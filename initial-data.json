@@ -1,0 +1,2838 @@
+{
+  "DEFAULT_ANNOUNCEMENT": "Welcome to YGO Skyscraper — Duel Academy! 🏫\n\nThis is the official hub for our dueling community. Check the Archetype Database to see available decks, join tournaments in the Bracket, and spin the Wheel for rewards and matchups.\n\nExams are held once a month or every two months depending on the mod. Check the Exams page for results and the next event hint.\n\nGood luck and happy dueling! ⚡",
+  "DEFAULT_PASSWORD": "duelacademy2024",
+  "INITIAL_TICKETS": [
+    {
+      "name": "☘️ Force Trade Ticket",
+      "price": "",
+      "desc": "Force your opponent to trade archetypes with you. You choose the two archetypes to be traded.",
+      "stock": 0
+    },
+    {
+      "name": "☘️ Gambling Ticket",
+      "price": "3,000 DP or sacrifice 1 deck",
+      "desc": "Receive rewards or consequences at random.",
+      "stock": 8
+    },
+    {
+      "name": "☘️ Lucky Discount Ticket",
+      "price": "3,000 DP or sacrifice 1 deck",
+      "desc": "Receive a random discount ticket (10%, 25%, 50%, or 100%).",
+      "stock": 8
+    },
+    {
+      "name": "☘️ Magnet Ring Ticket",
+      "price": "",
+      "desc": "Steal a random amount of DP from a random person who is in a different dorm from yours.",
+      "stock": 0
+    },
+    {
+      "name": "☘️ Deck Coffin Ticket",
+      "price": "Sacrifice 1 deck",
+      "desc": "Sacrifice your deck and receive a new one based on the value of the deck you sacrificed.",
+      "stock": 7
+    },
+    {
+      "name": "☘️ Refund Ticket",
+      "price": "Free",
+      "desc": "Refund your deck and receive half of its value in return.",
+      "stock": 6
+    },
+    {
+      "name": "☘️ Respin Ticket",
+      "price": "3,000 DP or sacrifice 1 deck",
+      "desc": "Spin the wheel again. The result of your previous spin may be replaced by the new result.",
+      "stock": 3
+    },
+    {
+      "name": "☘️ Dorm Switcher Ticket",
+      "price": "",
+      "desc": "Target two people (including yourself, if desired) from different dorms and swap their dorms.",
+      "stock": 0
+    },
+    {
+      "name": "☘️ Semi Duplicator Ticket",
+      "price": "",
+      "desc": "Target one archetype from the archetype list. That archetype can then be used by two people instead of one.",
+      "stock": 0
+    },
+    {
+      "name": "☘️ Forbidden Hammer Ticket",
+      "price": "",
+      "desc": "Target one archetype from the archetype list. That archetype becomes banned and cannot be used by anyone.",
+      "stock": 0
+    }
+  ],
+  "INITIAL_RULES": [
+    {
+      "id": 1,
+      "title": "☘️ Force Trade Ticket",
+      "body": "Force your opponent to trade archetypes with you. You choose the two archetypes to be traded."
+    },
+    {
+      "id": 2,
+      "title": "☘️ Gambling Ticket",
+      "body": "Cost: 3,000 DP or sacrifice 1 deck.\nReceive rewards or consequences at random."
+    },
+    {
+      "id": 3,
+      "title": "☘️ Lucky Discount Ticket",
+      "body": "Cost: 3,000 DP or sacrifice 1 deck.\nReceive a random discount ticket (10%, 25%, 50%, or 100%)."
+    },
+    {
+      "id": 4,
+      "title": "☘️ Magnet Ring Ticket",
+      "body": "Steal a random amount of DP from a random person who is in a different dorm from yours."
+    },
+    {
+      "id": 5,
+      "title": "☘️ Deck Coffin Ticket",
+      "body": "Cost: Sacrifice 1 deck.\nSacrifice your deck and receive a new one based on the value of the deck you sacrificed."
+    },
+    {
+      "id": 6,
+      "title": "☘️ Refund Ticket",
+      "body": "Cost: Free.\nRefund your deck and receive half of its value in return."
+    },
+    {
+      "id": 7,
+      "title": "☘️ Respin Ticket",
+      "body": "Cost: 3,000 DP or sacrifice 1 deck.\nSpin the wheel again. The result of your previous spin may be replaced by the new result."
+    },
+    {
+      "id": 8,
+      "title": "☘️ Dorm Switcher Ticket",
+      "body": "Target two people (including yourself, if desired) from different dorms and swap their dorms."
+    },
+    {
+      "id": 9,
+      "title": "☘️ Semi Duplicator Ticket",
+      "body": "Target one archetype from the archetype list. That archetype can then be used by two people instead of one."
+    },
+    {
+      "id": 10,
+      "title": "☘️ Forbidden Hammer Ticket",
+      "body": "Target one archetype from the archetype list. That archetype becomes banned and cannot be used by anyone."
+    },
+    {
+      "id": 11,
+      "title": "Archetype Rules",
+      "body": "• Cards that mention any archetype in their name or effect are archetypal.\n• Cards that mention no archetype are non-archetypal.\n• Cards mentioning 2+ archetypes belong to each one.\n• Maximum 4 archetypes per duelist.\n• Refund = half the original DP value back."
+    },
+    {
+      "id": 12,
+      "title": "Exam Rules",
+      "body": "• Exams happen once a month or every two months (mod decides).\n• Each exam has a theme.\n• Three types: Writing, Dueling Opponent, Dueling Mod.\n• Points assigned by mod for each type.\n• Dorm Leaders are exempt.\n• Failing earns the Dropout title.\n• Highest scorer earns Top Scorer title."
+    }
+  ],
+  "INITIAL_DUELISTS": [
+    {
+      "id": "d1",
+      "name": "Baek",
+      "dorm": "obelisk",
+      "dp": 15000,
+      "titles": [],
+      "archs": [
+        "Star Seraph"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d2",
+      "name": "Drake",
+      "dorm": "obelisk",
+      "dp": 5000,
+      "titles": [],
+      "archs": [
+        "Magnet Warrior",
+        "Mikanko",
+        "Regenesis",
+        "Kashtira"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d3",
+      "name": "Jay",
+      "dorm": "slifer",
+      "dp": 13000,
+      "titles": [],
+      "archs": [
+        "Blue-Eyes",
+        "Primite",
+        "Temple of the Kings",
+        "Yummy"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d4",
+      "name": "Jr",
+      "dorm": "ra",
+      "dp": 8500,
+      "titles": [],
+      "archs": [
+        "Evolzar",
+        "GMX",
+        "Megalith",
+        "Ryzeal"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d5",
+      "name": "Ketumile",
+      "dorm": "obelisk",
+      "dp": 1000,
+      "titles": [],
+      "archs": [
+        "D/D",
+        "Radiant Typhoon",
+        "Sky Striker",
+        "Tenpai"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d6",
+      "name": "Kite",
+      "dorm": "ra",
+      "dp": 16000,
+      "titles": [],
+      "archs": [
+        "Ryu-Ge"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d7",
+      "name": "Moon Shadow",
+      "dorm": "obelisk",
+      "dp": 15000,
+      "titles": [],
+      "archs": [
+        "@Ignister"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d8",
+      "name": "Ren",
+      "dorm": "obelisk",
+      "dp": 21000,
+      "titles": [],
+      "archs": [
+        "Ancient Warrior",
+        "Mecha Phantom Beast",
+        "Utopia",
+        "Voiceless Voice"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d9",
+      "name": "Reo",
+      "dorm": "obelisk",
+      "dp": 34000,
+      "titles": [],
+      "archs": [
+        "Bystial",
+        "Mitsurugi",
+        "Orcust",
+        "Rokket"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d10",
+      "name": "Serenity",
+      "dorm": "slifer",
+      "dp": 8500,
+      "titles": [],
+      "archs": [
+        "Exosister",
+        "Fire King",
+        "Jurrac",
+        "Plunder Patrol"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d11",
+      "name": "Sia",
+      "dorm": "slifer",
+      "dp": 32500,
+      "titles": [],
+      "archs": [
+        "Adamancipator",
+        "Centur-Ion",
+        "Koa'ki Meiru",
+        "Naturia"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d12",
+      "name": "Slashburnx",
+      "dorm": "ra",
+      "dp": 9000,
+      "titles": [],
+      "archs": [
+        "Branded",
+        "Chimera Fusion",
+        "Hecahand",
+        "Predaplant"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d13",
+      "name": "Sora",
+      "dorm": "slifer",
+      "dp": 5000,
+      "titles": [],
+      "archs": [
+        "Eldlich"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d14",
+      "name": "Sun Shadow",
+      "dorm": "slifer",
+      "dp": 5000,
+      "titles": [],
+      "archs": [],
+      "tickets": []
+    },
+    {
+      "id": "d15",
+      "name": "Unusual",
+      "dorm": "obelisk",
+      "dp": 16500,
+      "titles": [],
+      "archs": [
+        "Blackwing"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d16",
+      "name": "Yugo",
+      "dorm": "ra",
+      "dp": 21500,
+      "titles": [],
+      "archs": [
+        "Kaiju",
+        "Red Dragon Archfiend"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d17",
+      "name": "Yukai",
+      "dorm": "slifer",
+      "dp": 1500,
+      "titles": [],
+      "archs": [
+        "Ashened",
+        "Kewl Tune",
+        "Toon",
+        "The Ritual of Light and Darkness"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d18",
+      "name": "Yuji",
+      "dorm": "obelisk",
+      "dp": 19500,
+      "titles": [],
+      "archs": [
+        "Stardust"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d19",
+      "name": "Zero Two",
+      "dorm": "obelisk",
+      "dp": 26500,
+      "titles": [],
+      "archs": [
+        "Dracotail",
+        "Lunalight",
+        "Witchcraft",
+        "Fairy Tail"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d20",
+      "name": "Aiden",
+      "dorm": "ra",
+      "dp": 16000,
+      "titles": [],
+      "archs": [
+        "Yosenju"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d21",
+      "name": "Aqua",
+      "dorm": "ra",
+      "dp": 70500,
+      "titles": [],
+      "archs": [
+        "Dogmatika",
+        "Fiendsmith",
+        "Labrynth"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d22",
+      "name": "Astena",
+      "dorm": "obelisk",
+      "dp": 15000,
+      "titles": [],
+      "archs": [
+        "Prediction Princess",
+        "Valkyrie"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d23",
+      "name": "Code Talker",
+      "dorm": "slifer",
+      "dp": 3000,
+      "titles": [],
+      "archs": [
+        "Aroma",
+        "Gladiator Beast",
+        "Rescue Ace"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d24",
+      "name": "Darkgamer",
+      "dorm": "ra",
+      "dp": 14500,
+      "titles": [],
+      "archs": [
+        "Artmage",
+        "Phantom Knights",
+        "Elfnote",
+        "Horus"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d25",
+      "name": "Declan Akaba",
+      "dorm": "obelisk",
+      "dp": 22500,
+      "titles": [],
+      "archs": [
+        "Traptrix",
+        "Zoodiac"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d26",
+      "name": "Flexy",
+      "dorm": "slifer",
+      "dp": 0,
+      "titles": [],
+      "archs": [
+        "Danger!",
+        "Flower Cardian",
+        "Genex"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d27",
+      "name": "Gale",
+      "dorm": "ra",
+      "dp": 9000,
+      "titles": [],
+      "archs": [
+        "Amazoness",
+        "Odd-Eyes",
+        "Tearlament"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d28",
+      "name": "GZ Ball",
+      "dorm": "slifer",
+      "dp": 5000,
+      "titles": [],
+      "archs": [],
+      "tickets": []
+    },
+    {
+      "id": "d29",
+      "name": "Minato",
+      "dorm": "obelisk",
+      "dp": 10000,
+      "titles": [],
+      "archs": [
+        "Ancient Gear"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d30",
+      "name": "MJ",
+      "dorm": "obelisk",
+      "dp": 10000,
+      "titles": [],
+      "archs": [
+        "Bujin",
+        "Memento"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d31",
+      "name": "Myth",
+      "dorm": "ra",
+      "dp": 10000,
+      "titles": [],
+      "archs": [
+        "Dragon Ruler",
+        "Frightfur"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d32",
+      "name": "Nate",
+      "dorm": "ra",
+      "dp": 5000,
+      "titles": [],
+      "archs": [
+        "Raidraptor",
+        "Virtual World"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d33",
+      "name": "Raiden",
+      "dorm": "ra",
+      "dp": 57500,
+      "titles": [],
+      "archs": [
+        "Evil Twin",
+        "Magistus"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d34",
+      "name": "Ren Kaji",
+      "dorm": "obelisk",
+      "dp": 19500,
+      "titles": [],
+      "archs": [
+        "Snake-Eye",
+        "Sacred Beast"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d35",
+      "name": "Rigby",
+      "dorm": "ra",
+      "dp": 12500,
+      "titles": [],
+      "archs": [
+        "Appliancer",
+        "Invoked"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d36",
+      "name": "Samantha",
+      "dorm": "obelisk",
+      "dp": 15500,
+      "titles": [],
+      "archs": [
+        "Libromancer",
+        "Marincess",
+        "Prank-Kids"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d37",
+      "name": "Tebatso",
+      "dorm": "obelisk",
+      "dp": 10000,
+      "titles": [],
+      "archs": [
+        "Therion",
+        "Vendread"
+      ],
+      "tickets": []
+    },
+    {
+      "id": "d38",
+      "name": "Thato",
+      "dorm": "slifer",
+      "dp": 5000,
+      "titles": [],
+      "archs": [
+        "Morphthronic"
+      ],
+      "tickets": []
+    }
+  ],
+  "INITIAL_ARCHETYPES": [
+    {
+      "id": "a1",
+      "name": "@Ignister",
+      "notes": "",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a2",
+      "name": "Abyss Actor",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a3",
+      "name": "Adamancipator",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a4",
+      "name": "Allure Queen",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a5",
+      "name": "Ally of Justice",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a6",
+      "name": "Altergeist",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a7",
+      "name": "Amazement",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a8",
+      "name": "Amazoness",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a9",
+      "name": "Amorphage",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a10",
+      "name": "Ancient Fairy",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a11",
+      "name": "Ancient Gear",
+      "notes": "",
+      "price": 12000,
+      "status": ""
+    },
+    {
+      "id": "a12",
+      "name": "Ancient Warrior",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a13",
+      "name": "Appliancer",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a14",
+      "name": "Aquaactress",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a15",
+      "name": "Arcana Force",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a16",
+      "name": "Argostar",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a17",
+      "name": "Armed Dragon",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a18",
+      "name": "Aroma",
+      "notes": "",
+      "price": 6000,
+      "status": ""
+    },
+    {
+      "id": "a19",
+      "name": "Artifact",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a20",
+      "name": "Artmage",
+      "notes": "",
+      "price": 15000,
+      "status": ""
+    },
+    {
+      "id": "a21",
+      "name": "Ashened",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a22",
+      "name": "Asutra",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a23",
+      "name": "Azamina",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a24",
+      "name": "B.E.S.",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a25",
+      "name": "Batteryman",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a26",
+      "name": "Battleguard",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a27",
+      "name": "Battlewasp",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a28",
+      "name": "Battlin' Boxer",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a29",
+      "name": "Beetrooper",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a30",
+      "name": "Blackwing",
+      "notes": "Included: Black-winged",
+      "price": 9000,
+      "status": ""
+    },
+    {
+      "id": "a31",
+      "name": "Blitzclique",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a32",
+      "name": "Blue-Eyes",
+      "notes": "Included: White Dragon",
+      "price": 30000,
+      "status": ""
+    },
+    {
+      "id": "a33",
+      "name": "Branded",
+      "notes": "Included: Despia",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a34",
+      "name": "Bujin",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a35",
+      "name": "Burning Abyss",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a36",
+      "name": "Buster Blader",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a37",
+      "name": "Bystial",
+      "notes": "",
+      "price": 6500,
+      "status": ""
+    },
+    {
+      "id": "a38",
+      "name": "Centur-Ion",
+      "notes": "",
+      "price": 13000,
+      "status": ""
+    },
+    {
+      "id": "a39",
+      "name": "Charmer",
+      "notes": "Included: Possessed",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a40",
+      "name": "Chemicritter",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a41",
+      "name": "Chimera Fusion",
+      "notes": "Included: Mythical Beast; Excluded: Mythical Beast Pendulum",
+      "price": 20000,
+      "status": ""
+    },
+    {
+      "id": "a42",
+      "name": "Chronomaly",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a43",
+      "name": "Clear World",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a44",
+      "name": "Cloudian",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a45",
+      "name": "Clown Crew",
+      "notes": "",
+      "price": 14000,
+      "status": ""
+    },
+    {
+      "id": "a46",
+      "name": "Code Talker",
+      "notes": "Included: Firewall",
+      "price": 28000,
+      "status": ""
+    },
+    {
+      "id": "a47",
+      "name": "Constellar",
+      "notes": "Included: Tellarknight",
+      "price": 11000,
+      "status": ""
+    },
+    {
+      "id": "a48",
+      "name": "Crusadia",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a49",
+      "name": "Crystal Beast",
+      "notes": "",
+      "price": 8000,
+      "status": ""
+    },
+    {
+      "id": "a50",
+      "name": "Crystron",
+      "notes": "",
+      "price": 13000,
+      "status": ""
+    },
+    {
+      "id": "a51",
+      "name": "Cubic",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a52",
+      "name": "Cyber Angel",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a53",
+      "name": "Cyber Dragon",
+      "notes": "Included: Cyberdark",
+      "price": 23000,
+      "status": ""
+    },
+    {
+      "id": "a54",
+      "name": "D/D",
+      "notes": "",
+      "price": 24000,
+      "status": ""
+    },
+    {
+      "id": "a55",
+      "name": "Danger!",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a56",
+      "name": "Dark Magician",
+      "notes": "Included: Magician Girl, Gandora",
+      "price": 30000,
+      "status": ""
+    },
+    {
+      "id": "a57",
+      "name": "Dark Scorpion",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a58",
+      "name": "Dark World",
+      "notes": "",
+      "price": 8500,
+      "status": ""
+    },
+    {
+      "id": "a59",
+      "name": "Darklord",
+      "notes": "",
+      "price": 15000,
+      "status": ""
+    },
+    {
+      "id": "a60",
+      "name": "Deskbot",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a61",
+      "name": "Dinomist",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a62",
+      "name": "Dinomorphia",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a63",
+      "name": "Dinowrestler",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a64",
+      "name": "Dogmatika",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a65",
+      "name": "Doom Z",
+      "notes": "",
+      "price": 18000,
+      "status": ""
+    },
+    {
+      "id": "a66",
+      "name": "Dracoslayer",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a67",
+      "name": "Dracotail",
+      "notes": "",
+      "price": 30000,
+      "status": ""
+    },
+    {
+      "id": "a68",
+      "name": "Dragon Ruler",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a69",
+      "name": "Dragonmaid",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a70",
+      "name": "Dragunity",
+      "notes": "",
+      "price": 9000,
+      "status": ""
+    },
+    {
+      "id": "a71",
+      "name": "Dream Mirror",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a72",
+      "name": "Drytron",
+      "notes": "",
+      "price": 12000,
+      "status": ""
+    },
+    {
+      "id": "a73",
+      "name": "Dual Avatar",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a74",
+      "name": "Duston",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a75",
+      "name": "Earthbound",
+      "notes": "",
+      "price": 4500,
+      "status": ""
+    },
+    {
+      "id": "a76",
+      "name": "Eldlich",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a77",
+      "name": "Elemental Lord",
+      "notes": "Included: Elementsaber",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a78",
+      "name": "Elfnote",
+      "notes": "",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a79",
+      "name": "Endymion",
+      "notes": "Included: Mythical Beast Pendulum",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a80",
+      "name": "Enneacraft",
+      "notes": "",
+      "price": 16000,
+      "status": ""
+    },
+    {
+      "id": "a81",
+      "name": "Evil Eye",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a82",
+      "name": "Evil Twin",
+      "notes": "",
+      "price": 13500,
+      "status": ""
+    },
+    {
+      "id": "a83",
+      "name": "Evolzar",
+      "notes": "Included: Evoltile, Evolsaur",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a84",
+      "name": "Exodia",
+      "notes": "Included: Millennium",
+      "price": 20000,
+      "status": ""
+    },
+    {
+      "id": "a85",
+      "name": "Exosister",
+      "notes": "",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a86",
+      "name": "Eyes Restrict",
+      "notes": "Included: Relinquished",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a87",
+      "name": "F.A.",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a88",
+      "name": "Fabled",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a89",
+      "name": "Fairy Tail",
+      "notes": "",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a90",
+      "name": "Fiendsmith",
+      "notes": "",
+      "price": 35000,
+      "status": ""
+    },
+    {
+      "id": "a91",
+      "name": "Fire Fist",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a92",
+      "name": "Fire King",
+      "notes": "",
+      "price": 17500,
+      "status": ""
+    },
+    {
+      "id": "a93",
+      "name": "Fishborg",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a94",
+      "name": "Flame Swordsman",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a95",
+      "name": "Flamvell",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a96",
+      "name": "Floowandereeze",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a97",
+      "name": "Flower Cardian",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a98",
+      "name": "Fortune Lady",
+      "notes": "Included: Fortune Fairy",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a99",
+      "name": "Fossil Fusion",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a100",
+      "name": "Frightfur",
+      "notes": "Included: Fluffal, Edge Imp",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a101",
+      "name": "Frog",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a102",
+      "name": "Fur Hire",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a103",
+      "name": "G Golem",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a104",
+      "name": "Galaxy-Eyes",
+      "notes": "Included: Photon, Tachyon, Cipher",
+      "price": 20000,
+      "status": ""
+    },
+    {
+      "id": "a105",
+      "name": "Gate Guardian",
+      "notes": "",
+      "price": 5500,
+      "status": ""
+    },
+    {
+      "id": "a106",
+      "name": "Geargia",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a107",
+      "name": "Gem-",
+      "notes": "",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a108",
+      "name": "Generaider",
+      "notes": "",
+      "price": 9000,
+      "status": ""
+    },
+    {
+      "id": "a109",
+      "name": "Genex",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a110",
+      "name": "Ghostrick",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a111",
+      "name": "Ghoti",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a112",
+      "name": "Gimmick Puppet",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a113",
+      "name": "Gishki",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a114",
+      "name": "Gladiator Beast",
+      "notes": "",
+      "price": 12500,
+      "status": ""
+    },
+    {
+      "id": "a115",
+      "name": "GMX",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a116",
+      "name": "Goblin Biker",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a117",
+      "name": "Gold Pride",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a118",
+      "name": "Gouki",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a119",
+      "name": "Gravekeeper",
+      "notes": "Included: Necrovalley",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a120",
+      "name": "Graydle",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a121",
+      "name": "Gusto",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a122",
+      "name": "Harpie",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a123",
+      "name": "Hazy Flame",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a124",
+      "name": "Hecahand",
+      "notes": "",
+      "price": 14000,
+      "status": ""
+    },
+    {
+      "id": "a125",
+      "name": "Herald",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a126",
+      "name": "Heraldric",
+      "notes": "Included: Heraldry",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a127",
+      "name": "HERO",
+      "notes": "Included: Neo-Spacian, Chrysalis",
+      "price": 0,
+      "status": "Unavailable"
+    },
+    {
+      "id": "a128",
+      "name": "Heroic",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a129",
+      "name": "Hieratic",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a130",
+      "name": "Horus",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a131",
+      "name": "Ice Barrier",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a132",
+      "name": "Icejade",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a133",
+      "name": "Igknight",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a134",
+      "name": "Impcantation",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a135",
+      "name": "Infernity",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a136",
+      "name": "Infernoid",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a137",
+      "name": "Infinitrack",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a138",
+      "name": "Invoked",
+      "notes": "Included: Aleister The Invoker",
+      "price": 18000,
+      "status": ""
+    },
+    {
+      "id": "a139",
+      "name": "Inzektor",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a140",
+      "name": "Iron Chain",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a141",
+      "name": "Jinzo",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a142",
+      "name": "Jurrac",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a143",
+      "name": "K9",
+      "notes": "",
+      "price": 20000,
+      "status": ""
+    },
+    {
+      "id": "a144",
+      "name": "Kaiju",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a145",
+      "name": "Karakuri",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a146",
+      "name": "Kashtira",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a147",
+      "name": "Kewl Tune",
+      "notes": "",
+      "price": 30000,
+      "status": ""
+    },
+    {
+      "id": "a148",
+      "name": "Knightmare",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a149",
+      "name": "Koa'ki Meiru",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a150",
+      "name": "Kozmo",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a151",
+      "name": "Krawler",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a152",
+      "name": "Kuriboh",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a153",
+      "name": "Labrynth",
+      "notes": "",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a154",
+      "name": "Laval",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a155",
+      "name": "Libromancer",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a156",
+      "name": "Lightsworn",
+      "notes": "",
+      "price": 8000,
+      "status": ""
+    },
+    {
+      "id": "a157",
+      "name": "Lswarm",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a158",
+      "name": "Lunalight",
+      "notes": "",
+      "price": 30000,
+      "status": ""
+    },
+    {
+      "id": "a159",
+      "name": "Lyrilusc",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a160",
+      "name": "Machina",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a161",
+      "name": "Madolche",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a162",
+      "name": "Magical Musket",
+      "notes": "",
+      "price": 6000,
+      "status": ""
+    },
+    {
+      "id": "a163",
+      "name": "Magikey",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a164",
+      "name": "Magistus",
+      "notes": "",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a165",
+      "name": "Magnet Warrior",
+      "notes": "",
+      "price": 20000,
+      "status": ""
+    },
+    {
+      "id": "a166",
+      "name": "Majespecter",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a167",
+      "name": "Malefic",
+      "notes": "Included: Cards mentioned on Malefic monsters",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a168",
+      "name": "Maliss",
+      "notes": "",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a169",
+      "name": "Mannadium",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a170",
+      "name": "Marincess",
+      "notes": "",
+      "price": 12000,
+      "status": ""
+    },
+    {
+      "id": "a171",
+      "name": "Materiactor",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a172",
+      "name": "Mathmech",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a173",
+      "name": "Mayakashi",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a174",
+      "name": "Mecha Phantom Beast",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a175",
+      "name": "Megalith",
+      "notes": "",
+      "price": 7000,
+      "status": ""
+    },
+    {
+      "id": "a176",
+      "name": "Mekk-Knight",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a177",
+      "name": "Meklord",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a178",
+      "name": "Melffy",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a179",
+      "name": "Melodious",
+      "notes": "",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a180",
+      "name": "Memento",
+      "notes": "",
+      "price": 20000,
+      "status": ""
+    },
+    {
+      "id": "a181",
+      "name": "Mermail",
+      "notes": "Included: Atlantean",
+      "price": 18000,
+      "status": ""
+    },
+    {
+      "id": "a182",
+      "name": "Metalfoes",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a183",
+      "name": "Metalmorph",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a184",
+      "name": "Metaphys",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a185",
+      "name": "Mikanko",
+      "notes": "",
+      "price": 9500,
+      "status": ""
+    },
+    {
+      "id": "a186",
+      "name": "Mimighoul",
+      "notes": "",
+      "price": 4500,
+      "status": ""
+    },
+    {
+      "id": "a187",
+      "name": "Mist Valley",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a188",
+      "name": "Mitsurugi",
+      "notes": "",
+      "price": 21000,
+      "status": ""
+    },
+    {
+      "id": "a189",
+      "name": "Monarch",
+      "notes": "",
+      "price": 7000,
+      "status": ""
+    },
+    {
+      "id": "a190",
+      "name": "Morphthronic",
+      "notes": "Included: Power Tool",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a191",
+      "name": "Myutant",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a192",
+      "name": "Naturia",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a193",
+      "name": "Nekroz",
+      "notes": "",
+      "price": 4500,
+      "status": ""
+    },
+    {
+      "id": "a194",
+      "name": "Nemeses",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a195",
+      "name": "Nemleria",
+      "notes": "",
+      "price": 6500,
+      "status": ""
+    },
+    {
+      "id": "a196",
+      "name": "Nephthys",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a197",
+      "name": "Ninja",
+      "notes": "",
+      "price": 8000,
+      "status": ""
+    },
+    {
+      "id": "a198",
+      "name": "Noble Knight",
+      "notes": "",
+      "price": 15000,
+      "status": ""
+    },
+    {
+      "id": "a199",
+      "name": "Nordic",
+      "notes": "Included: Aesir",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a200",
+      "name": "Nouvelles",
+      "notes": "Included: Hungry Burger, Patissciel",
+      "price": 5500,
+      "status": ""
+    },
+    {
+      "id": "a201",
+      "name": "Numeron",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a202",
+      "name": "Odd-Eyes",
+      "notes": "Included: Performapal, Supreme King Dragon, Z-Arc",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a203",
+      "name": "Ogdoadic",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a204",
+      "name": "Ojama",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a205",
+      "name": "Orcust",
+      "notes": "",
+      "price": 19000,
+      "status": ""
+    },
+    {
+      "id": "a206",
+      "name": "P.U.N.K.",
+      "notes": "",
+      "price": 15000,
+      "status": ""
+    },
+    {
+      "id": "a207",
+      "name": "Paleozoic",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a208",
+      "name": "Penguin",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a209",
+      "name": "Performage",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a210",
+      "name": "Phantasm Spiral",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a211",
+      "name": "Phantom Knights",
+      "notes": "Included: Dark Rebellion, Xyz Dragon",
+      "price": 19500,
+      "status": ""
+    },
+    {
+      "id": "a212",
+      "name": "Plunder Patrol",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a213",
+      "name": "Power Patron",
+      "notes": "Excluded: Medius The Pure",
+      "price": 8000,
+      "status": ""
+    },
+    {
+      "id": "a214",
+      "name": "Prank-Kids",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a215",
+      "name": "Predaplant",
+      "notes": "Included: Starving Venom, Fusion Dragon",
+      "price": 22500,
+      "status": ""
+    },
+    {
+      "id": "a216",
+      "name": "Prediction Princess",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a217",
+      "name": "Primite",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a218",
+      "name": "Psy-Frame",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a219",
+      "name": "Purrely",
+      "notes": "",
+      "price": 4500,
+      "status": ""
+    },
+    {
+      "id": "a220",
+      "name": "Qli",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a221",
+      "name": "R.B.",
+      "notes": "",
+      "price": 7000,
+      "status": ""
+    },
+    {
+      "id": "a222",
+      "name": "Radiant Typhoon",
+      "notes": "",
+      "price": 29000,
+      "status": ""
+    },
+    {
+      "id": "a223",
+      "name": "Ragnaraika",
+      "notes": "",
+      "price": 5500,
+      "status": ""
+    },
+    {
+      "id": "a224",
+      "name": "Raidraptor",
+      "notes": "",
+      "price": 8000,
+      "status": ""
+    },
+    {
+      "id": "a225",
+      "name": "Red Dragon Archfiend",
+      "notes": "Included: Resonator",
+      "price": 20000,
+      "status": ""
+    },
+    {
+      "id": "a226",
+      "name": "Red-Eyes",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a227",
+      "name": "Regenesis",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a228",
+      "name": "Reptilianne",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a229",
+      "name": "Rescue Ace",
+      "notes": "",
+      "price": 12000,
+      "status": ""
+    },
+    {
+      "id": "a230",
+      "name": "Rikka",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a231",
+      "name": "Ritual Beast",
+      "notes": "",
+      "price": 6000,
+      "status": ""
+    },
+    {
+      "id": "a232",
+      "name": "Roid",
+      "notes": "Excluded: Speedroid",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a233",
+      "name": "Rokket",
+      "notes": "Included: Borrel, Topologic",
+      "price": 23000,
+      "status": ""
+    },
+    {
+      "id": "a234",
+      "name": "Rose Dragon",
+      "notes": "Included: Black Rose",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a235",
+      "name": "Runick",
+      "notes": "",
+      "price": 8000,
+      "status": ""
+    },
+    {
+      "id": "a236",
+      "name": "Ryu-Ge",
+      "notes": "",
+      "price": 6000,
+      "status": ""
+    },
+    {
+      "id": "a237",
+      "name": "Ryzeal",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a238",
+      "name": "S-Force",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a239",
+      "name": "Sacred Beast",
+      "notes": "",
+      "price": 8500,
+      "status": ""
+    },
+    {
+      "id": "a240",
+      "name": "Salamangreat",
+      "notes": "",
+      "price": 12000,
+      "status": ""
+    },
+    {
+      "id": "a241",
+      "name": "Scareclaw",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a242",
+      "name": "Scrap",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a243",
+      "name": "Shaddoll",
+      "notes": "",
+      "price": 11000,
+      "status": ""
+    },
+    {
+      "id": "a244",
+      "name": "Shark",
+      "notes": "",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a245",
+      "name": "Shining Sarcophagus",
+      "notes": "",
+      "price": 5500,
+      "status": ""
+    },
+    {
+      "id": "a246",
+      "name": "Shiranui",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a247",
+      "name": "Silent Magician",
+      "notes": "Included: Silent Swordsman",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a248",
+      "name": "Simorgh",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a249",
+      "name": "Six Samurai",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a250",
+      "name": "Skull Servant",
+      "notes": "Included: Wight",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a251",
+      "name": "Sky Striker",
+      "notes": "",
+      "price": 30000,
+      "status": ""
+    },
+    {
+      "id": "a252",
+      "name": "Snake-Eye",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a253",
+      "name": "Solfachord",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a254",
+      "name": "Speedroid",
+      "notes": "Included: Clear Wing, Synchro Dragon",
+      "price": 12500,
+      "status": ""
+    },
+    {
+      "id": "a255",
+      "name": "Spellbook",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a256",
+      "name": "Spright",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a257",
+      "name": "Springans",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a258",
+      "name": "SPYRAL",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a259",
+      "name": "Star Seraph",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a260",
+      "name": "Stardust",
+      "notes": "Included: Synchrons, Junk",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a261",
+      "name": "Subterror",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a262",
+      "name": "Sunavalon",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a263",
+      "name": "Super Quant",
+      "notes": "",
+      "price": 5000,
+      "status": ""
+    },
+    {
+      "id": "a264",
+      "name": "Superheavy Samurai",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a265",
+      "name": "Swordsoul",
+      "notes": "",
+      "price": 12500,
+      "status": ""
+    },
+    {
+      "id": "a266",
+      "name": "Sylvan",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a267",
+      "name": "Symphonic Warrior",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a268",
+      "name": "T.G.",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a269",
+      "name": "Tearlament",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a270",
+      "name": "Temple of the Kings",
+      "notes": "Included: Apophis",
+      "price": 30000,
+      "status": ""
+    },
+    {
+      "id": "a271",
+      "name": "Tenpai",
+      "notes": "Included: Sangen",
+      "price": 16000,
+      "status": ""
+    },
+    {
+      "id": "a272",
+      "name": "Tenyi",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a273",
+      "name": "The Ritual of Light and Darkness",
+      "notes": "Included: Black Luster Soldier, Gaia",
+      "price": 25000,
+      "status": ""
+    },
+    {
+      "id": "a274",
+      "name": "The Sanctuary in the Sky",
+      "notes": "Included: The Agents",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a275",
+      "name": "The Weather",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a276",
+      "name": "Therion",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a277",
+      "name": "Thunder Dragon",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a278",
+      "name": "Time Thief",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a279",
+      "name": "Timelord",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a280",
+      "name": "Tindangle",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a281",
+      "name": "Tistina",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a282",
+      "name": "Toon",
+      "notes": "",
+      "price": 50000,
+      "status": ""
+    },
+    {
+      "id": "a283",
+      "name": "Traptrix",
+      "notes": "",
+      "price": 2500,
+      "status": ""
+    },
+    {
+      "id": "a284",
+      "name": "Tri-Brigade",
+      "notes": "",
+      "price": 8000,
+      "status": ""
+    },
+    {
+      "id": "a285",
+      "name": "Triamid",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a286",
+      "name": "True Draco",
+      "notes": "Included: True King",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a287",
+      "name": "U.A.",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a288",
+      "name": "Umbral Horror",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a289",
+      "name": "Unchained",
+      "notes": "",
+      "price": 13000,
+      "status": ""
+    },
+    {
+      "id": "a290",
+      "name": "Ursarctic",
+      "notes": "",
+      "price": 4500,
+      "status": ""
+    },
+    {
+      "id": "a291",
+      "name": "Utopia",
+      "notes": "Included: Gagaga, Dododo, Gogogo, Zubaba, Astral, Onomat",
+      "price": 39000,
+      "status": ""
+    },
+    {
+      "id": "a292",
+      "name": "Vaalmonica",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a293",
+      "name": "Valkyrie",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a294",
+      "name": "Vampire",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a295",
+      "name": "Vanquish Soul",
+      "notes": "",
+      "price": 9000,
+      "status": ""
+    },
+    {
+      "id": "a296",
+      "name": "Vaylantz",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a297",
+      "name": "Vendread",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a298",
+      "name": "Vernusylph",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a299",
+      "name": "Virtual World",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a300",
+      "name": "Voiceless Voice",
+      "notes": "",
+      "price": 7500,
+      "status": ""
+    },
+    {
+      "id": "a301",
+      "name": "Volcanic",
+      "notes": "",
+      "price": 4000,
+      "status": ""
+    },
+    {
+      "id": "a302",
+      "name": "Vylon",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a303",
+      "name": "War Rock",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a304",
+      "name": "Watt",
+      "notes": "",
+      "price": 1000,
+      "status": ""
+    },
+    {
+      "id": "a305",
+      "name": "Wind-Up",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a306",
+      "name": "Windwitch",
+      "notes": "",
+      "price": 3500,
+      "status": ""
+    },
+    {
+      "id": "a307",
+      "name": "Witchcraft",
+      "notes": "",
+      "price": 10000,
+      "status": ""
+    },
+    {
+      "id": "a308",
+      "name": "World Legacy",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    },
+    {
+      "id": "a309",
+      "name": "X-Saber",
+      "notes": "",
+      "price": 6000,
+      "status": ""
+    },
+    {
+      "id": "a310",
+      "name": "Yang Zing",
+      "notes": "",
+      "price": 2000,
+      "status": ""
+    },
+    {
+      "id": "a311",
+      "name": "Yosenju",
+      "notes": "",
+      "price": 500,
+      "status": ""
+    },
+    {
+      "id": "a312",
+      "name": "Yubel",
+      "notes": "",
+      "price": 21500,
+      "status": ""
+    },
+    {
+      "id": "a313",
+      "name": "Yummy",
+      "notes": "",
+      "price": 27500,
+      "status": ""
+    },
+    {
+      "id": "a314",
+      "name": "Zefra",
+      "notes": "",
+      "price": 1500,
+      "status": ""
+    },
+    {
+      "id": "a315",
+      "name": "Zoodiac",
+      "notes": "",
+      "price": 3000,
+      "status": ""
+    }
+  ],
+  "SHOP_BUDGET_DEFAULT": [
+    "Amorphage",
+    "Argostar",
+    "Burning Abyss",
+    "Cyber Angel",
+    "Dual Avatar",
+    "Flame Swordsman",
+    "Frog",
+    "Herald",
+    "Infernoid",
+    "Karakuri",
+    "Laval",
+    "Meklord",
+    "Mist Valley",
+    "Red-Eyes",
+    "Simorgh",
+    "Springans",
+    "Tistina",
+    "Vaylantz",
+    "Yang Zing"
+  ],
+  "SHOP_PREMIUM_DEFAULT": [
+    "Asutra",
+    "Azamina",
+    "Dark Magician",
+    "Darklord",
+    "Dragonmaid",
+    "Enneacraft",
+    "Nemleria",
+    "Ryzeal"
+  ]
+}

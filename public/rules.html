@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Rules — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">📖 Rules &amp; Info</div>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;">
+    Official rules, ticket explanations, and academy guidelines — written and maintained by the mod.
+  </p>
+
+  <!-- ADD SECTION (admin only) -->
+  <div style="margin-bottom:20px;">
+    <button class="btn-gold admin-only" onclick="openAddRule()">➕ Add Section</button>
+  </div>
+
+  <!-- RULES LIST -->
+  <div id="rules-list"></div>
+</div>
+
+<!-- ADD / EDIT RULE MODAL -->
+<div class="modal-overlay" id="modal-rule">
+  <div class="modal">
+    <h2 id="modal-rule-title">Add Section</h2>
+    <input type="hidden" id="ru-id"/>
+    <div class="form-group">
+      <label>Section Title</label>
+      <input class="form-ctrl" id="ru-title" placeholder="e.g. Deck Coffin Ticket"/>
+    </div>
+    <div class="form-group">
+      <label>Content</label>
+      <textarea class="form-ctrl" id="ru-body" rows="7"
+        placeholder="Explain the rule, ticket, or guideline in detail…"
+        style="min-height:140px;"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-rule')">Cancel</button>
+      <button class="btn-gold" onclick="submitRule()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="modal-admin">
+  <div class="modal">
+    <h2>🔐 Admin Login</h2>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pw-inp" class="form-ctrl" placeholder="Enter password"
+        onkeydown="if(event.key==='Enter') doAdminLogin()" autocomplete="off"/>
+      <div id="admin-pw-err" class="form-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-admin')">Cancel</button>
+      <button class="btn-gold" onclick="doAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-change-pw">
+  <div class="modal">
+    <h2>🔑 Change Password</h2>
+    <div class="form-group"><label>Current Password</label><input type="password" id="pw-cur" class="form-ctrl"/></div>
+    <div class="form-group"><label>New Password</label><input type="password" id="pw-new" class="form-ctrl"/></div>
+    <div class="form-group"><label>Confirm New Password</label><input type="password" id="pw-conf" class="form-ctrl"/></div>
+    <div id="pw-err" class="form-err"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-change-pw')">Cancel</button>
+      <button class="btn-gold" onclick="doChangePassword()">Save Password</button>
+    </div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="store.js"></script>
+<script type="module" src="nav.js"></script>
+<script src="rules.js" defer></script>
+</body>
+</html>

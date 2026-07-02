@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Wheel — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">🎡 Spin the Wheel</div>
+
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start;" id="wheel-layout">
+
+    <!-- LEFT: Canvas + result + history -->
+    <div>
+      <!-- Wheel canvas -->
+      <div class="wheel-wrap" style="margin-bottom:28px;">
+        <div class="wheel-container" style="width:340px;height:340px;">
+          <div class="wheel-ptr">▼</div>
+          <canvas id="wheel-canvas" width="340" height="340"></canvas>
+        </div>
+
+        <!-- Spin button (admin only) -->
+        <button class="spin-btn admin-only" id="spin-btn" onclick="doSpin()">⚡ SPIN!</button>
+
+        <!-- Viewer message (non-admin) -->
+        <div id="viewer-msg" class="viewer-msg" style="display:none;">
+          Only the mod can spin the wheel.
+        </div>
+
+        <!-- Result box -->
+        <div class="result-box" id="result-box" style="display:none;">
+          <h3>🏆 Result</h3>
+          <div class="result-value" id="result-text"></div>
+          <div class="seed-tag" id="result-seed"></div>
+        </div>
+      </div>
+
+      <!-- Spin history -->
+      <div class="card">
+        <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:0.9rem;font-weight:700;margin-bottom:4px;">
+          📜 Spin History
+        </div>
+        <div style="color:var(--muted);font-size:0.74rem;margin-bottom:12px;">
+          Every spin is logged with a seed so results can be verified — anti-cheat.
+        </div>
+        <div id="wheel-history"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Items panel -->
+    <div>
+      <div class="card">
+        <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:0.88rem;font-weight:700;margin-bottom:10px;">
+          🎯 Wheel Items <span id="items-count" style="color:var(--muted);font-size:0.75rem;font-weight:400;"></span>
+        </div>
+
+        <!-- Items display -->
+        <div id="items-display" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;min-height:32px;"></div>
+
+        <!-- Admin controls -->
+        <div class="admin-only-block">
+          <div style="border-top:1px solid var(--border);padding-top:12px;">
+            <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
+              Manage Items
+            </div>
+
+            <!-- Add item -->
+            <div style="display:flex;gap:6px;margin-bottom:10px;">
+              <input class="search-box" id="new-item-inp" placeholder="Add item…"
+                style="font-size:0.82rem;padding:6px 10px;"
+                onkeydown="if(event.key==='Enter') addWheelItem()"/>
+              <button class="btn-gold" style="padding:6px 14px;font-size:0.82rem;" onclick="addWheelItem()">Add</button>
+            </div>
+
+            <!-- Quick add duelists -->
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:6px;">Quick-add duelists:</div>
+            <div id="quick-add" style="display:flex;flex-wrap:wrap;gap:4px;max-height:110px;overflow-y:auto;margin-bottom:10px;"></div>
+
+            <!-- Clear all -->
+            <button class="btn-danger" style="width:100%;padding:7px;" onclick="clearWheelItems()">
+              🗑 Clear All Items
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="modal-admin">
+  <div class="modal">
+    <h2>🔐 Admin Login</h2>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pw-inp" class="form-ctrl" placeholder="Enter password"
+        onkeydown="if(event.key==='Enter') doAdminLogin()" autocomplete="off"/>
+      <div id="admin-pw-err" class="form-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-admin')">Cancel</button>
+      <button class="btn-gold" onclick="doAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-change-pw">
+  <div class="modal">
+    <h2>🔑 Change Password</h2>
+    <div class="form-group"><label>Current Password</label><input type="password" id="pw-cur" class="form-ctrl"/></div>
+    <div class="form-group"><label>New Password</label><input type="password" id="pw-new" class="form-ctrl"/></div>
+    <div class="form-group"><label>Confirm New Password</label><input type="password" id="pw-conf" class="form-ctrl"/></div>
+    <div id="pw-err" class="form-err"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-change-pw')">Cancel</button>
+      <button class="btn-gold" onclick="doChangePassword()">Save Password</button>
+    </div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="store.js"></script>
+<script type="module" src="nav.js"></script>
+<script src="wheel.js" defer></script>
+</body>
+</html>

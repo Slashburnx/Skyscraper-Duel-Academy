@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>YGO Skyscraper — Duel Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-crown">♛</div>
+  <div class="hero-title">YGO Skyscraper</div>
+  <div class="hero-sub">Duel Academy</div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- ANNOUNCEMENT -->
+  <div class="announce-box">
+    <div class="announce-label">📢 ANNOUNCEMENT</div>
+    <div id="announce-text">Loading…</div>
+    <div id="announce-edit" style="display:none;">
+      <textarea id="announce-ta" rows="6" class="form-ctrl" style="margin-bottom:8px;"></textarea>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn-outline" onclick="cancelAnnounce()">Cancel</button>
+        <button class="btn-gold" onclick="saveAnnounce()">Save</button>
+      </div>
+    </div>
+    <button id="btn-edit-announce" class="btn-icon admin-only" style="margin-top:12px;"
+      onclick="startAnnounce()">✏️ Edit Announcement</button>
+  </div>
+
+  <!-- DORM STRIP -->
+  <div class="dorm-strip">
+    <div class="dorm-card dorm-obelisk">
+      <div class="dorm-icon">❄️</div>
+      <div class="dorm-name" style="color:var(--ob);">Obelisk Blue</div>
+      <div class="dorm-count" id="count-obelisk">—</div>
+      <div class="dorm-leader" id="leader-obelisk"></div>
+    </div>
+    <div class="dorm-card dorm-ra">
+      <div class="dorm-icon">⚜️</div>
+      <div class="dorm-name" style="color:var(--ra);">Ra Yellow</div>
+      <div class="dorm-count" id="count-ra">—</div>
+      <div class="dorm-leader" id="leader-ra"></div>
+    </div>
+    <div class="dorm-card dorm-slifer">
+      <div class="dorm-icon">🏮</div>
+      <div class="dorm-name" style="color:var(--sl);">Slifer Red</div>
+      <div class="dorm-count" id="count-slifer">—</div>
+      <div class="dorm-leader" id="leader-slifer"></div>
+    </div>
+  </div>
+
+  <!-- TOP 5 + HALL OF TITLES -->
+  <div class="home-grid">
+    <div class="card">
+      <div class="card-title">🍀 Top 5 Richest Duelists</div>
+      <div id="top5"><div style="color:var(--muted);font-size:0.85rem;">Loading…</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">👑 Hall of Titles</div>
+      <div id="hall-titles"><div style="color:var(--muted);font-size:0.85rem;">Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- LAST WHEEL RESULT -->
+  <div class="card center-card">
+    <div class="mini-label">🎡 Last Wheel Result</div>
+    <div id="home-wheel-result" class="wheel-result-display">Loading…</div>
+    <a href="wheel.html" class="btn-outline" style="margin-top:10px;display:inline-block;">Go to Wheel →</a>
+  </div>
+
+  <!-- NEXT EVENT HINT -->
+  <div class="hint-box">
+    <div class="hint-title">🔮 Next Event Hint</div>
+    <div id="home-hint" class="hint-text">Loading…</div>
+    <a href="exams.html" class="hint-link">View Exam Records →</a>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="card admin-only-block" id="admin-panel" style="border-color:rgba(200,155,0,0.3);">
+    <div class="card-title">⚙️ Admin Panel</div>
+    <button class="btn-outline" onclick="openModal('modal-change-pw')">🔑 Change Password</button>
+  </div>
+
+</div>
+
+<script src="data.js" defer></script>
+<script type="module" src="home.js"></script>
+</body>
+</html>

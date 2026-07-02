@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Bracket — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">🏆 Tournament Bracket</div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchBracketTab('view', this)">🎮 Bracket</button>
+    <button class="tab-btn" onclick="switchBracketTab('setup', this)">⚙️ Setup</button>
+  </div>
+
+  <!-- BRACKET VIEW -->
+  <div id="tab-view">
+    <p style="font-size:0.8rem;color:var(--muted);margin-bottom:16px;">
+      Click a duelist's name to advance them to the next round.
+    </p>
+    <div id="bracket-display"></div>
+  </div>
+
+  <!-- SETUP TAB -->
+  <div id="tab-setup" style="display:none;max-width:520px;">
+
+    <div style="margin-bottom:18px;">
+      <div style="font-size:0.78rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">
+        Bracket Size
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;" id="size-btns">
+        <button class="filter-btn" onclick="setBracketSize(4,this)">4</button>
+        <button class="filter-btn sel" onclick="setBracketSize(8,this)">8</button>
+        <button class="filter-btn" onclick="setBracketSize(16,this)">16</button>
+        <button class="filter-btn" onclick="setBracketSize(32,this)">32</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:7px;margin-bottom:12px;">
+      <input class="search-box" id="bp-inp" placeholder="Add duelist name…"
+        onkeydown="if(event.key==='Enter') addBracketPlayer()"/>
+      <button class="btn-gold" style="padding:8px 16px;font-size:0.85rem;" onclick="addBracketPlayer()">Add</button>
+    </div>
+
+    <div style="display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap;">
+      <button class="btn-outline" onclick="importRoster()">📋 Import from Roster</button>
+      <button class="btn-danger" onclick="resetBracket()">🗑 Reset Bracket</button>
+    </div>
+
+    <div id="bp-list" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
+  </div>
+
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="modal-admin">
+  <div class="modal">
+    <h2>🔐 Admin Login</h2>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pw-inp" class="form-ctrl" placeholder="Enter password"
+        onkeydown="if(event.key==='Enter') doAdminLogin()" autocomplete="off"/>
+      <div id="admin-pw-err" class="form-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-admin')">Cancel</button>
+      <button class="btn-gold" onclick="doAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-change-pw">
+  <div class="modal">
+    <h2>🔑 Change Password</h2>
+    <div class="form-group"><label>Current Password</label><input type="password" id="pw-cur" class="form-ctrl"/></div>
+    <div class="form-group"><label>New Password</label><input type="password" id="pw-new" class="form-ctrl"/></div>
+    <div class="form-group"><label>Confirm New Password</label><input type="password" id="pw-conf" class="form-ctrl"/></div>
+    <div id="pw-err" class="form-err"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-change-pw')">Cancel</button>
+      <button class="btn-gold" onclick="doChangePassword()">Save Password</button>
+    </div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="store.js"></script>
+<script type="module" src="nav.js"></script>
+<script src="bracket.js" defer></script>
+</body>
+</html>

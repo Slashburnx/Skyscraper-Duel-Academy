@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Exams — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">📝 Exam Records</div>
+
+  <!-- NEXT EVENT HINT -->
+  <div class="hint-box" style="margin-bottom:28px;">
+    <div class="hint-title">🔮 Next Event Hint</div>
+    <div id="hint-display" class="hint-text"></div>
+    <div id="hint-edit" style="display:none;">
+      <textarea id="hint-ta" class="form-ctrl" rows="3"
+        placeholder="Write a cryptic hint for the next event theme…"
+        style="margin-top:10px;margin-bottom:8px;"></textarea>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn-outline" onclick="cancelHint()">Cancel</button>
+        <button class="btn-gold" onclick="saveHint()">Save Hint</button>
+      </div>
+    </div>
+    <button class="btn-icon admin-only" style="margin-top:10px;" onclick="startHint()">✏️ Edit Hint</button>
+  </div>
+
+  <!-- ADD EXAM BUTTON (admin only) -->
+  <div style="margin-bottom:20px;">
+    <button class="btn-gold admin-only" onclick="openAddExam()">➕ Add New Exam Event</button>
+  </div>
+
+  <!-- EXAM LIST -->
+  <div id="exams-list"></div>
+</div>
+
+<!-- ADD / EDIT EXAM MODAL -->
+<div class="modal-overlay" id="modal-exam">
+  <div class="modal" style="max-width:600px;">
+    <h2 id="modal-exam-title">Add Exam Event</h2>
+    <input type="hidden" id="ex-id"/>
+
+    <div class="form-group">
+      <label>Event Title</label>
+      <input class="form-ctrl" id="ex-title" placeholder="e.g. October Exam — Hero Theme"/>
+    </div>
+    <div class="form-group">
+      <label>Theme</label>
+      <input class="form-ctrl" id="ex-theme" placeholder="e.g. HERO Archetypes"/>
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input class="form-ctrl" type="date" id="ex-date"/>
+    </div>
+    <div class="form-group">
+      <label>Hint for Next Event <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <textarea class="form-ctrl" id="ex-hint" rows="2"
+        placeholder="A cryptic hint about the next event theme…"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Duelist Scores</label>
+      <div style="font-size:0.75rem;color:var(--muted);margin-bottom:10px;">
+        Leave blank for duelists who did not participate.
+      </div>
+      <div id="ex-scores" style="display:flex;flex-direction:column;gap:8px;max-height:360px;overflow-y:auto;"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-exam')">Cancel</button>
+      <button class="btn-gold" onclick="submitExam()">Save Exam</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="modal-admin">
+  <div class="modal">
+    <h2>🔐 Admin Login</h2>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pw-inp" class="form-ctrl" placeholder="Enter password"
+        onkeydown="if(event.key==='Enter') doAdminLogin()" autocomplete="off"/>
+      <div id="admin-pw-err" class="form-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-admin')">Cancel</button>
+      <button class="btn-gold" onclick="doAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-change-pw">
+  <div class="modal">
+    <h2>🔑 Change Password</h2>
+    <div class="form-group"><label>Current Password</label><input type="password" id="pw-cur" class="form-ctrl"/></div>
+    <div class="form-group"><label>New Password</label><input type="password" id="pw-new" class="form-ctrl"/></div>
+    <div class="form-group"><label>Confirm New Password</label><input type="password" id="pw-conf" class="form-ctrl"/></div>
+    <div id="pw-err" class="form-err"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-change-pw')">Cancel</button>
+      <button class="btn-gold" onclick="doChangePassword()">Save Password</button>
+    </div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="store.js"></script>
+<script type="module" src="nav.js"></script>
+<script src="exams.js" defer></script>
+</body>
+</html>

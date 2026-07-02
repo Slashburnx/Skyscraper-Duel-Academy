@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Decklists — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">📋 Decklists</div>
+
+  <div class="filters">
+    <input class="search-box" id="dl-search" placeholder="🔍 Search duelist…" oninput="renderDecklists()"/>
+    <button class="filter-btn sel" onclick="setDlFilter('all', this)">All</button>
+    <button class="filter-btn" onclick="setDlFilter('obelisk', this)">❄️ Obelisk</button>
+    <button class="filter-btn" onclick="setDlFilter('ra', this)">⚜️ Ra</button>
+    <button class="filter-btn" onclick="setDlFilter('slifer', this)">🏮 Slifer</button>
+    <select id="dl-sort" class="filter-btn" onchange="renderDecklists()" style="cursor:pointer;">
+      <option value="dp">Sort: DP ↓</option>
+      <option value="name">Sort: Name A–Z</option>
+    </select>
+    <span class="count-tag" id="dl-count"></span>
+  </div>
+
+  <div class="grid-3" id="dl-grid"></div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="modal-admin">
+  <div class="modal">
+    <h2>🔐 Admin Login</h2>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pw-inp" class="form-ctrl" placeholder="Enter password"
+        onkeydown="if(event.key==='Enter') doAdminLogin()" autocomplete="off"/>
+      <div id="admin-pw-err" class="form-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-admin')">Cancel</button>
+      <button class="btn-gold" onclick="doAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-change-pw">
+  <div class="modal">
+    <h2>🔑 Change Password</h2>
+    <div class="form-group"><label>Current Password</label><input type="password" id="pw-cur" class="form-ctrl"/></div>
+    <div class="form-group"><label>New Password</label><input type="password" id="pw-new" class="form-ctrl"/></div>
+    <div class="form-group"><label>Confirm New Password</label><input type="password" id="pw-conf" class="form-ctrl"/></div>
+    <div id="pw-err" class="form-err"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-change-pw')">Cancel</button>
+      <button class="btn-gold" onclick="doChangePassword()">Save Password</button>
+    </div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="store.js"></script>
+<script type="module" src="nav.js"></script>
+<script src="decklists.js" defer></script>
+</body>
+</html>

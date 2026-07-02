@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Archetypes — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">📚 Archetype Database</div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('table',this)">📋 All Archetypes</button>
+    <button class="tab-btn" onclick="switchTab('rules',this)">📜 Rulings</button>
+  </div>
+
+  <!-- TABLE TAB -->
+  <div id="tab-table">
+
+    <!-- Admin: Add new archetype -->
+    <div style="margin-bottom:14px;">
+      <button class="btn-gold admin-only" onclick="openAddArch()">➕ Add New Archetype</button>
+    </div>
+
+    <div class="filters">
+      <input class="search-box" id="arch-search" placeholder="🔍 Search archetype or owner…"
+        oninput="renderArchTable()"/>
+      <button class="filter-btn sel" onclick="setArchFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setArchFilter('available',this)">Available</button>
+      <button class="filter-btn" onclick="setArchFilter('taken',this)">Taken</button>
+      <button class="filter-btn" onclick="setArchFilter('restricted',this)">Restricted</button>
+      <span class="count-tag" id="arch-count"></span>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Archetype</th>
+            <th>Notes</th>
+            <th>Price (DP)</th>
+            <th>Owner(s)</th>
+            <th>Status</th>
+            <th id="arch-edit-col" style="display:none;">Edit</th>
+          </tr>
+        </thead>
+        <tbody id="arch-tbody">
+          <tr><td colspan="6" style="color:var(--muted);padding:16px;">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RULINGS TAB -->
+  <div id="tab-rules" style="display:none;">
+    <div class="card">
+      <h3 style="font-family:'Cinzel',serif;color:var(--gold);margin-bottom:16px;">Archetype Rulings</h3>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <div style="font-weight:700;color:var(--gold);margin-bottom:4px;">• Archetypal Cards</div>
+          <div style="color:#C0C0D8;font-size:0.88rem;line-height:1.7;">Cards that mention any archetype in their name or effect are archetypal.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--gold);margin-bottom:4px;">• Non-Archetypal Cards</div>
+          <div style="color:#C0C0D8;font-size:0.88rem;line-height:1.7;">Cards that mention no archetype are non-archetypal. Example: Ash Blossom belongs to no archetype.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--gold);margin-bottom:4px;">• Multi-Archetype Cards</div>
+          <div style="color:#C0C0D8;font-size:0.88rem;line-height:1.7;">Cards mentioning 2+ archetypes belong to each one they mention.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--gold);margin-bottom:4px;">• Special Cases</div>
+          <div style="color:#C0C0D8;font-size:0.88rem;line-height:1.7;">Check the Notes column. Inclusions and exclusions listed there override standard rules.</div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--gold);margin-bottom:4px;">• Refund Policy</div>
+          <div style="color:#C0C0D8;font-size:0.88rem;line-height:1.7;">Refund an archetype for half its original DP value. Use a Refund Ticket from the Shop.</div>
+        </div>
+        <div style="background:rgba(200,155,0,0.07);border:1px solid rgba(200,155,0,0.2);border-radius:6px;padding:14px;">
+          <strong style="color:var(--gold);">Maximum 4 archetypes per duelist.</strong><br/>
+          <span style="font-size:0.83rem;color:#C0C0D8;">Each duelist holds up to 4 archetype slots simultaneously.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD NEW ARCHETYPE MODAL -->
+<div class="modal-overlay" id="modal-add-arch">
+  <div class="modal">
+    <h2>➕ Add New Archetype</h2>
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-ctrl" id="na-name" placeholder="Archetype name"/>
+    </div>
+    <div class="form-group">
+      <label>Notes <span style="color:var(--muted);font-weight:400;">(inclusions/exclusions)</span></label>
+      <input class="form-ctrl" id="na-notes" placeholder="e.g. Included: White Dragon"/>
+    </div>
+    <div class="form-group">
+      <label>Price (DP)</label>
+      <input class="form-ctrl" type="number" id="na-price" placeholder="0" min="0"/>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select class="form-ctrl" id="na-status">
+        <option value="">— Normal —</option>
+        <option value="Forbidden">Forbidden</option>
+        <option value="Semi-Limited">Semi-Limited</option>
+        <option value="Trimited">Trimited</option>
+        <option value="Unavailable">Unavailable</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-add-arch')">Cancel</button>
+      <button class="btn-gold" onclick="submitAddArch()">Add Archetype</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js" defer></script>
+<script type="module" src="archetypes.js"></script>
+</body>
+</html>

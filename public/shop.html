@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Shop — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">🛒 Shop</div>
+
+  <!-- BUDGET ARCHETYPES -->
+  <div class="subsection">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:1rem;font-weight:700;">
+        Budget Archetypes
+      </div>
+      <button class="btn-gold admin-only" style="padding:5px 14px;font-size:0.78rem;"
+        onclick="openAddToShop('budget')">➕ Add Archetype</button>
+    </div>
+    <div style="color:var(--muted);font-size:0.78rem;margin-bottom:14px;">500 – 5,000 DP</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Archetype</th>
+            <th>Price (DP)</th>
+            <th>Status</th>
+            <th id="budget-edit-col" style="display:none;">Remove</th>
+          </tr>
+        </thead>
+        <tbody id="shop-budget"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PREMIUM ARCHETYPES -->
+  <div class="subsection">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:1rem;font-weight:700;">
+        Premium Archetypes
+      </div>
+      <button class="btn-gold admin-only" style="padding:5px 14px;font-size:0.78rem;"
+        onclick="openAddToShop('premium')">➕ Add Archetype</button>
+    </div>
+    <div style="color:var(--muted);font-size:0.78rem;margin-bottom:14px;">6,500 – 16,000 DP</div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Archetype</th>
+            <th>Price (DP)</th>
+            <th>Status</th>
+            <th id="premium-edit-col" style="display:none;">Remove</th>
+          </tr>
+        </thead>
+        <tbody id="shop-premium"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TICKETS -->
+  <div class="subsection">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
+      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:1rem;font-weight:700;">
+        🎫 Tickets &amp; Items
+      </div>
+      <button class="btn-gold admin-only" style="padding:5px 14px;font-size:0.78rem;"
+        onclick="openAddTicket()">➕ Add Ticket</button>
+    </div>
+    <div style="color:var(--muted);font-size:0.78rem;margin-bottom:14px;">
+      See the <a href="rules.html" style="color:var(--gold);">Rules page</a> for what each ticket does.
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price / Condition</th>
+            <th>Stock</th>
+            <th id="ticket-edit-col" style="display:none;">Edit</th>
+          </tr>
+        </thead>
+        <tbody id="shop-tickets"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADD ARCHETYPE TO SHOP MODAL -->
+<div class="modal-overlay" id="modal-add-shop">
+  <div class="modal">
+    <h2 id="modal-add-shop-title">Add to Shop</h2>
+    <input type="hidden" id="add-shop-section"/>
+    <div class="form-group">
+      <label>Select Archetype</label>
+      <select class="form-ctrl" id="add-shop-arch"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-add-shop')">Cancel</button>
+      <button class="btn-gold" onclick="submitAddToShop()">Add to Shop</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TICKET MODAL -->
+<div class="modal-overlay" id="modal-add-ticket">
+  <div class="modal">
+    <h2>➕ Add Ticket</h2>
+    <div class="form-group">
+      <label>Ticket Name</label>
+      <select class="form-ctrl" id="tk-name" onchange="prefillTicket(this.value)">
+        <option value="">— Select a ticket type —</option>
+        <option>☘️ Force Trade Ticket</option>
+        <option>☘️ Gambling Ticket</option>
+        <option>☘️ Lucky Discount Ticket</option>
+        <option>☘️ Magnet Ring Ticket</option>
+        <option>☘️ Deck Coffin Ticket</option>
+        <option>☘️ Refund Ticket</option>
+        <option>☘️ Respin Ticket</option>
+        <option>☘️ Dorm Switcher Ticket</option>
+        <option>☘️ Semi Duplicator Ticket</option>
+        <option>☘️ Forbidden Hammer Ticket</option>
+        <option value="custom">✏️ Custom ticket…</option>
+      </select>
+    </div>
+    <div id="tk-custom-group" style="display:none;" class="form-group">
+      <label>Custom Name</label>
+      <input class="form-ctrl" id="tk-custom-name" placeholder="Ticket name"/>
+    </div>
+    <div class="form-group">
+      <label>Price / Condition</label>
+      <input class="form-ctrl" id="tk-price" placeholder="e.g. 3,000 DP or Free"/>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-ctrl" id="tk-desc" rows="3" placeholder="What does this ticket do?"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Stock</label>
+      <input class="form-ctrl" type="number" id="tk-stock" placeholder="0" min="0" value="1"/>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-add-ticket')">Cancel</button>
+      <button class="btn-gold" onclick="submitAddTicket()">Add Ticket</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="modal-admin">
+  <div class="modal">
+    <h2>🔐 Admin Login</h2>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="admin-pw-inp" class="form-ctrl" placeholder="Enter password"
+        onkeydown="if(event.key==='Enter') doAdminLogin()" autocomplete="off"/>
+      <div id="admin-pw-err" class="form-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-admin')">Cancel</button>
+      <button class="btn-gold" onclick="doAdminLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-change-pw">
+  <div class="modal">
+    <h2>🔑 Change Password</h2>
+    <div class="form-group"><label>Current Password</label><input type="password" id="pw-cur" class="form-ctrl"/></div>
+    <div class="form-group"><label>New Password</label><input type="password" id="pw-new" class="form-ctrl"/></div>
+    <div class="form-group"><label>Confirm New Password</label><input type="password" id="pw-conf" class="form-ctrl"/></div>
+    <div id="pw-err" class="form-err"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-change-pw')">Cancel</button>
+      <button class="btn-gold" onclick="doChangePassword()">Save Password</button>
+    </div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="store.js"></script>
+<script type="module" src="nav.js"></script>
+<script src="shop.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Duelists — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">👥 Academy Duelists</div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <input class="search-box" id="dl-search" placeholder="🔍 Search duelist…" oninput="renderDuelists()"/>
+    <button class="filter-btn sel" onclick="setDlFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setDlFilter('obelisk',this)">❄️ Obelisk</button>
+    <button class="filter-btn" onclick="setDlFilter('ra',this)">⚜️ Ra</button>
+    <button class="filter-btn" onclick="setDlFilter('slifer',this)">🏮 Slifer</button>
+    <select id="dl-sort" class="filter-btn" onchange="renderDuelists()" style="cursor:pointer;">
+      <option value="dorm">Sort: By Dorm</option>
+      <option value="dp">Sort: DP ↓</option>
+      <option value="name">Sort: Name A–Z</option>
+    </select>
+    <span class="count-tag" id="dl-count"></span>
+  </div>
+
+  <!-- DUELIST ROOT -->
+  <div id="duelists-root">
+    <div style="color:var(--muted);padding:24px;">Loading duelists…</div>
+  </div>
+
+</div>
+
+<!-- ADD / EDIT DUELIST MODAL -->
+<div class="modal-overlay" id="modal-duelist">
+  <div class="modal" style="max-width:500px;">
+    <h2 id="modal-d-title">Add Duelist</h2>
+    <input type="hidden" id="d-id"/>
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-ctrl" type="text" id="d-name" placeholder="Duelist name"/>
+    </div>
+    <div class="form-group">
+      <label>Dorm</label>
+      <select class="form-ctrl" id="d-dorm">
+        <option value="obelisk">❄️ Obelisk Blue</option>
+        <option value="ra">⚜️ Ra Yellow</option>
+        <option value="slifer" selected>🏮 Slifer Red</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>DP</label>
+      <input class="form-ctrl" type="number" id="d-dp" placeholder="0" min="0"/>
+    </div>
+    <div class="form-group">
+      <label>Titles</label>
+      <div id="d-titles" style="display:flex;flex-wrap:wrap;gap:5px;padding:8px;
+        background:var(--surface2);border:1px solid var(--border);border-radius:6px;min-height:40px;"></div>
+    </div>
+    <div class="form-group">
+      <label>Archetypes (max 4)</label>
+      <div id="d-slots"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-duelist')">Cancel</button>
+      <button class="btn-gold" onclick="submitDuelist()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TICKET TO DUELIST MODAL -->
+<div class="modal-overlay" id="modal-add-ticket-d">
+  <div class="modal">
+    <h2>🎫 Add Ticket to Duelist</h2>
+    <input type="hidden" id="atd-id"/>
+    <div class="form-group">
+      <label>Ticket</label>
+      <select class="form-ctrl" id="atd-ticket"></select>
+    </div>
+    <div style="font-size:0.78rem;color:var(--muted);margin-top:-8px;margin-bottom:12px;"
+      id="atd-stock-info"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('modal-add-ticket-d')">Cancel</button>
+      <button class="btn-gold" onclick="submitAddTicketToDuelist()">Add Ticket</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js" defer></script>
+<script type="module" src="duelists.js"></script>
+</body>
+</html>
