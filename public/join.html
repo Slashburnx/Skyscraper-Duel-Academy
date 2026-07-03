@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Set Up Your Account — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap" style="max-width:440px;margin:0 auto;">
+  <div class="section-title">🎓 Set Up Your Account</div>
+
+  <div id="join-loading" style="color:var(--muted);font-size:0.9rem;">Checking your invite link...</div>
+
+  <div id="join-invalid" class="card" style="display:none;padding:20px;">
+    <p id="join-invalid-msg" style="color:#FF6B6B;font-size:0.9rem;"></p>
+    <p style="color:var(--muted);font-size:0.82rem;margin-top:10px;">
+      Ask the academy admin to send you a new invite link.
+    </p>
+  </div>
+
+  <div id="join-form-wrap" class="card" style="display:none;padding:20px;">
+    <p style="color:var(--gold);font-weight:700;margin-bottom:16px;" id="join-welcome"></p>
+
+    <div class="form-group">
+      <label>Choose a username</label>
+      <input id="join-username" class="form-ctrl" type="text" placeholder="3-20 characters, letters/numbers/underscore" autocomplete="username"/>
+    </div>
+
+    <div class="form-group">
+      <label>Choose a password</label>
+      <input id="join-password" class="form-ctrl" type="password" placeholder="At least 6 characters" autocomplete="new-password"/>
+    </div>
+
+    <div class="form-group">
+      <label>Confirm password</label>
+      <input id="join-password2" class="form-ctrl" type="password" placeholder="Type it again" autocomplete="new-password"/>
+    </div>
+
+    <p id="join-err" class="form-err"></p>
+
+    <button class="btn-gold" style="width:100%;" onclick="submitJoin()">Create My Account</button>
+  </div>
+
+  <div id="join-success" class="card" style="display:none;padding:20px;">
+    <p style="color:var(--gold);font-weight:700;">✅ Account created!</p>
+    <p style="color:var(--muted);font-size:0.85rem;margin-top:8px;">
+      You're logged in as <span id="join-success-name" style="color:var(--gold);"></span>.
+    </p>
+    <a href="index.html" class="btn-gold" style="display:inline-block;margin-top:14px;text-decoration:none;">Go to Home Page</a>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="store.js"></script>
+<script type="module" src="nav.js"></script>
+<script src="join.js" defer></script>
+</body>
+</html>

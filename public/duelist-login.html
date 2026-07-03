@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Duelist Login — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap" style="max-width:400px;margin:0 auto;">
+  <div class="section-title">🔑 Duelist Login</div>
+
+  <div id="login-logged-in" class="card" style="display:none;padding:20px;">
+    <p style="color:var(--gold);font-weight:700;">You're already logged in as <span id="login-current-name"></span>.</p>
+    <a href="index.html" class="btn-gold" style="display:inline-block;margin-top:14px;text-decoration:none;">Go to Home Page</a>
+    <button class="btn-icon" style="margin-top:10px;" onclick="doDuelistLogout()">Log out</button>
+  </div>
+
+  <div id="login-form-wrap" class="card" style="padding:20px;">
+    <div class="form-group">
+      <label>Username</label>
+      <input id="login-username" class="form-ctrl" type="text" autocomplete="username"/>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input id="login-password" class="form-ctrl" type="password" autocomplete="current-password"/>
+    </div>
+    <p id="login-err" class="form-err"></p>
+    <button class="btn-gold" style="width:100%;" onclick="submitDuelistLogin()">Log In</button>
+    <p style="color:var(--muted);font-size:0.78rem;margin-top:14px;">
+      Don't have an account yet? Ask the academy admin for your invite link.
+    </p>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="nav.js"></script>
+<script src="duelist-login.js" defer></script>
+</body>
+</html>

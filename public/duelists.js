@@ -165,6 +165,11 @@ function buildCard(d, admin) {
           onclick="grantDP('${d.id}')">💰 Grant DP</button>` : ''}
         ${admin && (d.titles||[]).includes('Dorm Leader') ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;color:var(--sl);"
           onclick="kickMember('${d.id}')">👢 Kick Member</button>` : ''}
+        ${admin ? (d.accountActive
+          ? `<span style="font-size:0.68rem;color:#4CAF7D;">✅ Account Active</span>`
+          : `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;"
+              onclick="generateInvite('${d.id}')">🔗 Generate Invite</button>`
+        ) : ''}
       </div>
       ${titleHtml ? `<div style="margin-bottom:7px;">${titleHtml}</div>` : ''}
       <div style="margin-bottom:10px;">${archHtml}</div>
@@ -374,6 +379,33 @@ window.deleteDuelist = async function(id) {
   if (!confirm('Remove this duelist?')) return;
   await fbRemove(PATHS.duelists + '/' + id);
   notify('Duelist removed');
+};
+
+// ── Generate an account-setup invite link for a duelist ─────
+window.generateInvite = async function(id) {
+  const d = duelists.find(x => x.id === id);
+  if (!d) return;
+
+  const res = await fetch(`/api/admin/duelists/${id}/invite`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+  const data = await res.json();
+
+  if (!data.success) {
+    notify('⚠️ Could not generate invite link');
+    return;
+  }
+
+  const link = `${window.location.origin}/join.html?token=${data.inviteToken}`;
+
+  try {
+    await navigator.clipboard.writeText(link);
+    notify(`🔗 Invite link for ${d.name} copied to clipboard! Valid for 7 days.`);
+  } catch {
+    // Clipboard access can fail (permissions, non-HTTPS, etc.) — fall back to showing it.
+    prompt(`Copy this invite link and send it to ${d.name} (valid for 7 days):`, link);
+  }
 };
 
 // ── Grant DP (Gambler role auto-doubles the amount) ─────────

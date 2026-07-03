@@ -1,8 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const Admin = require('../models/Admin');
 const requireAdmin = require('../middleware/auth');
+const { getAtPath, setAtPath, loadTree } = require('../utils/tree');
 
 const router = express.Router();
 
@@ -45,8 +47,8 @@ router.get('/check', (req, res) => {
   const token = req.cookies.adminToken;
   if (!token) return res.json({ isAdmin: false });
   try {
-    jwt.verify(token, process.env.JWT_SECRET);
-    res.json({ isAdmin: true });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.json({ isAdmin: decoded.role === 'admin' });
   } catch {
     res.json({ isAdmin: false });
   }
@@ -68,6 +70,31 @@ router.post('/change-password', requireAdmin, async (req, res) => {
   admin.passwordHash = await bcrypt.hash(newPassword, 10);
   await admin.save();
   res.json({ success: true });
+});
+
+// POST /api/admin/duelists/:id/invite — generate a one-time account-setup link for a duelist.
+router.post('/duelists/:id/invite', requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  const doc = await loadTree();
+  const duelist = getAtPath(doc.data, ['duelists', id]);
+
+  if (!duelist) {
+    return res.status(404).json({ success: false, message: 'Duelist not found.' });
+  }
+
+  const inviteToken = crypto.randomBytes(24).toString('hex');
+  const inviteExpiresAt = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days
+
+  doc.data = setAtPath(doc.data, ['duelists', id], {
+    ...duelist,
+    inviteToken,
+    inviteExpiresAt,
+    accountActive: duelist.accountActive || false,
+  });
+  doc.markModified('data');
+  await doc.save();
+
+  res.json({ success: true, inviteToken, expiresAt: inviteExpiresAt });
 });
 
 module.exports = router;

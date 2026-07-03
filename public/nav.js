@@ -16,6 +16,7 @@ const NAV_PAGES = [
   ['wheel.html',      '🎡 Wheel'],
   ['bracket.html',    '🏆 Bracket'],
   ['rules.html',      '📖 Rules'],
+  ['duelist-login.html', '🔑 My Account'],
 ];
 
 // ── Build and inject nav ───────────────────────────────────
