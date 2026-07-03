@@ -25,10 +25,33 @@ const DORM_ICON  = { obelisk:'❄️',          ra:'⚜️',        slifer:'🏮
 const DORM_NAME  = { obelisk:'Obelisk Blue', ra:'Ra Yellow', slifer:'Slifer Red' };
 const DORM_COLOR = { obelisk:'#1B4FD8',      ra:'#D4A800',   slifer:'#CC1A1A' };
 
-const TITLE_LIST = ['Dorm Leader','Mod','King of Games','Queen of Games','Top Scorer','Dropout Boy','Dropout Girl'];
+const TITLE_LIST = [
+  'Skyscraper Champion','King of Games','Queen of Games','Legendary Duelist','Dorm Leader',
+  'GOAT Champion','Genesys Champion','Forbidden Master','The Great One',
+  'Top Scorer','Gambler','Null Sovereign','Dropout Boy','Dropout Girl',
+];
 const TITLE_ICON = {
-  'Dorm Leader':'🏛️','Mod':'⚙️','King of Games':'👑',
-  'Queen of Games':'👑','Top Scorer':'🎯','Dropout Boy':'💀','Dropout Girl':'💀',
+  'Skyscraper Champion':'🌟','King of Games':'👑','Queen of Games':'👑','Legendary Duelist':'⚔️','Dorm Leader':'🏛️',
+  'GOAT Champion':'🐐','Genesys Champion':'🧬','Forbidden Master':'🚫','The Great One':'🎴',
+  'Top Scorer':'🎯','Gambler':'🎰','Null Sovereign':'🌀','Dropout Boy':'💀','Dropout Girl':'💀',
+};
+// Shown as a tooltip on each role chip/checkbox so admins can see what a role
+// actually does without leaving the page.
+const TITLE_BENEFITS = {
+  'Skyscraper Champion': '+1 Deck Slot · Immune to Force Trade · Double Starter Allowance · 1 Forbidden Hammer Ticket after every KOG Tournament',
+  'King of Games':        '+1 Deck Slot · May activate Magnet Ring once a month (awarded to the King of Games Tournament champion)',
+  'Queen of Games':       '+1 Deck Slot · May activate Magnet Ring once a month (personal badge for a King of Games Tournament champion — the tournament itself keeps its official name)',
+  'Legendary Duelist':    '+1 Deck Slot (awarded for #1 on the Ranked Duels leaderboard)',
+  'Dorm Leader':          'May kick 1 dorm member per month · May lend a deck to a memberless dorm-mate',
+  'GOAT Champion':        'No additional effects (title only)',
+  'Genesys Champion':     'No additional effects (title only)',
+  'Forbidden Master':     'May include 2 different Forbidden Cards in future Banned Card Tournaments',
+  'The Great One':        'No additional effects (title only)',
+  'Top Scorer':           'No additional effects (awarded for 1st place in an exam)',
+  'Gambler':              'DP received from any effect is automatically doubled',
+  'Null Sovereign':       'May include 1 Forbidden Card during eligible tournaments',
+  'Dropout Boy':          'No gameplay effect — awarded for the lowest exam score',
+  'Dropout Girl':         'No gameplay effect — awarded for the lowest exam score',
 };
 
 const EXAM_TYPES = ['Writing','Dueling Opponent','Dueling Mod'];
@@ -50,16 +73,21 @@ Exams are held once a month or every two months depending on the mod. Check the 
 Good luck and happy dueling! ⚡`;
 
 const INITIAL_TICKETS = [
-  { name:'☘️ Force Trade Ticket',      price:'',                             desc:'Force your opponent to trade archetypes with you. You choose the two archetypes to be traded.',                    stock:0 },
-  { name:'☘️ Gambling Ticket',         price:'3,000 DP or sacrifice 1 deck', desc:'Receive rewards or consequences at random.',                                                                        stock:8 },
-  { name:'☘️ Lucky Discount Ticket',   price:'3,000 DP or sacrifice 1 deck', desc:'Receive a random discount ticket (10%, 25%, 50%, or 100%).',                                                       stock:8 },
-  { name:'☘️ Magnet Ring Ticket',      price:'',                             desc:'Steal a random amount of DP from a random person who is in a different dorm from yours.',                          stock:0 },
-  { name:'☘️ Deck Coffin Ticket',      price:'Sacrifice 1 deck',             desc:'Sacrifice your deck and receive a new one based on the value of the deck you sacrificed.',                         stock:7 },
-  { name:'☘️ Refund Ticket',           price:'Free',                         desc:'Refund your deck and receive half of its value in return.',                                                        stock:6 },
-  { name:'☘️ Respin Ticket',           price:'3,000 DP or sacrifice 1 deck', desc:'Spin the wheel again. The result of your previous spin may be replaced by the new result.',                       stock:3 },
-  { name:'☘️ Dorm Switcher Ticket',    price:'',                             desc:'Target two people (including yourself, if desired) from different dorms and swap their dorms.',                    stock:0 },
-  { name:'☘️ Semi Duplicator Ticket',  price:'',                             desc:'Target one archetype from the archetype list. That archetype can then be used by two people instead of one.',     stock:0 },
-  { name:'☘️ Forbidden Hammer Ticket', price:'',                             desc:'Target one archetype from the archetype list. That archetype becomes banned and cannot be used by anyone.',        stock:0 },
+  { name:'☘️ Force Trade Ticket',       price:'30,000 DP (rare)',             desc:'Force another duelist to trade archetypes with you — you choose one of yours and one of theirs.', stock:1 },
+  { name:'☘️ Gambling Ticket',          price:'3,000 DP or sacrifice 1 archetype', desc:'Activate a random gamble — may reward valuable prizes or inflict penalties, entirely by chance.', stock:8 },
+  { name:'☘️ Lucky Discount Ticket',    price:'Sacrifice 1 archetype',         desc:'Receive a random Shop discount: 10%, 25%, 50%, or 100% off.', stock:8 },
+  { name:'☘️ Magnet Ring Ticket',       price:'Not sold in Shop',              desc:'Steal a random amount of DP from a randomly selected duelist in a different dorm.', stock:0 },
+  { name:'☘️ Deck Coffin Ticket',       price:'Not sold in Shop',              desc:'Permanently sacrifice one deck and receive a replacement based on its value.', stock:0 },
+  { name:'☘️ Refund Ticket',            price:'Free (auto-activates)',         desc:'Return one of your decks and receive 50% of its total DP value back.', stock:6 },
+  { name:'☘️ Respin Ticket',            price:'3,000 DP',                      desc:'Spin an eligible wheel one more time — the new result replaces your previous one.', stock:3 },
+  { name:'☘️ Dorm Switcher Ticket',     price:'Not sold in Shop',              desc:'Select two duelists from different dorms (may include yourself) — they swap dorm assignments.', stock:0 },
+  { name:'☘️ Semi Duplicator Ticket',   price:'Not sold in Shop',              desc:'Choose one archetype — its ownership limit increases from 1 owner to 2.', stock:0 },
+  { name:'☘️ Forbidden Hammer Ticket',  price:'Not sold in Shop',              desc:'Choose one archetype — it becomes Forbidden and unusable by anyone.', stock:0 },
+  { name:'☘️ Star Multiplier Ticket',   price:'6,000 DP or sacrifice 1 deck',  desc:'Doubles the reward from an eligible reward wheel or dice roll during a Luck Event.', stock:4 },
+  { name:'☘️ Triplet Generator Ticket', price:'Not sold in Shop',              desc:'Choose one archetype — its ownership limit increases from 1 owner to 3.', stock:0 },
+  { name:'☘️ Gambling Ticket V2',       price:'Sacrifice 1 deck',              desc:'Wager DP against two other duelists on a die roll — sole correct guesser wins the pool.', stock:2 },
+  { name:'☘️ Status Removal Ticket',    price:'Not sold in Shop',              desc:'Choose one Forbidden, Semi-Duplicated, or Triplicated archetype and remove its status.', stock:0 },
+  { name:'☘️ Bracket Switcher Ticket',  price:'Not sold in Shop',              desc:'Choose two tournament bracket participants (may include yourself) — they swap positions.', stock:0 },
 ];
 
 const INITIAL_RULES = [

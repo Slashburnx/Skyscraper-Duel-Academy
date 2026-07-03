@@ -121,7 +121,7 @@ function buildCard(d, admin) {
   const c = DORM_COLOR[d.dorm];
 
   const titleHtml = (d.titles||[])
-    .map(t => `<span class="title-chip t-${t.replace(/\s+/g,'-')}">${TITLE_ICON[t]||''} ${t}</span>`)
+    .map(t => `<span class="title-chip t-${t.replace(/\s+/g,'-')}" title="${(TITLE_BENEFITS[t]||'').replace(/"/g,'&quot;')}">${TITLE_ICON[t]||''} ${t}</span>`)
     .join('');
 
   const slots = ['','','',''];
@@ -156,11 +156,15 @@ function buildCard(d, admin) {
       <div style="font-size:0.68rem;color:${c};font-weight:700;letter-spacing:0.5px;margin-bottom:3px;">
         ${DORM_ICON[d.dorm]} ${DORM_NAME[d.dorm]}
       </div>
-      <div style="font-size:0.82rem;color:var(--gold);font-weight:700;margin-bottom:6px;">
+      <div style="font-size:0.82rem;color:var(--gold);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         💰 ${d.dp.toLocaleString()} DP
         <span style="color:var(--muted);font-weight:400;font-size:0.72rem;">
           &nbsp;·&nbsp; ${(d.archs||[]).length}/4 slots
         </span>
+        ${admin ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;"
+          onclick="grantDP('${d.id}')">💰 Grant DP</button>` : ''}
+        ${admin && (d.titles||[]).includes('Dorm Leader') ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;color:var(--sl);"
+          onclick="kickMember('${d.id}')">👢 Kick Member</button>` : ''}
       </div>
       ${titleHtml ? `<div style="margin-bottom:7px;">${titleHtml}</div>` : ''}
       <div style="margin-bottom:10px;">${archHtml}</div>
@@ -256,7 +260,8 @@ window.removeTicketFromDuelist = async function(duelistId, ticketIdx) {
 function buildTitleChecks(current) {
   document.getElementById('d-titles').innerHTML = TITLE_LIST.map(t => `
     <label style="display:flex;align-items:center;gap:5px;font-size:0.78rem;cursor:pointer;
-                  padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);">
+                  padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:var(--surface);"
+           title="${(TITLE_BENEFITS[t]||'').replace(/"/g,'&quot;')}">
       <input type="checkbox" value="${t}" ${(current||[]).includes(t) ? 'checked' : ''}/>
       ${TITLE_ICON[t]||''} ${t}
     </label>`).join('');
@@ -369,6 +374,80 @@ window.deleteDuelist = async function(id) {
   if (!confirm('Remove this duelist?')) return;
   await fbRemove(PATHS.duelists + '/' + id);
   notify('Duelist removed');
+};
+
+// ── Grant DP (Gambler role auto-doubles the amount) ─────────
+window.grantDP = async function(id) {
+  const d = duelists.find(x => x.id === id);
+  if (!d) return;
+
+  const input = prompt(`Grant DP to ${d.name}\nEnter the base amount:`);
+  if (input === null) return;
+  const amount = parseInt(input, 10);
+  if (!amount || amount <= 0) { notify('⚠️ Enter a valid amount'); return; }
+
+  const isGambler   = (d.titles||[]).includes('Gambler');
+  const finalAmount = isGambler ? amount * 2 : amount;
+  const newDp       = (d.dp||0) + finalAmount;
+
+  await fbSet(PATHS.duelists + '/' + id, { ...d, dp: newDp });
+
+  notify(isGambler
+    ? `🎰 ${d.name} is a Gambler — ${amount.toLocaleString()} DP doubled to ${finalAmount.toLocaleString()}! New total: ${newDp.toLocaleString()}`
+    : `✅ Granted ${finalAmount.toLocaleString()} DP to ${d.name}. New total: ${newDp.toLocaleString()}`);
+};
+
+// ── Dorm Leader: kick a member (once per month) ──────────────
+const KICK_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+window.kickMember = async function(leaderId) {
+  const leader = duelists.find(x => x.id === leaderId);
+  if (!leader) return;
+  if (!(leader.titles||[]).includes('Dorm Leader')) {
+    notify('⚠️ Only a Dorm Leader can do this');
+    return;
+  }
+
+  const sinceLastKick = Date.now() - (leader.lastKickAt || 0);
+  if (sinceLastKick < KICK_COOLDOWN_MS) {
+    const daysLeft = Math.ceil((KICK_COOLDOWN_MS - sinceLastKick) / (24*60*60*1000));
+    notify(`⚠️ ${leader.name} already used this month's kick. ${daysLeft} day(s) left.`);
+    return;
+  }
+
+  const sameDorm = duelists.filter(d => d.dorm === leader.dorm && d.id !== leader.id);
+  if (!sameDorm.length) { notify('⚠️ No other members in this dorm'); return; }
+
+  const names  = sameDorm.map((d,i) => `${i+1}. ${d.name}`).join('\n');
+  const choice = prompt(`${leader.name} (Dorm Leader) is kicking a member.\nEnter a number:\n${names}`);
+  if (choice === null) return;
+  const target = sameDorm[parseInt(choice, 10) - 1];
+  if (!target) { notify('⚠️ Invalid selection'); return; }
+
+  if (!confirm(`Kick ${target.name} from the dorm?\nThey lose 10,000 DP, 1 archetype, and move to a random different dorm.`)) return;
+
+  // Remove one archetype — ask which, if they have more than one.
+  let removedArch = null;
+  let remainingArchs = [...(target.archs||[])];
+  if (remainingArchs.length === 1) {
+    removedArch = remainingArchs[0];
+    remainingArchs = [];
+  } else if (remainingArchs.length > 1) {
+    const archList   = remainingArchs.map((a,i) => `${i+1}. ${a}`).join('\n');
+    const archChoice = prompt(`Which archetype should ${target.name} lose?\n${archList}`);
+    const idx = parseInt(archChoice, 10) - 1;
+    removedArch = remainingArchs[idx] ?? remainingArchs[0];
+    remainingArchs = remainingArchs.filter(a => a !== removedArch);
+  }
+
+  const otherDorms = ['obelisk','ra','slifer'].filter(dm => dm !== target.dorm);
+  const newDorm     = otherDorms[Math.floor(Math.random() * otherDorms.length)];
+  const newDp       = Math.max(0, (target.dp||0) - 10000);
+
+  await fbSet(PATHS.duelists + '/' + target.id, { ...target, dp: newDp, archs: remainingArchs, dorm: newDorm });
+  await fbSet(PATHS.duelists + '/' + leader.id, { ...leader, lastKickAt: Date.now() });
+
+  notify(`👢 ${target.name} kicked: -10,000 DP${removedArch ? ', lost ' + removedArch : ''}, moved to ${DORM_NAME[newDorm]}.`);
 };
 
 // ── Admin change ───────────────────────────────────────────
