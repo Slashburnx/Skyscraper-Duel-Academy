@@ -153,4 +153,25 @@ router.get('/check', async (req, res) => {
   }
 });
 
+// PUT /api/duelist-auth/me/avatar  { url } — a duelist sets their OWN profile picture.
+// Scoped narrowly on purpose: this is the only field a duelist can write directly,
+// everything else (DP, archetypes, dorm, etc.) still goes through admin or the
+// request/approval system.
+router.put('/me/avatar', requireDuelist, async (req, res) => {
+  const { url } = req.body;
+  if (!url || typeof url !== 'string' || !url.startsWith('https://')) {
+    return res.status(400).json({ success: false, message: 'Invalid image URL.' });
+  }
+
+  const doc = await loadTree();
+  const duelist = getAtPath(doc.data, ['duelists', req.duelistId]);
+  if (!duelist) return res.status(404).json({ success: false, message: 'Duelist not found.' });
+
+  doc.data = setAtPath(doc.data, ['duelists', req.duelistId], { ...duelist, profilePicUrl: url });
+  doc.markModified('data');
+  await doc.save();
+
+  res.json({ success: true, profilePicUrl: url });
+});
+
 module.exports = router;

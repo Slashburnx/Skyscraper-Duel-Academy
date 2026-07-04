@@ -18,6 +18,7 @@ const NAV_PAGES = [
   ['rules.html',      '📖 Rules'],
   ['requests.html',   '📋 Requests'],
   ['chat.html',       '💬 Chat'],
+  ['profile.html',    '🎓 My Profile'],
   ['duelist-login.html', '🔑 My Account'],
 ];
 
