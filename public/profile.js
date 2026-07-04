@@ -6,7 +6,7 @@
 // Only the cloud name + an UNSIGNED upload preset are needed here — never put
 // your Cloudinary API secret in front-end code.
 const CLOUDINARY_CLOUD_NAME    = 'dbrsxel6l';
-const CLOUDINARY_UPLOAD_PRESET = 'l418vvuzT';
+const CLOUDINARY_UPLOAD_PRESET = 'skycraper-duel-academy';
 
 injectNav('profile.html');
 
