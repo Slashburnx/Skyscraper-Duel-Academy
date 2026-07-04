@@ -16,6 +16,7 @@ const NAV_PAGES = [
   ['wheel.html',      '🎡 Wheel'],
   ['bracket.html',    '🏆 Bracket'],
   ['rules.html',      '📖 Rules'],
+  ['requests.html',   '📋 Requests'],
   ['duelist-login.html', '🔑 My Account'],
 ];
 

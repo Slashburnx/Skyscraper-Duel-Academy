@@ -11,10 +11,23 @@ let duelists   = [];
 let archetypes = [];
 let tickets    = [];
 let dlFilter   = 'all';
+let myDuelistId = null; // set if a duelist (not admin) is logged into their own account
 
 // ── Init ──────────────────────────────────────────────────
 injectNav('duelists.html');
 injectModals();
+loadMySession();
+
+async function loadMySession() {
+  try {
+    const res  = await fetch('/api/duelist-auth/check', { credentials: 'include' });
+    const data = await res.json();
+    if (data.loggedIn) {
+      myDuelistId = data.duelistId;
+      renderDuelists();
+    }
+  } catch (err) { /* not logged in as a duelist, that's fine */ }
+}
 
 // ── Firebase listeners ─────────────────────────────────────
 fbListen(PATHS.duelists, val => {
@@ -170,6 +183,8 @@ function buildCard(d, admin) {
           : `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;"
               onclick="generateInvite('${d.id}')">🔗 Generate Invite</button>`
         ) : ''}
+        ${!admin && myDuelistId === d.id && (d.titles||[]).includes('Dorm Leader') ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;color:var(--sl);"
+          onclick="requestKick('${d.id}')">👢 Request Kick</button>` : ''}
       </div>
       ${titleHtml ? `<div style="margin-bottom:7px;">${titleHtml}</div>` : ''}
       <div style="margin-bottom:10px;">${archHtml}</div>
@@ -379,6 +394,46 @@ window.deleteDuelist = async function(id) {
   if (!confirm('Remove this duelist?')) return;
   await fbRemove(PATHS.duelists + '/' + id);
   notify('Duelist removed');
+};
+
+// ── Dorm Leader (logged in as themselves): request a kick ──
+window.requestKick = async function(leaderId) {
+  const leader = duelists.find(x => x.id === leaderId);
+  if (!leader) return;
+
+  const sameDorm = duelists.filter(d => d.dorm === leader.dorm && d.id !== leader.id);
+  if (!sameDorm.length) { notify('⚠️ No other members in your dorm'); return; }
+
+  const names  = sameDorm.map((d,i) => `${i+1}. ${d.name}`).join('\n');
+  const choice = prompt(`Request to kick a member of your dorm.\nEnter a number:\n${names}`);
+  if (choice === null) return;
+  const target = sameDorm[parseInt(choice, 10) - 1];
+  if (!target) { notify('⚠️ Invalid selection'); return; }
+
+  let archToRemove = null;
+  const targetArchs = target.archs || [];
+  if (targetArchs.length > 1) {
+    const archChoice = prompt(`Which of ${target.name}'s archetypes should be removed if approved?\n${targetArchs.map((a,i)=>`${i+1}. ${a}`).join('\n')}`);
+    const idx = parseInt(archChoice, 10) - 1;
+    archToRemove = targetArchs[idx];
+    if (!archToRemove) { notify('⚠️ Invalid selection'); return; }
+  }
+
+  if (!confirm(`Send a kick request for ${target.name} to the admin for approval?`)) return;
+
+  const res  = await fetch('/api/requests/kick-member', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ targetId: target.id, archToRemove }),
+  });
+  const data = await res.json();
+
+  if (!data.success) {
+    notify(`⚠️ ${data.message || 'Could not submit request'}`);
+    return;
+  }
+  notify(`✅ Kick request for ${target.name} sent to the admin for approval.`);
 };
 
 // ── Generate an account-setup invite link for a duelist ─────

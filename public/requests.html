@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Requests — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">📋 Requests</div>
+
+  <div id="req-signed-out" class="card" style="display:none;padding:20px;">
+    <p style="color:var(--muted);font-size:0.9rem;">
+      Log in as admin or as a duelist to view requests.
+    </p>
+  </div>
+
+  <div id="req-admin-section" style="display:none;">
+    <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;">⏳ Pending Approval</h3>
+    <div id="req-admin-pending" style="margin-bottom:26px;"></div>
+
+    <h3 style="color:var(--muted);font-family:'Cinzel',serif;margin-bottom:10px;font-size:0.95rem;">Resolved History</h3>
+    <div id="req-admin-history"></div>
+  </div>
+
+  <div id="req-mine-section" style="display:none;">
+    <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;">📨 My Requests</h3>
+    <div id="req-mine-list"></div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="nav.js"></script>
+<script src="requests.js" defer></script>
+</body>
+</html>
