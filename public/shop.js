@@ -8,6 +8,8 @@
 // now come from store.js (backed by the Node.js API), loaded before this file.
 
 // ── Build one archetype row ────────────────────────────────
+let myDuelistId = null; // set if a duelist (not admin) is logged into their own account
+
 function buildArchRow(name, section) {
   const archs    = getArchetypes();
   const duelists = getDuelists();
@@ -17,6 +19,7 @@ function buildArchRow(name, section) {
   const taken    = owners.length > 0;
   const unavail  = a.status === 'Unavailable';
   const forbidden = a.status === 'Forbidden';
+  const available = !unavail && !forbidden && !taken;
 
   let statusBadge;
   if (unavail)        statusBadge = '<span class="badge b-grey">Unavailable</span>';
@@ -28,6 +31,11 @@ function buildArchRow(name, section) {
     ? '<span style="color:var(--muted);">—</span>'
     : `<span style="color:var(--gold);font-weight:600;">${a.price > 0 ? a.price.toLocaleString() + ' DP' : '—'}</span>`;
 
+  const buyButton = (!admin && myDuelistId && available)
+    ? `<button class="btn-icon" style="font-size:0.72rem;padding:3px 9px;"
+        onclick="requestPurchase('${name.replace(/'/g,"\\'")}')">🛒 Request to Buy</button>`
+    : '';
+
   return `
     <tr>
       <td style="font-weight:600;">${name}</td>
@@ -38,6 +46,7 @@ function buildArchRow(name, section) {
           <button class="btn-icon" style="color:var(--sl);"
             onclick="removeFromShop('${name.replace(/'/g,"\\'")}','${section}')">✕ Remove</button>
         </td>` : ''}
+      ${!admin && myDuelistId ? `<td>${buyButton}</td>` : ''}
     </tr>`;
 }
 
@@ -46,7 +55,9 @@ function renderBudget() {
   const admin  = isAdminLoggedIn();
   const budget = getShopBudget();
   const ecol   = document.getElementById('budget-edit-col');
+  const bcol   = document.getElementById('budget-buy-col');
   if (ecol) ecol.style.display = admin ? '' : 'none';
+  if (bcol) bcol.style.display = (!admin && myDuelistId) ? '' : 'none';
 
   document.getElementById('shop-budget').innerHTML = budget.length
     ? budget.map(n => buildArchRow(n, 'budget')).join('')
@@ -60,7 +71,9 @@ function renderPremium() {
   const admin   = isAdminLoggedIn();
   const premium = getShopPremium();
   const ecol    = document.getElementById('premium-edit-col');
+  const bcol    = document.getElementById('premium-buy-col');
   if (ecol) ecol.style.display = admin ? '' : 'none';
+  if (bcol) bcol.style.display = (!admin && myDuelistId) ? '' : 'none';
 
   document.getElementById('shop-premium').innerHTML = premium.length
     ? premium.map(n => buildArchRow(n, 'premium')).join('')
@@ -202,6 +215,41 @@ function onAdminChange() { renderShop(); }
 
 injectNav('shop.html');
 renderShop();
+loadMySession();
+
+async function loadMySession() {
+  try {
+    const res  = await fetch('/api/duelist-auth/check', { credentials: 'include' });
+    const data = await res.json();
+    if (data.loggedIn) {
+      myDuelistId = data.duelistId;
+      renderShop();
+    }
+  } catch (err) { /* not logged in as a duelist, that's fine */ }
+}
+
+// ── Duelist: request to buy a shop item ─────────────────────
+window.requestPurchase = async function(itemName) {
+  const archs = getArchetypes();
+  const a     = archs.find(x => x.name === itemName);
+  const price = a ? a.price : 0;
+
+  if (!confirm(`Request to buy ${itemName} for ${price.toLocaleString()} DP?\nThis needs admin approval before it takes effect.`)) return;
+
+  const res  = await fetch('/api/requests/shop-purchase', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ itemName }),
+  });
+  const data = await res.json();
+
+  if (!data.success) {
+    notify(`⚠️ ${data.message || 'Could not submit request'}`);
+    return;
+  }
+  notify(`✅ Purchase request for ${itemName} sent to the admin for approval.`);
+};
 
 // ── Prefill ticket modal when selecting a known ticket type ─
 const TICKET_DEFAULTS = {

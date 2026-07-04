@@ -76,6 +76,75 @@ router.post('/kick-member', requireDuelist, async (req, res) => {
   res.json({ success: true, request });
 });
 
+// ═══════════════════════════════════════════════════════════
+// POST /api/requests/shop-purchase — a duelist requests to buy
+// an archetype currently listed in the shop. Nothing happens
+// to their DP/archetypes until an admin approves it.
+// ═══════════════════════════════════════════════════════════
+router.post('/shop-purchase', requireDuelist, async (req, res) => {
+  const { itemName } = req.body;
+  if (!itemName) return res.status(400).json({ success: false, message: 'No item specified.' });
+
+  const doc = await loadTree();
+  const duelistsObj   = getAtPath(doc.data, ['duelists']) || {};
+  const archetypesObj = getAtPath(doc.data, ['archetypes']) || {};
+  const shopBudget     = getAtPath(doc.data, ['shop', 'budget'])  || [];
+  const shopPremium    = getAtPath(doc.data, ['shop', 'premium']) || [];
+
+  const buyer = duelistsObj[req.duelistId];
+  if (!buyer) return res.status(404).json({ success: false, message: 'Your duelist record was not found.' });
+
+  const stillInShop = shopBudget.includes(itemName) || shopPremium.includes(itemName);
+  if (!stillInShop) {
+    return res.status(404).json({ success: false, message: 'That item is no longer available in the shop.' });
+  }
+
+  const archetype = Object.values(archetypesObj).find(a => a.name === itemName);
+  if (!archetype) return res.status(404).json({ success: false, message: 'Archetype not found.' });
+  if (archetype.status === 'Forbidden')   return res.status(400).json({ success: false, message: 'That archetype is Forbidden.' });
+  if (archetype.status === 'Unavailable') return res.status(400).json({ success: false, message: 'That archetype is Unavailable.' });
+
+  const owners = Object.values(duelistsObj).filter(d => (d.archs || []).includes(itemName));
+  if (owners.length > 0) {
+    return res.status(409).json({ success: false, message: `Already owned by ${owners.map(d => d.name).join(', ')}.` });
+  }
+
+  if ((buyer.archs || []).length >= 4) {
+    return res.status(400).json({ success: false, message: 'You already have 4 archetypes (the maximum).' });
+  }
+  if ((buyer.dp || 0) < archetype.price) {
+    return res.status(400).json({ success: false, message: `You need ${archetype.price.toLocaleString()} DP but only have ${(buyer.dp||0).toLocaleString()}.` });
+  }
+
+  const requestsObj = getAtPath(doc.data, ['requests']) || {};
+  const alreadyPending = Object.values(requestsObj).some(
+    r => r.type === 'shop_purchase' && r.status === 'pending' && r.requestedBy === req.duelistId && r.itemName === itemName
+  );
+  if (alreadyPending) {
+    return res.status(409).json({ success: false, message: 'You already requested this item — waiting on admin approval.' });
+  }
+
+  const id = crypto.randomBytes(8).toString('hex');
+  const request = {
+    id,
+    type: 'shop_purchase',
+    status: 'pending',
+    requestedBy: req.duelistId,
+    requestedByName: buyer.name,
+    itemName,
+    price: archetype.price,
+    createdAt: Date.now(),
+    resolvedAt: null,
+    rejectionReason: null,
+  };
+
+  doc.data = setAtPath(doc.data, ['requests', id], request);
+  doc.markModified('data');
+  await doc.save();
+
+  res.json({ success: true, request });
+});
+
 // GET /api/requests — full queue, admin only.
 router.get('/', requireAdmin, async (req, res) => {
   const doc = await loadTree();
@@ -122,6 +191,36 @@ router.post('/:id/approve', requireAdmin, async (req, res) => {
     });
     doc.data = setAtPath(doc.data, ['duelists', leader.id], {
       ...leader, lastKickAt: Date.now(),
+    });
+  }
+
+  if (request.type === 'shop_purchase') {
+    const duelistsObj   = getAtPath(doc.data, ['duelists']) || {};
+    const archetypesObj = getAtPath(doc.data, ['archetypes']) || {};
+    const buyer = duelistsObj[request.requestedBy];
+
+    if (!buyer) return res.status(404).json({ success: false, message: 'Buyer no longer exists.' });
+
+    // Re-validate now, since things may have changed since the request was submitted
+    // (someone else bought it, buyer spent their DP elsewhere, etc.)
+    const archetype = Object.values(archetypesObj).find(a => a.name === request.itemName);
+    if (!archetype) return res.status(404).json({ success: false, message: 'Archetype no longer exists.' });
+
+    const owners = Object.values(duelistsObj).filter(d => (d.archs || []).includes(request.itemName));
+    if (owners.length > 0) {
+      return res.status(409).json({ success: false, message: `Can't approve — already owned by ${owners.map(d => d.name).join(', ')}. Reject instead.` });
+    }
+    if ((buyer.archs || []).length >= 4) {
+      return res.status(400).json({ success: false, message: `Can't approve — ${buyer.name} already has 4 archetypes. Reject instead.` });
+    }
+    if ((buyer.dp || 0) < request.price) {
+      return res.status(400).json({ success: false, message: `Can't approve — ${buyer.name} no longer has enough DP. Reject instead.` });
+    }
+
+    doc.data = setAtPath(doc.data, ['duelists', buyer.id], {
+      ...buyer,
+      dp: (buyer.dp || 0) - request.price,
+      archs: [...(buyer.archs || []), request.itemName],
     });
   }
 

@@ -9,7 +9,7 @@ injectNav('requests.html');
 const STATUS_COLOR = { pending: '#E0B400', approved: '#4CAF7D', rejected: '#FF6B6B' };
 const STATUS_LABEL = { pending: '⏳ Pending', approved: '✅ Approved', rejected: '❌ Rejected' };
 
-const TYPE_LABEL = { kick_member: '👢 Kick Member' };
+const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase' };
 
 function requestCard(r, { showActions } = {}) {
   const when = new Date(r.createdAt).toLocaleString();
@@ -18,6 +18,8 @@ function requestCard(r, { showActions } = {}) {
     detail = `<strong>${r.requestedByName}</strong> (Dorm Leader) wants to kick <strong>${r.targetName}</strong>` +
               (r.archToRemove ? ` — would lose the archetype <em>${r.archToRemove}</em>` : '') +
               ` and 10,000 DP.`;
+  } else if (r.type === 'shop_purchase') {
+    detail = `<strong>${r.requestedByName}</strong> wants to buy <strong>${r.itemName}</strong> for ${r.price.toLocaleString()} DP.`;
   }
 
   return `
