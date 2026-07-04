@@ -17,6 +17,7 @@ const NAV_PAGES = [
   ['bracket.html',    '🏆 Bracket'],
   ['rules.html',      '📖 Rules'],
   ['requests.html',   '📋 Requests'],
+  ['chat.html',       '💬 Chat'],
   ['duelist-login.html', '🔑 My Account'],
 ];
 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Chat — YGO Skyscraper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .chat-tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .chat-tab {
+      padding:7px 14px; border-radius:6px; border:1px solid var(--border);
+      background:var(--surface); color:var(--muted); font-size:0.82rem; cursor:pointer;
+    }
+    .chat-tab.active { border-color:var(--gold); color:var(--gold); }
+    .chat-layout { display:flex; gap:16px; align-items:flex-start; }
+    .chat-contacts { width:220px; flex-shrink:0; }
+    .chat-contact {
+      padding:8px 10px; border-radius:6px; cursor:pointer; font-size:0.82rem;
+      border:1px solid var(--border); margin-bottom:6px; background:var(--surface);
+    }
+    .chat-contact.active { border-color:var(--gold); }
+    .chat-contact .last { color:var(--muted); font-size:0.72rem; margin-top:2px; }
+    .chat-main { flex:1; min-width:0; }
+    .chat-messages {
+      height:360px; overflow-y:auto; border:1px solid var(--border); border-radius:8px;
+      padding:12px; margin-bottom:10px; background:rgba(0,0,0,0.15);
+    }
+    .chat-msg { margin-bottom:10px; }
+    .chat-msg .who { font-size:0.72rem; color:var(--gold); margin-bottom:2px; }
+    .chat-msg .when { font-size:0.65rem; color:var(--muted); margin-left:6px; }
+    .chat-msg .text { font-size:0.86rem; color:#E8E8F0; white-space:pre-wrap; word-break:break-word; }
+    .chat-msg.mine .who { color:#7FB8FF; }
+    .chat-input-row { display:flex; gap:8px; }
+    .chat-input-row textarea {
+      flex:1; resize:none; height:44px; padding:8px 10px; border-radius:6px;
+      border:1px solid var(--border); background:var(--surface); color:#fff; font-family:inherit;
+    }
+  </style>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap">
+  <div class="section-title">💬 Chat</div>
+
+  <div id="chat-signed-out" class="card" style="display:none;padding:20px;">
+    <p style="color:var(--muted);font-size:0.9rem;">Log in as admin or as a duelist to use chat.</p>
+  </div>
+
+  <div id="chat-app" style="display:none;">
+    <div class="chat-tabs">
+      <div class="chat-tab" data-tab="room" onclick="switchTab('room')">🌐 Academy Room</div>
+      <div class="chat-tab" data-tab="inbox" onclick="switchTab('inbox')">📨 Admin Inbox</div>
+      <div class="chat-tab" data-tab="dm" onclick="switchTab('dm')" id="dm-tab-btn" style="display:none;">💌 Direct Messages</div>
+    </div>
+
+    <div class="chat-layout">
+      <div class="chat-contacts" id="chat-contacts" style="display:none;"></div>
+      <div class="chat-main">
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-row">
+          <textarea id="chat-input" placeholder="Type a message..." maxlength="1000"></textarea>
+          <button class="btn-gold" onclick="sendCurrentMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="nav.js"></script>
+<script src="chat.js" defer></script>
+</body>
+</html>
