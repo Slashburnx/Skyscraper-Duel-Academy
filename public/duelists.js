@@ -185,6 +185,8 @@ function buildCard(d, admin) {
         ) : ''}
         ${!admin && myDuelistId === d.id && (d.titles||[]).includes('Dorm Leader') ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;color:var(--sl);"
           onclick="requestKick('${d.id}')">👢 Request Kick</button>` : ''}
+        ${!admin && myDuelistId === d.id && (d.tickets||[]).length ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;"
+          onclick="useTicket('${d.id}')">🎟️ Use a Ticket</button>` : ''}
       </div>
       ${titleHtml ? `<div style="margin-bottom:7px;">${titleHtml}</div>` : ''}
       <div style="margin-bottom:10px;">${archHtml}</div>
@@ -434,6 +436,112 @@ window.requestKick = async function(leaderId) {
     return;
   }
   notify(`✅ Kick request for ${target.name} sent to the admin for approval.`);
+};
+
+// ── Duelist (logged in as themselves): use one of their tickets ──
+const AUTOMATED_TICKETS = {
+  '☘️ Force Trade Ticket':       'force_trade',
+  '☘️ Refund Ticket':            'refund',
+  '☘️ Forbidden Hammer Ticket':  'forbidden_hammer',
+  '☘️ Status Removal Ticket':    'status_removal',
+  '☘️ Semi Duplicator Ticket':   'semi_duplicator',
+  '☘️ Triplet Generator Ticket': 'triplet_generator',
+  '☘️ Dorm Switcher Ticket':     'dorm_switcher',
+  '☘️ Bracket Switcher Ticket':  'bracket_switcher',
+};
+
+window.useTicket = async function(id) {
+  const d = duelists.find(x => x.id === id);
+  if (!d || !(d.tickets||[]).length) return;
+
+  // Count owned tickets by name for a friendly picker list.
+  const counts = {};
+  d.tickets.forEach(t => { counts[t] = (counts[t]||0) + 1; });
+  const names = Object.keys(counts);
+  const list  = names.map((n,i) => `${i+1}. ${n} (x${counts[n]})`).join('\n');
+  const choice = prompt(`Which ticket do you want to use?\n${list}`);
+  if (choice === null) return;
+  const ticketName = names[parseInt(choice, 10) - 1];
+  if (!ticketName) { notify('⚠️ Invalid selection'); return; }
+
+  const ticketType = AUTOMATED_TICKETS[ticketName];
+  if (!ticketType) {
+    notify('⚠️ This ticket isn\'t automated yet — ask the admin to apply it manually for now.');
+    return;
+  }
+
+  const params = {};
+
+  if (ticketType === 'force_trade') {
+    const others = duelists.filter(x => x.id !== d.id);
+    const targetChoice = prompt(`Trade with who?\n${others.map((x,i)=>`${i+1}. ${x.name}`).join('\n')}`);
+    const target = others[parseInt(targetChoice,10)-1];
+    if (!target) { notify('⚠️ Invalid selection'); return; }
+    if (!(d.archs||[]).length) { notify('⚠️ You have no archetypes to trade'); return; }
+    if (!(target.archs||[]).length) { notify(`⚠️ ${target.name} has no archetypes to trade`); return; }
+    const myArchChoice = prompt(`Which of YOUR archetypes do you give up?\n${d.archs.map((a,i)=>`${i+1}. ${a}`).join('\n')}`);
+    const myArchetype = d.archs[parseInt(myArchChoice,10)-1];
+    const theirArchChoice = prompt(`Which of ${target.name}'s archetypes do you want?\n${target.archs.map((a,i)=>`${i+1}. ${a}`).join('\n')}`);
+    const theirArchetype = target.archs[parseInt(theirArchChoice,10)-1];
+    if (!myArchetype || !theirArchetype) { notify('⚠️ Invalid selection'); return; }
+    Object.assign(params, { targetId: target.id, myArchetype, theirArchetype });
+
+  } else if (ticketType === 'refund') {
+    if (!(d.archs||[]).length) { notify('⚠️ You have no archetypes to refund'); return; }
+    const archChoice = prompt(`Refund which archetype?\n${d.archs.map((a,i)=>`${i+1}. ${a}`).join('\n')}`);
+    const archetypeName = d.archs[parseInt(archChoice,10)-1];
+    if (!archetypeName) { notify('⚠️ Invalid selection'); return; }
+    params.archetypeName = archetypeName;
+
+  } else if (ticketType === 'forbidden_hammer' || ticketType === 'semi_duplicator' || ticketType === 'triplet_generator') {
+    const archetypeName = prompt('Type the exact name of the archetype to target:');
+    if (!archetypeName) return;
+    params.archetypeName = archetypeName.trim();
+
+  } else if (ticketType === 'status_removal') {
+    const flagged = archetypes.filter(a => ['Forbidden','Semi-Duplicated','Triplicated'].includes(a.status));
+    if (!flagged.length) { notify('⚠️ No archetypes currently have a status to remove'); return; }
+    const archChoice = prompt(`Remove status from which archetype?\n${flagged.map((a,i)=>`${i+1}. ${a.name} (${a.status})`).join('\n')}`);
+    const chosen = flagged[parseInt(archChoice,10)-1];
+    if (!chosen) { notify('⚠️ Invalid selection'); return; }
+    params.archetypeName = chosen.name;
+
+  } else if (ticketType === 'dorm_switcher') {
+    const list2 = duelists.map((x,i) => `${i+1}. ${x.name} (${x.dorm})`).join('\n');
+    const aChoice = prompt(`First duelist to swap dorms?\n${list2}`);
+    const dA = duelists[parseInt(aChoice,10)-1];
+    const bChoice = prompt(`Second duelist to swap dorms?\n${list2}`);
+    const dB = duelists[parseInt(bChoice,10)-1];
+    if (!dA || !dB || dA.id === dB.id) { notify('⚠️ Choose two different duelists'); return; }
+    Object.assign(params, { duelistAId: dA.id, duelistBId: dB.id });
+
+  } else if (ticketType === 'bracket_switcher') {
+    const players = await fbGet(PATHS.bracketPlayers) || [];
+    if (players.length < 2) { notify('⚠️ Not enough bracket entries to swap'); return; }
+    const list3 = players.map((n,i) => `${i+1}. ${n}`).join('\n');
+    const aChoice = prompt(`First bracket entry?\n${list3}`);
+    const nameA = players[parseInt(aChoice,10)-1];
+    const bChoice = prompt(`Second bracket entry?\n${list3}`);
+    const nameB = players[parseInt(bChoice,10)-1];
+    if (!nameA || !nameB || nameA === nameB) { notify('⚠️ Choose two different entries'); return; }
+    Object.assign(params, { nameA, nameB });
+  }
+
+  if (!confirm(`Use ${ticketName}? This will be sent to the admin for approval.`)) return;
+
+  const res  = await fetch('/api/requests/use-ticket', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ ticketName, params }),
+  });
+  const data = await res.json();
+
+  if (!data.success) {
+    notify(`⚠️ ${data.message || 'Could not submit request'}`);
+    return;
+  }
+  notify(`✅ ${ticketName} request sent to the admin for approval.`);
 };
 
 // ── Generate an account-setup invite link for a duelist ─────

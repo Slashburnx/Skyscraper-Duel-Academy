@@ -16,7 +16,8 @@ function buildArchRow(name, section) {
   const admin    = isAdminLoggedIn();
   const a        = archs.find(x => x.name === name) || { price: 0, status: '' };
   const owners   = getArchOwners(name, duelists);
-  const taken    = owners.length > 0;
+  const ownerLimit = a.status === 'Triplicated' ? 3 : a.status === 'Semi-Duplicated' ? 2 : 1;
+  const taken    = owners.length >= ownerLimit;
   const unavail  = a.status === 'Unavailable';
   const forbidden = a.status === 'Forbidden';
   const available = !unavail && !forbidden && !taken;
@@ -24,7 +25,7 @@ function buildArchRow(name, section) {
   let statusBadge;
   if (unavail)        statusBadge = '<span class="badge b-grey">Unavailable</span>';
   else if (forbidden) statusBadge = '<span class="badge b-red">Forbidden</span>';
-  else if (taken)     statusBadge = `<span class="badge b-red">Sold — ${owners.join(', ')}</span>`;
+  else if (owners.length > 0) statusBadge = `<span class="badge ${taken ? 'b-red' : 'b-blue'}">${owners.join(', ')} (${owners.length}/${ownerLimit})${taken ? '' : ' — still available'}</span>`;
   else                statusBadge = '<span class="badge b-green">Available</span>';
 
   const priceCell = (unavail || forbidden)

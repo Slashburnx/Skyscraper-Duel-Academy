@@ -105,7 +105,8 @@ router.post('/shop-purchase', requireDuelist, async (req, res) => {
   if (archetype.status === 'Unavailable') return res.status(400).json({ success: false, message: 'That archetype is Unavailable.' });
 
   const owners = Object.values(duelistsObj).filter(d => (d.archs || []).includes(itemName));
-  if (owners.length > 0) {
+  const ownerLimit = archetype.status === 'Triplicated' ? 3 : archetype.status === 'Semi-Duplicated' ? 2 : 1;
+  if (owners.length >= ownerLimit) {
     return res.status(409).json({ success: false, message: `Already owned by ${owners.map(d => d.name).join(', ')}.` });
   }
 
@@ -133,6 +134,114 @@ router.post('/shop-purchase', requireDuelist, async (req, res) => {
     requestedByName: buyer.name,
     itemName,
     price: archetype.price,
+    createdAt: Date.now(),
+    resolvedAt: null,
+    rejectionReason: null,
+  };
+
+  doc.data = setAtPath(doc.data, ['requests', id], request);
+  doc.markModified('data');
+  await doc.save();
+
+  res.json({ success: true, request });
+});
+
+// Maps the exact ticket names (as stored in a duelist's inventory) to an
+// internal type key. Only these 8 have full automation right now — the
+// rest (Gambling, Magnet Ring, Deck Coffin, Lucky Discount, Respin, Star
+// Multiplier, Gambling V2) are still admin-manual until built later.
+const AUTOMATED_TICKETS = {
+  '☘️ Force Trade Ticket':       'force_trade',
+  '☘️ Refund Ticket':            'refund',
+  '☘️ Forbidden Hammer Ticket':  'forbidden_hammer',
+  '☘️ Status Removal Ticket':    'status_removal',
+  '☘️ Semi Duplicator Ticket':   'semi_duplicator',
+  '☘️ Triplet Generator Ticket': 'triplet_generator',
+  '☘️ Dorm Switcher Ticket':     'dorm_switcher',
+  '☘️ Bracket Switcher Ticket':  'bracket_switcher',
+};
+
+// ═══════════════════════════════════════════════════════════
+// POST /api/requests/use-ticket — a duelist requests to use a
+// ticket they own. The ticket is only actually consumed (and
+// its effect applied) once an admin approves.
+// ═══════════════════════════════════════════════════════════
+router.post('/use-ticket', requireDuelist, async (req, res) => {
+  const { ticketName, params } = req.body;
+  const ticketType = AUTOMATED_TICKETS[ticketName];
+
+  if (!ticketType) {
+    return res.status(400).json({ success: false, message: 'That ticket type is not yet supported for automatic use.' });
+  }
+
+  const doc = await loadTree();
+  const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
+  const requester = duelistsObj[req.duelistId];
+  if (!requester) return res.status(404).json({ success: false, message: 'Your duelist record was not found.' });
+
+  const owned = (requester.tickets || []).filter(t => t === ticketName).length;
+  const requestsObj = getAtPath(doc.data, ['requests']) || {};
+  const pendingCount = Object.values(requestsObj).filter(
+    r => r.type === 'use_ticket' && r.status === 'pending' && r.requestedBy === req.duelistId && r.ticketName === ticketName
+  ).length;
+
+  if (owned <= pendingCount) {
+    return res.status(409).json({ success: false, message: `You don't have a free ${ticketName} available (or one is already pending approval).` });
+  }
+
+  // ── Per-ticket validation ──────────────────────────────────
+  const p = params || {};
+  const archetypesObj = getAtPath(doc.data, ['archetypes']) || {};
+
+  if (ticketType === 'force_trade') {
+    const target = duelistsObj[p.targetId];
+    if (!target) return res.status(404).json({ success: false, message: 'Target duelist not found.' });
+    if (target.id === req.duelistId) return res.status(400).json({ success: false, message: "You can't trade with yourself." });
+    if ((target.titles || []).includes('Skyscraper Champion')) {
+      return res.status(403).json({ success: false, message: `${target.name} is a Skyscraper Champion — immune to Force Trade.` });
+    }
+    if (!(requester.archs || []).includes(p.myArchetype)) {
+      return res.status(400).json({ success: false, message: 'You do not own that archetype.' });
+    }
+    if (!(target.archs || []).includes(p.theirArchetype)) {
+      return res.status(400).json({ success: false, message: `${target.name} does not own that archetype.` });
+    }
+  } else if (ticketType === 'refund') {
+    if (!(requester.archs || []).includes(p.archetypeName)) {
+      return res.status(400).json({ success: false, message: 'You do not own that archetype.' });
+    }
+  } else if (ticketType === 'forbidden_hammer' || ticketType === 'semi_duplicator' || ticketType === 'triplet_generator') {
+    const a = Object.values(archetypesObj).find(x => x.name === p.archetypeName);
+    if (!a) return res.status(404).json({ success: false, message: 'Archetype not found.' });
+  } else if (ticketType === 'status_removal') {
+    const a = Object.values(archetypesObj).find(x => x.name === p.archetypeName);
+    if (!a) return res.status(404).json({ success: false, message: 'Archetype not found.' });
+    if (!['Forbidden', 'Semi-Duplicated', 'Triplicated'].includes(a.status)) {
+      return res.status(400).json({ success: false, message: 'That archetype has no status to remove.' });
+    }
+  } else if (ticketType === 'dorm_switcher') {
+    const a = duelistsObj[p.duelistAId];
+    const b = duelistsObj[p.duelistBId];
+    if (!a || !b) return res.status(404).json({ success: false, message: 'One or both duelists not found.' });
+    if (a.id === b.id) return res.status(400).json({ success: false, message: 'Choose two different duelists.' });
+  } else if (ticketType === 'bracket_switcher') {
+    const players = getAtPath(doc.data, ['bracket', 'players']) || [];
+    if (!players.includes(p.nameA) || !players.includes(p.nameB)) {
+      return res.status(400).json({ success: false, message: 'Both names must currently be in the bracket.' });
+    }
+    if (p.nameA === p.nameB) return res.status(400).json({ success: false, message: 'Choose two different bracket entries.' });
+  }
+
+  const id = crypto.randomBytes(8).toString('hex');
+  const request = {
+    id,
+    type: 'use_ticket',
+    ticketType,
+    status: 'pending',
+    requestedBy: req.duelistId,
+    requestedByName: requester.name,
+    ticketName,
+    params: p,
     createdAt: Date.now(),
     resolvedAt: null,
     rejectionReason: null,
@@ -207,7 +316,8 @@ router.post('/:id/approve', requireAdmin, async (req, res) => {
     if (!archetype) return res.status(404).json({ success: false, message: 'Archetype no longer exists.' });
 
     const owners = Object.values(duelistsObj).filter(d => (d.archs || []).includes(request.itemName));
-    if (owners.length > 0) {
+    const ownerLimit = archetype.status === 'Triplicated' ? 3 : archetype.status === 'Semi-Duplicated' ? 2 : 1;
+    if (owners.length >= ownerLimit) {
       return res.status(409).json({ success: false, message: `Can't approve — already owned by ${owners.map(d => d.name).join(', ')}. Reject instead.` });
     }
     if ((buyer.archs || []).length >= 4) {
@@ -222,6 +332,95 @@ router.post('/:id/approve', requireAdmin, async (req, res) => {
       dp: (buyer.dp || 0) - request.price,
       archs: [...(buyer.archs || []), request.itemName],
     });
+  }
+
+  if (request.type === 'use_ticket') {
+    const duelistsObj   = getAtPath(doc.data, ['duelists']) || {};
+    const archetypesObj = getAtPath(doc.data, ['archetypes']) || {};
+    const requester = duelistsObj[request.requestedBy];
+    if (!requester) return res.status(404).json({ success: false, message: 'Requester no longer exists.' });
+
+    const owned = (requester.tickets || []).filter(t => t === request.ticketName).length;
+    if (owned < 1) {
+      return res.status(409).json({ success: false, message: `${requester.name} no longer has that ticket. Reject instead.` });
+    }
+
+    const p = request.params || {};
+    const findArch = name => Object.values(archetypesObj).find(a => a.name === name);
+
+    // Consume one copy of the ticket regardless of effect below.
+    const remainingTickets = [...(requester.tickets || [])];
+    remainingTickets.splice(remainingTickets.indexOf(request.ticketName), 1);
+    doc.data = setAtPath(doc.data, ['duelists', requester.id], { ...requester, tickets: remainingTickets });
+
+    if (request.ticketType === 'force_trade') {
+      const target = duelistsObj[p.targetId];
+      if (!target) return res.status(404).json({ success: false, message: 'Target no longer exists. Reject instead.' });
+      if (!(requester.archs || []).includes(p.myArchetype) || !(target.archs || []).includes(p.theirArchetype)) {
+        return res.status(409).json({ success: false, message: 'Archetypes changed since this was requested. Reject instead.' });
+      }
+      const newRequesterArchs = requester.archs.filter(a => a !== p.myArchetype).concat(p.theirArchetype);
+      const newTargetArchs    = target.archs.filter(a => a !== p.theirArchetype).concat(p.myArchetype);
+      doc.data = setAtPath(doc.data, ['duelists', requester.id], { ...requester, tickets: remainingTickets, archs: newRequesterArchs });
+      doc.data = setAtPath(doc.data, ['duelists', target.id],    { ...target, archs: newTargetArchs });
+    }
+
+    else if (request.ticketType === 'refund') {
+      const a = findArch(p.archetypeName);
+      if (!(requester.archs || []).includes(p.archetypeName)) {
+        return res.status(409).json({ success: false, message: 'No longer owns that archetype. Reject instead.' });
+      }
+      const refundAmount = a ? Math.round(a.price * 0.5) : 0;
+      doc.data = setAtPath(doc.data, ['duelists', requester.id], {
+        ...requester, tickets: remainingTickets,
+        archs: requester.archs.filter(x => x !== p.archetypeName),
+        dp: (requester.dp || 0) + refundAmount,
+      });
+    }
+
+    else if (request.ticketType === 'forbidden_hammer') {
+      const a = findArch(p.archetypeName);
+      if (!a) return res.status(404).json({ success: false, message: 'Archetype no longer exists. Reject instead.' });
+      doc.data = setAtPath(doc.data, ['archetypes', a.id], { ...a, status: 'Forbidden' });
+    }
+
+    else if (request.ticketType === 'semi_duplicator') {
+      const a = findArch(p.archetypeName);
+      if (!a) return res.status(404).json({ success: false, message: 'Archetype no longer exists. Reject instead.' });
+      doc.data = setAtPath(doc.data, ['archetypes', a.id], { ...a, status: 'Semi-Duplicated' });
+    }
+
+    else if (request.ticketType === 'triplet_generator') {
+      const a = findArch(p.archetypeName);
+      if (!a) return res.status(404).json({ success: false, message: 'Archetype no longer exists. Reject instead.' });
+      doc.data = setAtPath(doc.data, ['archetypes', a.id], { ...a, status: 'Triplicated' });
+    }
+
+    else if (request.ticketType === 'status_removal') {
+      const a = findArch(p.archetypeName);
+      if (!a) return res.status(404).json({ success: false, message: 'Archetype no longer exists. Reject instead.' });
+      doc.data = setAtPath(doc.data, ['archetypes', a.id], { ...a, status: '' });
+    }
+
+    else if (request.ticketType === 'dorm_switcher') {
+      const a = duelistsObj[p.duelistAId];
+      const b = duelistsObj[p.duelistBId];
+      if (!a || !b) return res.status(404).json({ success: false, message: 'One or both duelists no longer exist. Reject instead.' });
+      doc.data = setAtPath(doc.data, ['duelists', a.id], { ...a, dorm: b.dorm });
+      doc.data = setAtPath(doc.data, ['duelists', b.id], { ...b, dorm: a.dorm });
+    }
+
+    else if (request.ticketType === 'bracket_switcher') {
+      const players = getAtPath(doc.data, ['bracket', 'players']) || [];
+      const idxA = players.indexOf(p.nameA);
+      const idxB = players.indexOf(p.nameB);
+      if (idxA === -1 || idxB === -1) {
+        return res.status(409).json({ success: false, message: 'One or both names are no longer in the bracket. Reject instead.' });
+      }
+      const swapped = [...players];
+      [swapped[idxA], swapped[idxB]] = [swapped[idxB], swapped[idxA]];
+      doc.data = setAtPath(doc.data, ['bracket', 'players'], swapped);
+    }
   }
 
   doc.data = setAtPath(doc.data, ['requests', id], {

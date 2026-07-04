@@ -9,7 +9,22 @@ injectNav('requests.html');
 const STATUS_COLOR = { pending: '#E0B400', approved: '#4CAF7D', rejected: '#FF6B6B' };
 const STATUS_LABEL = { pending: '⏳ Pending', approved: '✅ Approved', rejected: '❌ Rejected' };
 
-const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase' };
+const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase', use_ticket: '🎟️ Use Ticket' };
+
+function ticketDetail(r) {
+  const p = r.params || {};
+  switch (r.ticketType) {
+    case 'force_trade':       return `wants to trade their <strong>${p.myArchetype}</strong> for <strong>${p.theirArchetype}</strong>`;
+    case 'refund':             return `wants to refund <strong>${p.archetypeName}</strong> (50% DP back)`;
+    case 'forbidden_hammer':   return `wants to make <strong>${p.archetypeName}</strong> Forbidden`;
+    case 'semi_duplicator':    return `wants to Semi-Duplicate <strong>${p.archetypeName}</strong> (2 owners allowed)`;
+    case 'triplet_generator':  return `wants to Triplicate <strong>${p.archetypeName}</strong> (3 owners allowed)`;
+    case 'status_removal':     return `wants to clear the status on <strong>${p.archetypeName}</strong>`;
+    case 'dorm_switcher':      return `wants two duelists to swap dorms`;
+    case 'bracket_switcher':   return `wants <strong>${p.nameA}</strong> and <strong>${p.nameB}</strong> to swap bracket positions`;
+    default: return '';
+  }
+}
 
 function requestCard(r, { showActions } = {}) {
   const when = new Date(r.createdAt).toLocaleString();
@@ -20,6 +35,8 @@ function requestCard(r, { showActions } = {}) {
               ` and 10,000 DP.`;
   } else if (r.type === 'shop_purchase') {
     detail = `<strong>${r.requestedByName}</strong> wants to buy <strong>${r.itemName}</strong> for ${r.price.toLocaleString()} DP.`;
+  } else if (r.type === 'use_ticket') {
+    detail = `<strong>${r.requestedByName}</strong> used a <em>${r.ticketName}</em> — ${ticketDetail(r)}.`;
   }
 
   return `
