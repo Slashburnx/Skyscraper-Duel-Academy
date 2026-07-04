@@ -160,7 +160,7 @@ function buildCard(d, admin) {
   return `
     <div class="duelist-card" style="border-color:${c}33;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:2px;">
-        <div style="font-family:'Cinzel',serif;font-weight:700;font-size:0.95rem;">${d.name}</div>
+        <a href="profile.html?id=${d.id}" style="font-family:'Cinzel',serif;font-weight:700;font-size:0.95rem;color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color=''">${d.name}</a>
         ${admin ? `<div style="display:flex;gap:4px;flex-shrink:0;">
           <button class="btn-icon" onclick="openEditDuelist('${d.id}')">✏️</button>
           <button class="btn-icon" style="color:var(--sl);" onclick="deleteDuelist('${d.id}')">✕</button>

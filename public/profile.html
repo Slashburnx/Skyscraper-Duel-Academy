@@ -44,8 +44,10 @@
         <div style="color:var(--gold);font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;" id="profile-name"></div>
         <div style="color:var(--muted);font-size:0.85rem;" id="profile-dorm"></div>
         <input type="file" id="avatar-file" accept="image/*" style="display:none;" onchange="handleAvatarFile(event)"/>
-        <button class="btn-icon" style="margin-top:8px;font-size:0.78rem;" onclick="document.getElementById('avatar-file').click()">📷 Change Photo</button>
-        <span id="avatar-status" style="font-size:0.75rem;color:var(--muted);margin-left:8px;"></span>
+        <div id="avatar-edit-controls" style="display:none;">
+          <button class="btn-icon" style="margin-top:8px;font-size:0.78rem;" onclick="document.getElementById('avatar-file').click()">📷 Change Photo</button>
+          <span id="avatar-status" style="font-size:0.75rem;color:var(--muted);margin-left:8px;"></span>
+        </div>
       </div>
     </div>
 
@@ -65,8 +67,10 @@
     <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;">🎟️ My Tickets</h3>
     <div id="profile-tickets" style="margin-bottom:24px;"></div>
 
-    <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;">📨 My Requests</h3>
-    <div id="profile-requests"></div>
+    <div id="profile-requests-section">
+      <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;">📨 My Requests</h3>
+      <div id="profile-requests"></div>
+    </div>
   </div>
 </div>
 

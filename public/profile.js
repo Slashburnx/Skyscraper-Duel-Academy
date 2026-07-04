@@ -5,35 +5,50 @@
 // ⚠️ FILL THESE IN — see the setup steps in the message that came with this file.
 // Only the cloud name + an UNSIGNED upload preset are needed here — never put
 // your Cloudinary API secret in front-end code.
-const CLOUDINARY_CLOUD_NAME    = 'dbrsxel6l';
-const CLOUDINARY_UPLOAD_PRESET = 'skycraper-duel-academy';
+const CLOUDINARY_CLOUD_NAME    = 'YOUR_CLOUD_NAME';
+const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET';
 
 injectNav('profile.html');
 
-let myId = null;
+let myId = null;       // set if a duelist is logged in as themselves
+let viewingId = null;  // whose profile is actually being shown
+let isOwnProfile = false;
 
 (async function init() {
   const res  = await fetch('/api/duelist-auth/check', { credentials: 'include' });
   const data = await res.json();
+  if (data.loggedIn) myId = data.duelistId;
 
-  if (!data.loggedIn) {
+  const params = new URLSearchParams(window.location.search);
+  const idParam = params.get('id');
+
+  if (idParam) {
+    // Public view of a specific duelist — no login required to look, just to edit your own.
+    viewingId = idParam;
+  } else if (myId) {
+    // No ID given — fall back to "my own profile" for whoever's logged in.
+    viewingId = myId;
+  } else {
     document.getElementById('profile-signed-out').style.display = 'block';
     return;
   }
-  myId = data.duelistId;
+
+  isOwnProfile = viewingId === myId;
   document.getElementById('profile-app').style.display = 'block';
   await loadProfile();
 })();
 
 async function loadProfile() {
   const [dRes, archsRes, requestsRes] = await Promise.all([
-    fetch(`/api/data/duelists/${myId}`).then(r => r.json()),
+    fetch(`/api/data/duelists/${viewingId}`).then(r => r.json()),
     fetch('/api/data/archetypes').then(r => r.json()),
-    fetch('/api/requests/mine', { credentials: 'include' }).then(r => r.json()),
+    isOwnProfile
+      ? fetch('/api/requests/mine', { credentials: 'include' }).then(r => r.json())
+      : Promise.resolve({ requests: [] }),
   ]);
 
   const d = dRes.value;
-  if (!d) { notify('⚠️ Could not load your profile'); return; }
+  if (!d) { notify('⚠️ Could not load that profile'); return; }
 
   const archCatalog = Object.values(archsRes.value || {});
 
@@ -45,6 +60,12 @@ async function loadProfile() {
   avatarSlot.innerHTML = d.profilePicUrl
     ? `<img class="avatar-img" src="${d.profilePicUrl}" alt="${d.name}"/>`
     : `<div class="avatar-placeholder">👤</div>`;
+
+  // Only the account owner can change their own photo.
+  document.getElementById('avatar-edit-controls').style.display = isOwnProfile ? 'block' : 'none';
+
+  // Only the account owner sees their own request history.
+  document.getElementById('profile-requests-section').style.display = isOwnProfile ? 'block' : 'none';
 
   // ── Stat cards ──
   document.getElementById('stat-dp').textContent      = (d.dp || 0).toLocaleString() + ' DP';
