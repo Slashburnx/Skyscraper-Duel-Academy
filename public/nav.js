@@ -8,7 +8,6 @@
 import { adminLogin, adminLogout, adminCheck, adminChangePassword } from './api.js';
 
 const NAV_PAGES = [
-  ['index.html',      '🏠 Home'],
   ['duelists.html',   '👥 Duelists'],
   ['archetypes.html', '📚 Archetypes'],
   ['shop.html',       '🛒 Shop'],
@@ -32,7 +31,7 @@ export function injectNav(activePage) {
   document.getElementById('nav-root').innerHTML = `
     <nav>
       <div class="nav-inner">
-        <div class="nav-logo">YGO <span>Skyscraper</span></div>
+        <a href="index.html" class="nav-logo" style="text-decoration:none;">YGO <span>Skyscraper</span></a>
         <div class="nav-links" id="nav-links">${links}</div>
         <button class="nav-admin${adminOn ? ' on' : ''}" onclick="toggleAdmin()" id="nav-admin-btn">
           ${adminOn ? '🔓 Admin ON' : '🔒 Admin'}

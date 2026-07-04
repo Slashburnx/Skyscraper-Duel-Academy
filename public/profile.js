@@ -56,6 +56,13 @@ async function loadProfile() {
   document.getElementById('profile-name').textContent = d.name;
   document.getElementById('profile-dorm').textContent = `${DORM_ICON[d.dorm] || ''} ${DORM_NAME[d.dorm] || d.dorm}`;
 
+  const possessive = isOwnProfile ? 'My' : `${d.name}'s`;
+  document.getElementById('page-heading').textContent   = `🎓 ${possessive} Profile`;
+  document.getElementById('heading-archs').textContent   = `📚 ${possessive} Archetypes`;
+  document.getElementById('heading-roles').textContent   = `👑 ${possessive} Roles`;
+  document.getElementById('heading-tickets').textContent = `🎟️ ${possessive} Tickets`;
+  document.title = `${possessive} Profile — YGO Skyscraper`;
+
   const avatarSlot = document.getElementById('avatar-slot');
   avatarSlot.innerHTML = d.profilePicUrl
     ? `<img class="avatar-img" src="${d.profilePicUrl}" alt="${d.name}"/>`
