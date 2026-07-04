@@ -102,6 +102,47 @@ nav {
 }
 .nav-admin.on { background: var(--sl); color: #fff; }
 
+.nav-hamburger { display: none; }
+
+/* ── Mobile: nav links collapse into a popup, hamburger shows the toggle ── */
+@media (max-width: 860px) {
+  .nav-hamburger {
+    display: block;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1.1rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 16px;
+    flex-direction: column;
+    background: rgba(14,14,22,0.98);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    padding: 8px;
+    min-width: 220px;
+    max-height: 75vh;
+    overflow-y: auto;
+    backdrop-filter: blur(12px);
+  }
+  .nav-links.open { display: flex; }
+  .nav-link {
+    padding: 11px 14px;
+    border-bottom: none;
+    border-radius: 5px;
+  }
+  .nav-link:hover, .nav-link.active { background: rgba(212,168,0,0.1); }
+  nav { position: relative; }
+}
+
 /* ══════════════════════════════════════════════
    LAYOUT
 ══════════════════════════════════════════════ */
