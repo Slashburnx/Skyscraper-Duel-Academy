@@ -26,18 +26,19 @@ const DORM_NAME  = { obelisk:'Obelisk Blue', ra:'Ra Yellow', slifer:'Slifer Red'
 const DORM_COLOR = { obelisk:'#1B4FD8',      ra:'#D4A800',   slifer:'#CC1A1A' };
 
 const TITLE_LIST = [
-  'Skyscraper Champion','King of Games','Queen of Games','Legendary Duelist','Dorm Leader',
+  'Moderator','Skyscraper Champion','King of Games','Queen of Games','Legendary Duelist','Dorm Leader',
   'GOAT Champion','Genesys Champion','Forbidden Master','The Great One',
   'Top Scorer','Gambler','Null Sovereign','Dropout Boy','Dropout Girl',
 ];
 const TITLE_ICON = {
-  'Skyscraper Champion':'🌟','King of Games':'👑','Queen of Games':'👑','Legendary Duelist':'⚔️','Dorm Leader':'🏛️',
+  'Moderator':'🛡️','Skyscraper Champion':'🌟','King of Games':'👑','Queen of Games':'👑','Legendary Duelist':'⚔️','Dorm Leader':'🏛️',
   'GOAT Champion':'🐐','Genesys Champion':'🧬','Forbidden Master':'🚫','The Great One':'🎴',
   'Top Scorer':'🎯','Gambler':'🎰','Null Sovereign':'🌀','Dropout Boy':'💀','Dropout Girl':'💀',
 };
 // Shown as a tooltip on each role chip/checkbox so admins can see what a role
 // actually does without leaving the page.
 const TITLE_BENEFITS = {
+  'Moderator':            'Full site edit access — same powers as the original Admin login, but tied to this duelist\'s own account.',
   'Skyscraper Champion': '+1 Deck Slot · Immune to Force Trade · Double Starter Allowance · 1 Forbidden Hammer Ticket after every KOG Tournament',
   'King of Games':        '+1 Deck Slot · May activate Magnet Ring once a month (awarded to the King of Games Tournament champion)',
   'Queen of Games':       '+1 Deck Slot · May activate Magnet Ring once a month (personal badge for a King of Games Tournament champion — the tournament itself keeps its official name)',

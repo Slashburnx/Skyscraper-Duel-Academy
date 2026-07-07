@@ -1,6 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
-const requireAdmin = require('../middleware/auth');
+const requireModeratorOrAdmin = require('../middleware/moderatorAuth');
 const requireDuelist = require('../middleware/duelistAuth');
 const requireAnyLogin = require('../middleware/anyAuth');
 const { getAtPath, setAtPath, loadTree } = require('../utils/tree');
@@ -86,7 +86,7 @@ router.post('/inbox/mine', requireDuelist, async (req, res) => {
 });
 
 // GET /api/chat/inbox-list — admin only: every duelist + their inbox's last message (to build a conversation list)
-router.get('/inbox-list', requireAdmin, async (req, res) => {
+router.get('/inbox-list', requireModeratorOrAdmin, async (req, res) => {
   const doc = await loadTree();
   const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
   const inboxObj = getAtPath(doc.data, ['chat', 'inbox']) || {};
@@ -110,7 +110,7 @@ router.get('/inbox-list', requireAdmin, async (req, res) => {
 });
 
 // GET /api/chat/inbox/:duelistId — admin views a specific duelist's thread (and marks it read)
-router.get('/inbox/:duelistId', requireAdmin, async (req, res) => {
+router.get('/inbox/:duelistId', requireModeratorOrAdmin, async (req, res) => {
   const { duelistId } = req.params;
   const doc = await loadTree();
   const messages = getAtPath(doc.data, ['chat', 'inbox', duelistId]) || [];
@@ -124,7 +124,7 @@ router.get('/inbox/:duelistId', requireAdmin, async (req, res) => {
 });
 
 // POST /api/chat/inbox/:duelistId — admin sends a message to a specific duelist
-router.post('/inbox/:duelistId', requireAdmin, async (req, res) => {
+router.post('/inbox/:duelistId', requireModeratorOrAdmin, async (req, res) => {
   const { duelistId } = req.params;
   const { text } = req.body;
   if (!text || !text.trim()) return res.status(400).json({ success: false, message: 'Message cannot be empty.' });

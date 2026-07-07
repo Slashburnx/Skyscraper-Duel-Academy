@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const Admin = require('../models/Admin');
 const requireAdmin = require('../middleware/auth');
+const requireModeratorOrAdmin = require('../middleware/moderatorAuth');
 const { getAtPath, setAtPath, loadTree } = require('../utils/tree');
 
 const router = express.Router();
@@ -73,7 +74,7 @@ router.post('/change-password', requireAdmin, async (req, res) => {
 });
 
 // POST /api/admin/duelists/:id/invite — generate a one-time account-setup link for a duelist.
-router.post('/duelists/:id/invite', requireAdmin, async (req, res) => {
+router.post('/duelists/:id/invite', requireModeratorOrAdmin, async (req, res) => {
   const { id } = req.params;
   const doc = await loadTree();
   const duelist = getAtPath(doc.data, ['duelists', id]);

@@ -43,19 +43,38 @@ export function injectNav(activePage) {
   if (adminOn) document.body.classList.add('admin-mode');
 
   // The sessionStorage flag is just for instant UI on page load. The real
-  // truth is the server's httpOnly cookie (12h session) — reconcile in case
-  // it expired or was cleared, so edit buttons don't show when writes would
-  // actually be rejected by the server.
-  adminCheck().then(isAdmin => {
-    if (isAdmin !== adminOn) {
-      setAdminSession(isAdmin);
-      document.body.classList.toggle('admin-mode', isAdmin);
-      const btn = document.getElementById('nav-admin-btn');
-      if (btn) {
+  // truth is the server's httpOnly cookies (12h admin session / 14d duelist
+  // session) — reconcile in case they expired or were cleared, so edit
+  // buttons don't show when writes would actually be rejected by the server.
+  //
+  // A Moderator (a duelist account with the "Moderator" role) gets treated
+  // exactly like Admin for UI purposes — every page's existing
+  // isAdminLoggedIn() checks work for Moderators automatically this way,
+  // with no changes needed on any of those pages.
+  Promise.all([
+    adminCheck(),
+    fetch('/api/duelist-auth/check', { credentials: 'include' }).then(r => r.json()).catch(() => ({ loggedIn: false })),
+  ]).then(([isAdmin, duelistStatus]) => {
+    const isModerator = !isAdmin && duelistStatus.loggedIn && duelistStatus.isModerator;
+    const effective = isAdmin || isModerator;
+
+    if (effective !== adminOn) {
+      setAdminSession(effective);
+      document.body.classList.toggle('admin-mode', effective);
+      if (typeof window.onAdminChange === 'function') window.onAdminChange(effective);
+    }
+
+    const btn = document.getElementById('nav-admin-btn');
+    if (btn) {
+      if (isModerator) {
+        btn.textContent = '🛡️ Moderator';
+        btn.classList.add('on');
+        btn.onclick = () => notify('You have Moderator access via your duelist account. Manage your session from "My Account".');
+      } else {
         btn.textContent = isAdmin ? '🔓 Admin ON' : '🔒 Admin';
         btn.classList.toggle('on', isAdmin);
+        btn.onclick = window.toggleAdmin;
       }
-      if (typeof window.onAdminChange === 'function') window.onAdminChange(isAdmin);
     }
   });
 }

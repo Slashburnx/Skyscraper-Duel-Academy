@@ -1,6 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
-const requireAdmin = require('../middleware/auth');
+const requireModeratorOrAdmin = require('../middleware/moderatorAuth');
 const requireDuelist = require('../middleware/duelistAuth');
 const { getAtPath, setAtPath, loadTree } = require('../utils/tree');
 
@@ -255,7 +255,7 @@ router.post('/use-ticket', requireDuelist, async (req, res) => {
 });
 
 // GET /api/requests — full queue, admin only.
-router.get('/', requireAdmin, async (req, res) => {
+router.get('/', requireModeratorOrAdmin, async (req, res) => {
   const doc = await loadTree();
   const requestsObj = getAtPath(doc.data, ['requests']) || {};
   const all = Object.values(requestsObj).sort((a, b) => b.createdAt - a.createdAt);
@@ -273,7 +273,7 @@ router.get('/mine', requireDuelist, async (req, res) => {
 });
 
 // POST /api/requests/:id/approve — admin approves; the actual effect happens here, server-side.
-router.post('/:id/approve', requireAdmin, async (req, res) => {
+router.post('/:id/approve', requireModeratorOrAdmin, async (req, res) => {
   const { id } = req.params;
   const doc = await loadTree();
   const request = getAtPath(doc.data, ['requests', id]);
@@ -433,7 +433,7 @@ router.post('/:id/approve', requireAdmin, async (req, res) => {
 });
 
 // POST /api/requests/:id/reject — admin rejects; nothing happens to the data.
-router.post('/:id/reject', requireAdmin, async (req, res) => {
+router.post('/:id/reject', requireModeratorOrAdmin, async (req, res) => {
   const { id } = req.params;
   const { reason } = req.body;
   const doc = await loadTree();

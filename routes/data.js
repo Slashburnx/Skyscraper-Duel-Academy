@@ -1,5 +1,5 @@
 const express = require('express');
-const requireAdmin = require('../middleware/auth');
+const requireModeratorOrAdmin = require('../middleware/moderatorAuth');
 const { getAtPath, setAtPath, removeAtPath, loadTree } = require('../utils/tree');
 
 const router = express.Router();
@@ -13,7 +13,7 @@ router.get('/*', async (req, res) => {
 });
 
 // PUT /api/data/*  — overwrite the value at a path. Admin only.
-router.put('/*', requireAdmin, async (req, res) => {
+router.put('/*', requireModeratorOrAdmin, async (req, res) => {
   const segments = req.params[0].split('/').filter(Boolean);
   const doc = await loadTree();
   doc.data = setAtPath(doc.data, segments, req.body.value);
@@ -23,7 +23,7 @@ router.put('/*', requireAdmin, async (req, res) => {
 });
 
 // PATCH /api/data/*  — shallow-merge an object into the value at a path. Admin only.
-router.patch('/*', requireAdmin, async (req, res) => {
+router.patch('/*', requireModeratorOrAdmin, async (req, res) => {
   const segments = req.params[0].split('/').filter(Boolean);
   const doc = await loadTree();
   const current = getAtPath(doc.data, segments) || {};
@@ -35,7 +35,7 @@ router.patch('/*', requireAdmin, async (req, res) => {
 });
 
 // DELETE /api/data/*  — remove the value at a path. Admin only.
-router.delete('/*', requireAdmin, async (req, res) => {
+router.delete('/*', requireModeratorOrAdmin, async (req, res) => {
   const segments = req.params[0].split('/').filter(Boolean);
   const doc = await loadTree();
   doc.data = removeAtPath(doc.data, segments);

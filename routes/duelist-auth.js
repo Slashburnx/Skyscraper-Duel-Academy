@@ -147,7 +147,12 @@ router.get('/check', async (req, res) => {
     const duelist = getAtPath(doc.data, ['duelists', decoded.duelistId]);
     if (!duelist) return res.json({ loggedIn: false });
 
-    res.json({ loggedIn: true, duelistId: decoded.duelistId, name: duelist.name });
+    res.json({
+      loggedIn: true,
+      duelistId: decoded.duelistId,
+      name: duelist.name,
+      isModerator: (duelist.titles || []).includes('Moderator'),
+    });
   } catch {
     res.json({ loggedIn: false });
   }
