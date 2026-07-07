@@ -126,6 +126,13 @@ async function loadProfile() {
     : `<p style="color:var(--muted);font-size:0.85rem;">No requests yet.</p>`;
 }
 
+// ── Log out ──────────────────────────────────────────────────
+window.doProfileLogout = async function() {
+  await fetch('/api/duelist-auth/logout', { method: 'POST', credentials: 'include' });
+  notify('Logged out');
+  window.location.href = 'duelist-login.html';
+};
+
 // ── Avatar upload (Cloudinary, unsigned) ────────────────────
 window.handleAvatarFile = async function(event) {
   const file = event.target.files[0];
