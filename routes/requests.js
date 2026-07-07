@@ -453,13 +453,26 @@ router.post('/:id/approve', requireModeratorOrAdmin, async (req, res) => {
     }
   }
 
+  let extraResponse = {};
+  if (request.type === 'password_reset') {
+    const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
+    const duelist = duelistsObj[request.duelistId];
+    if (!duelist) return res.status(404).json({ success: false, message: 'Duelist no longer exists.' });
+
+    const resetToken = crypto.randomBytes(24).toString('hex');
+    const resetExpiresAt = Date.now() + 1000 * 60 * 60 * 24 * 7; // 7 days
+
+    doc.data = setAtPath(doc.data, ['duelists', duelist.id], { ...duelist, resetToken, resetExpiresAt });
+    extraResponse = { resetToken, expiresAt: resetExpiresAt };
+  }
+
   doc.data = setAtPath(doc.data, ['requests', id], {
     ...request, status: 'approved', resolvedAt: Date.now(),
   });
   doc.markModified('data');
   await doc.save();
 
-  res.json({ success: true });
+  res.json({ success: true, ...extraResponse });
 });
 
 // POST /api/requests/:id/reject — admin rejects; nothing happens to the data.

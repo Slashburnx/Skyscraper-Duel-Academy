@@ -9,7 +9,7 @@ injectNav('requests.html');
 const STATUS_COLOR = { pending: '#E0B400', approved: '#4CAF7D', rejected: '#FF6B6B' };
 const STATUS_LABEL = { pending: '⏳ Pending', approved: '✅ Approved', rejected: '❌ Rejected' };
 
-const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase', use_ticket: '🎟️ Use Ticket', claim_account: '🎓 Account Claim' };
+const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase', use_ticket: '🎟️ Use Ticket', claim_account: '🎓 Account Claim', password_reset: '🔑 Password Reset' };
 
 function ticketDetail(r) {
   const p = r.params || {};
@@ -39,6 +39,8 @@ function requestCard(r, { showActions } = {}) {
     detail = `<strong>${r.requestedByName}</strong> used a <em>${r.ticketName}</em> — ${ticketDetail(r)}.`;
   } else if (r.type === 'claim_account') {
     detail = `Someone wants to claim <strong>${r.duelistName}</strong> with the username <strong>${r.username}</strong>.`;
+  } else if (r.type === 'password_reset') {
+    detail = `<strong>${r.duelistName}</strong> (username: ${r.username}) forgot their password.`;
   }
 
   return `
@@ -96,7 +98,18 @@ window.approveRequest = async function(id) {
   const res  = await fetch(`/api/requests/${id}/approve`, { method: 'POST', credentials: 'include' });
   const data = await res.json();
   if (!data.success) { notify(`⚠️ ${data.message || 'Could not approve'}`); return; }
-  notify('✅ Request approved');
+
+  if (data.resetToken) {
+    const link = `${window.location.origin}/reset-password.html?token=${data.resetToken}`;
+    try {
+      await navigator.clipboard.writeText(link);
+      notify('✅ Approved! Reset link copied to clipboard — send it to them.');
+    } catch {
+      prompt('Approved! Copy this reset link and send it to them (valid 7 days):', link);
+    }
+  } else {
+    notify('✅ Request approved');
+  }
   loadAdminQueue();
 };
 
