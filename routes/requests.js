@@ -8,6 +8,17 @@ const router = express.Router();
 
 const KICK_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
+function findDuelistByUsername(duelistsObj, username) {
+  const wanted = String(username || '').trim().toLowerCase();
+  if (!wanted) return null;
+  for (const [id, d] of Object.entries(duelistsObj || {})) {
+    if (d && typeof d.username === 'string' && d.username.toLowerCase() === wanted) {
+      return { id, duelist: d };
+    }
+  }
+  return null;
+}
+
 // ═══════════════════════════════════════════════════════════
 // POST /api/requests/kick-member — a Dorm Leader (logged in as
 // themselves) requests to kick a member of their own dorm.
@@ -280,6 +291,25 @@ router.post('/:id/approve', requireModeratorOrAdmin, async (req, res) => {
 
   if (!request) return res.status(404).json({ success: false, message: 'Request not found.' });
   if (request.status !== 'pending') return res.status(409).json({ success: false, message: 'This request was already resolved.' });
+
+  if (request.type === 'claim_account') {
+    const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
+    const duelist = duelistsObj[request.duelistId];
+    if (!duelist) return res.status(404).json({ success: false, message: 'Duelist no longer exists.' });
+    if (duelist.accountActive) {
+      return res.status(409).json({ success: false, message: `${duelist.name} already has an account. Reject instead.` });
+    }
+    if (findDuelistByUsername(duelistsObj, request.username)) {
+      return res.status(409).json({ success: false, message: 'That username was taken in the meantime. Reject instead.' });
+    }
+
+    doc.data = setAtPath(doc.data, ['duelists', duelist.id], {
+      ...duelist,
+      username: request.username,
+      passwordHash: request.passwordHash,
+      accountActive: true,
+    });
+  }
 
   if (request.type === 'kick_member') {
     const duelistsObj = getAtPath(doc.data, ['duelists']) || {};

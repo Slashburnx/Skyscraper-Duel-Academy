@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { getAtPath, setAtPath, loadTree } = require('../utils/tree');
 const requireDuelist = require('../middleware/duelistAuth');
 
@@ -26,6 +27,88 @@ function findDuelistByUsername(duelistsObj, username) {
 function signDuelistToken(duelistId) {
   return jwt.sign({ role: 'duelist', duelistId }, process.env.JWT_SECRET, { expiresIn: '14d' });
 }
+
+// GET /api/duelist-auth/unclaimed — public list of duelists with no account yet,
+// for the self-serve signup page. Excludes anyone with an already-pending claim.
+router.get('/unclaimed', async (req, res) => {
+  const doc = await loadTree();
+  const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
+  const requestsObj = getAtPath(doc.data, ['requests']) || {};
+
+  const pendingClaimIds = new Set(
+    Object.values(requestsObj)
+      .filter(r => r.type === 'claim_account' && r.status === 'pending')
+      .map(r => r.duelistId)
+  );
+
+  const unclaimed = Object.values(duelistsObj)
+    .filter(d => !d.accountActive && !pendingClaimIds.has(d.id))
+    .map(d => ({ duelistId: d.id, name: d.name }));
+
+  res.json({ unclaimed });
+});
+
+// POST /api/duelist-auth/request-claim  { duelistId, username, password }
+// Creates a pending request — the account only actually activates once a
+// Moderator approves it, so nobody can silently claim someone else's identity.
+router.post('/request-claim', async (req, res) => {
+  const { duelistId, username, password } = req.body;
+
+  if (!duelistId || !username || !password) {
+    return res.status(400).json({ success: false, message: 'All fields are required.' });
+  }
+  if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+    return res.status(400).json({ success: false, message: 'Username must be 3-20 characters, letters/numbers/underscores only.' });
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ success: false, message: 'Password must be at least 6 characters.' });
+  }
+
+  const doc = await loadTree();
+  const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
+  const duelist = duelistsObj[duelistId];
+  if (!duelist) return res.status(404).json({ success: false, message: 'Duelist not found.' });
+  if (duelist.accountActive) {
+    return res.status(409).json({ success: false, message: 'This duelist already has an account.' });
+  }
+
+  if (findDuelistByUsername(duelistsObj, username)) {
+    return res.status(409).json({ success: false, message: 'That username is already taken.' });
+  }
+
+  const requestsObj = getAtPath(doc.data, ['requests']) || {};
+  const existingRequests = Object.values(requestsObj).filter(r => r.type === 'claim_account' && r.status === 'pending');
+
+  if (existingRequests.some(r => r.duelistId === duelistId)) {
+    return res.status(409).json({ success: false, message: 'Someone already requested to claim this duelist — ask a moderator to check the queue.' });
+  }
+  if (existingRequests.some(r => r.username.toLowerCase() === username.toLowerCase())) {
+    return res.status(409).json({ success: false, message: 'That username is already requested by someone else, pending approval.' });
+  }
+
+  // Hash immediately — the plaintext password is never stored anywhere, even while pending.
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const id = crypto.randomBytes(8).toString('hex');
+  const request = {
+    id,
+    type: 'claim_account',
+    status: 'pending',
+    duelistId,
+    duelistName: duelist.name,
+    username,
+    passwordHash,
+    createdAt: Date.now(),
+    resolvedAt: null,
+    rejectionReason: null,
+  };
+
+  doc.data = setAtPath(doc.data, ['requests', id], request);
+  doc.markModified('data');
+  await doc.save();
+
+  res.json({ success: true });
+});
 
 // GET /api/duelist-auth/invite/:token — check an invite link is valid, before showing the claim form.
 router.get('/invite/:token', async (req, res) => {

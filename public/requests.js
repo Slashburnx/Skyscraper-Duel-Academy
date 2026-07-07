@@ -9,7 +9,7 @@ injectNav('requests.html');
 const STATUS_COLOR = { pending: '#E0B400', approved: '#4CAF7D', rejected: '#FF6B6B' };
 const STATUS_LABEL = { pending: '⏳ Pending', approved: '✅ Approved', rejected: '❌ Rejected' };
 
-const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase', use_ticket: '🎟️ Use Ticket' };
+const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase', use_ticket: '🎟️ Use Ticket', claim_account: '🎓 Account Claim' };
 
 function ticketDetail(r) {
   const p = r.params || {};
@@ -37,6 +37,8 @@ function requestCard(r, { showActions } = {}) {
     detail = `<strong>${r.requestedByName}</strong> wants to buy <strong>${r.itemName}</strong> for ${r.price.toLocaleString()} DP.`;
   } else if (r.type === 'use_ticket') {
     detail = `<strong>${r.requestedByName}</strong> used a <em>${r.ticketName}</em> — ${ticketDetail(r)}.`;
+  } else if (r.type === 'claim_account') {
+    detail = `Someone wants to claim <strong>${r.duelistName}</strong> with the username <strong>${r.username}</strong>.`;
   }
 
   return `
