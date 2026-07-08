@@ -21,9 +21,9 @@ function notify(msg) {
 }
 
 // ── Constants ──────────────────────────────────────────────
-const DORM_ICON  = { obelisk:'❄️',          ra:'⚜️',        slifer:'🏮' };
-const DORM_NAME  = { obelisk:'Obelisk Blue', ra:'Ra Yellow', slifer:'Slifer Red' };
-const DORM_COLOR = { obelisk:'#1B4FD8',      ra:'#D4A800',   slifer:'#CC1A1A' };
+const DORM_ICON  = { obelisk:'❄️',          ra:'⚜️',        slifer:'🏮',       unassigned:'❔' };
+const DORM_NAME  = { obelisk:'Obelisk Blue', ra:'Ra Yellow', slifer:'Slifer Red', unassigned:'Unassigned' };
+const DORM_COLOR = { obelisk:'#1B4FD8',      ra:'#D4A800',   slifer:'#CC1A1A',   unassigned:'#6A6A8A' };
 
 const TITLE_LIST = [
   'Moderator','Skyscraper Champion','King of Games','Queen of Games','Legendary Duelist','Dorm Leader',

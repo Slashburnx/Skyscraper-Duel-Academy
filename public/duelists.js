@@ -83,7 +83,8 @@ function renderDuelists() {
 
   let list = duelists.filter(d => {
     if (!d.name.toLowerCase().includes(q)) return false;
-    if (dlFilter !== 'all' && d.dorm !== dlFilter) return false;
+    const effectiveDorm = d.dorm || 'unassigned';
+    if (dlFilter !== 'all' && effectiveDorm !== dlFilter) return false;
     return true;
   });
 
@@ -105,9 +106,12 @@ function renderDuelists() {
   if (sort === 'dorm') {
     // Group by dorm
     let html = '';
-    ['obelisk','ra','slifer'].forEach(dorm => {
-      const dp = list.filter(d => d.dorm === dorm);
+    ['obelisk','ra','slifer','unassigned'].forEach(dorm => {
+      const dp = dorm === 'unassigned'
+        ? list.filter(d => !d.dorm || d.dorm === 'unassigned')
+        : list.filter(d => d.dorm === dorm);
       if (!dp.length && dlFilter !== 'all') return;
+      if (dorm === 'unassigned' && !dp.length) return; // don't show an empty Unassigned section by default
       const c = DORM_COLOR[dorm];
       html += `
         <div class="subsection">
@@ -131,7 +135,7 @@ function renderDuelists() {
 
 // ── Build card ─────────────────────────────────────────────
 function buildCard(d, admin) {
-  const c = DORM_COLOR[d.dorm];
+  const c = DORM_COLOR[d.dorm || 'unassigned'];
 
   const titleHtml = (d.titles||[])
     .map(t => `<span class="title-chip t-${t.replace(/\s+/g,'-')}" title="${(TITLE_BENEFITS[t]||'').replace(/"/g,'&quot;')}">${TITLE_ICON[t]||''} ${t}</span>`)
@@ -167,7 +171,7 @@ function buildCard(d, admin) {
         </div>` : ''}
       </div>
       <div style="font-size:0.68rem;color:${c};font-weight:700;letter-spacing:0.5px;margin-bottom:3px;">
-        ${DORM_ICON[d.dorm]} ${DORM_NAME[d.dorm]}
+        ${DORM_ICON[d.dorm || 'unassigned']} ${DORM_NAME[d.dorm || 'unassigned']}
       </div>
       <div style="font-size:0.82rem;color:var(--gold);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         💰 ${d.dp.toLocaleString()} DP
@@ -187,6 +191,8 @@ function buildCard(d, admin) {
           onclick="requestKick('${d.id}')">👢 Request Kick</button>` : ''}
         ${!admin && myDuelistId === d.id && (d.tickets||[]).length ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;"
           onclick="useTicket('${d.id}')">🎟️ Use a Ticket</button>` : ''}
+        ${!admin && myDuelistId === d.id && (!d.dorm || d.dorm === 'unassigned') ? `<button class="btn-icon" style="font-size:0.68rem;padding:2px 7px;font-weight:400;color:var(--gold);"
+          onclick="joinADorm('${d.id}')">🎲 Join a Dorm</button>` : ''}
       </div>
       ${titleHtml ? `<div style="margin-bottom:7px;">${titleHtml}</div>` : ''}
       <div style="margin-bottom:10px;">${archHtml}</div>
@@ -436,6 +442,20 @@ window.requestKick = async function(leaderId) {
     return;
   }
   notify(`✅ Kick request for ${target.name} sent to the admin for approval.`);
+};
+
+// ── Duelist (logged in as themselves): roll to join a dorm ──
+window.joinADorm = async function(id) {
+  if (!confirm('Roll the dice to join a dorm?\n1-2 = Slifer Red · 3-4 = Ra Yellow · 5-6 = Obelisk Blue')) return;
+
+  const res  = await fetch('/api/duelist-auth/me/join-dorm', { method: 'POST', credentials: 'include' });
+  const data = await res.json();
+
+  if (!data.success) {
+    notify(`⚠️ ${data.message || 'Could not join a dorm'}`);
+    return;
+  }
+  notify(`🎲 You rolled a ${data.roll} — welcome to ${DORM_NAME[data.dorm]}!`);
 };
 
 // ── Duelist (logged in as themselves): use one of their tickets ──

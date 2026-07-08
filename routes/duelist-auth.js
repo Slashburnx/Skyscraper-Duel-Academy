@@ -356,4 +356,26 @@ router.put('/me/avatar', requireDuelist, async (req, res) => {
   res.json({ success: true, profilePicUrl: url });
 });
 
+// POST /api/duelist-auth/me/join-dorm — a dorm-less duelist rolls 1d6 to get
+// assigned a dorm, matching the academy's official dice-roll rule. The roll
+// happens server-side so it can't be manipulated from the browser.
+router.post('/me/join-dorm', requireDuelist, async (req, res) => {
+  const doc = await loadTree();
+  const duelist = getAtPath(doc.data, ['duelists', req.duelistId]);
+  if (!duelist) return res.status(404).json({ success: false, message: 'Duelist not found.' });
+
+  if (duelist.dorm && duelist.dorm !== 'unassigned') {
+    return res.status(409).json({ success: false, message: `You're already in ${duelist.dorm}.` });
+  }
+
+  const roll = Math.floor(Math.random() * 6) + 1; // 1-6
+  const dorm = roll <= 2 ? 'slifer' : roll <= 4 ? 'ra' : 'obelisk';
+
+  doc.data = setAtPath(doc.data, ['duelists', req.duelistId], { ...duelist, dorm });
+  doc.markModified('data');
+  await doc.save();
+
+  res.json({ success: true, roll, dorm });
+});
+
 module.exports = router;
