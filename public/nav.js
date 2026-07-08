@@ -33,9 +33,6 @@ export function injectNav(activePage) {
       <div class="nav-inner">
         <a href="index.html" class="nav-logo" style="text-decoration:none;">YGO <span>Skyscraper</span></a>
         <div class="nav-links" id="nav-links">${links}</div>
-        <button class="nav-admin${adminOn ? ' on' : ''}" onclick="toggleAdmin()" id="nav-admin-btn">
-          ${adminOn ? '🔓 Admin ON' : '🔒 Admin'}
-        </button>
         <button class="nav-hamburger" id="nav-hamburger" onclick="toggleHamburger()">☰</button>
       </div>
     </nav>`;
@@ -62,19 +59,6 @@ export function injectNav(activePage) {
       setAdminSession(effective);
       document.body.classList.toggle('admin-mode', effective);
       if (typeof window.onAdminChange === 'function') window.onAdminChange(effective);
-    }
-
-    const btn = document.getElementById('nav-admin-btn');
-    if (btn) {
-      if (isModerator) {
-        btn.textContent = '🛡️ Moderator';
-        btn.classList.add('on');
-        btn.onclick = () => notify('You have Moderator access via your duelist account. Manage your session from "My Account".');
-      } else {
-        btn.textContent = isAdmin ? '🔓 Admin ON' : '🔒 Admin';
-        btn.classList.toggle('on', isAdmin);
-        btn.onclick = window.toggleAdmin;
-      }
     }
   });
 }

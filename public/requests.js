@@ -134,7 +134,9 @@ window.rejectRequest = async function(id) {
   ]);
 
   let shownAny = false;
-  if (adminRes.isAdmin)     { await loadAdminQueue(); shownAny = true; }
-  if (duelistRes.loggedIn)  { await loadMyRequests(); shownAny = true; }
+  const isModerator = !adminRes.isAdmin && duelistRes.loggedIn && duelistRes.isModerator;
+  if (adminRes.isAdmin || isModerator) { await loadAdminQueue(); shownAny = true; }
+  if (duelistRes.loggedIn && !isModerator) { await loadMyRequests(); shownAny = true; }
+  if (isModerator) { await loadMyRequests(); } // moderators can still see their own submitted requests too
   if (!shownAny) document.getElementById('req-signed-out').style.display = 'block';
 })();

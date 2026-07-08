@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin — YGO Skyscraper</title>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<div class="page-wrap" style="max-width:400px;margin:0 auto;">
+  <div class="section-title">🔒 Admin Access</div>
+  <p style="color:var(--muted);font-size:0.82rem;margin-bottom:16px;">
+    This is the original site-owner login — used for emergencies and appointing
+    Moderators. Day-to-day moderation should go through a duelist account
+    with the Moderator role instead.
+  </p>
+
+  <div id="admin-logged-out" class="card" style="padding:20px;">
+    <div class="form-group">
+      <label>Admin Password</label>
+      <input id="admin-pw-input" class="form-ctrl" type="password" autocomplete="current-password"/>
+    </div>
+    <p id="admin-login-err" class="form-err"></p>
+    <button class="btn-gold" style="width:100%;" onclick="submitAdminLogin()">Log In</button>
+  </div>
+
+  <div id="admin-logged-in" class="card" style="display:none;padding:20px;">
+    <p style="color:var(--gold);font-weight:700;margin-bottom:14px;">✅ Logged in as Admin</p>
+    <button class="btn-icon" onclick="doAdminLogout()">Log Out</button>
+
+    <hr style="border-color:var(--border);margin:18px 0;"/>
+
+    <p style="color:var(--gold);font-weight:700;margin-bottom:10px;">Change Admin Password</p>
+    <div class="form-group">
+      <label>Current Password</label>
+      <input id="admin-current-pw" class="form-ctrl" type="password" autocomplete="current-password"/>
+    </div>
+    <div class="form-group">
+      <label>New Password</label>
+      <input id="admin-new-pw" class="form-ctrl" type="password" autocomplete="new-password"/>
+    </div>
+    <p id="admin-pw-change-err" class="form-err"></p>
+    <button class="btn-gold" style="width:100%;" onclick="submitAdminPwChange()">Update Password</button>
+  </div>
+</div>
+
+<div id="notif" class="notif" style="display:none;"></div>
+
+<script src="data.js" defer></script>
+<script type="module" src="nav.js"></script>
+<script src="admin-login.js" defer></script>
+</body>
+</html>

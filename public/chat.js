@@ -29,11 +29,15 @@ const contactsEl = document.getElementById('chat-contacts');
     return;
   }
 
-  iAmAdmin = adminRes.isAdmin;
+  // A Moderator (a duelist account with the Moderator role) gets the same
+  // inbox view as literal Admin — sees every duelist's thread, not just
+  // their own. They still keep DMs too, since they're also a real duelist.
+  const isModerator = !adminRes.isAdmin && duelistRes.loggedIn && duelistRes.isModerator;
+  iAmAdmin = adminRes.isAdmin || isModerator;
   if (duelistRes.loggedIn) { myDuelistId = duelistRes.duelistId; myName = duelistRes.name; }
 
   document.getElementById('chat-app').style.display = 'block';
-  if (!iAmAdmin) document.getElementById('dm-tab-btn').style.display = 'block';
+  if (duelistRes.loggedIn) document.getElementById('dm-tab-btn').style.display = 'block';
 
   switchTab('room');
 })();
