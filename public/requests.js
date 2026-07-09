@@ -9,7 +9,7 @@ injectNav('requests.html');
 const STATUS_COLOR = { pending: '#E0B400', approved: '#4CAF7D', rejected: '#FF6B6B' };
 const STATUS_LABEL = { pending: '⏳ Pending', approved: '✅ Approved', rejected: '❌ Rejected' };
 
-const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase', use_ticket: '🎟️ Use Ticket', claim_account: '🎓 Account Claim', password_reset: '🔑 Password Reset' };
+const TYPE_LABEL = { kick_member: '👢 Kick Member', shop_purchase: '🛒 Shop Purchase', use_ticket: '🎟️ Use Ticket', claim_account: '🎓 Account Claim', password_reset: '🔑 Password Reset', new_signup: '🆕 New Signup' };
 
 function ticketDetail(r) {
   const p = r.params || {};
@@ -41,6 +41,8 @@ function requestCard(r, { showActions } = {}) {
     detail = `Someone wants to claim <strong>${r.duelistName}</strong> with the username <strong>${r.username}</strong>.`;
   } else if (r.type === 'password_reset') {
     detail = `<strong>${r.duelistName}</strong> (username: ${r.username}) forgot their password.`;
+  } else if (r.type === 'new_signup') {
+    detail = `A new visitor wants to join as <strong>${r.name}</strong> with the username <strong>${r.username}</strong>. Will start in Unassigned.`;
   }
 
   return `

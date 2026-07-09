@@ -22,6 +22,11 @@
     .stat-card { padding:14px 16px; }
     .stat-card .label { font-size:0.72rem; color:var(--muted); margin-bottom:4px; }
     .stat-card .value { font-size:1.1rem; color:var(--gold); font-weight:700; }
+    .action-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+    .mod-section { border:1px solid var(--sl); border-radius:8px; padding:16px; margin-bottom:24px; background:rgba(204,26,26,0.05); }
+    .mod-section h4 { color:var(--sl); font-family:'Cinzel',serif; font-size:0.9rem; margin-bottom:8px; }
+    .inline-form { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
+    .inline-form .form-ctrl { flex:1; min-width:140px; }
   </style>
 </head>
 <body>
@@ -52,12 +57,25 @@
       </div>
     </div>
 
+    <!-- Bio -->
+    <div class="card" style="padding:14px 16px;margin-bottom:20px;">
+      <div style="font-size:0.72rem;color:var(--muted);margin-bottom:6px;">📝 Bio</div>
+      <p id="bio-display" style="font-size:0.88rem;color:#E8E8F0;white-space:pre-wrap;"></p>
+      <div id="bio-edit-controls" style="display:none;margin-top:8px;">
+        <textarea id="bio-input" class="form-ctrl" rows="3" maxlength="300" placeholder="Tell people about yourself..." style="width:100%;resize:vertical;"></textarea>
+        <button class="btn-gold" style="margin-top:6px;padding:5px 14px;font-size:0.8rem;" onclick="saveBio()">Save Bio</button>
+      </div>
+    </div>
+
     <div class="profile-grid">
       <div class="card stat-card"><div class="label">💰 DP</div><div class="value" id="stat-dp"></div></div>
       <div class="card stat-card"><div class="label">📚 Archetype Slots</div><div class="value" id="stat-archs"></div></div>
       <div class="card stat-card"><div class="label">🎟️ Tickets Held</div><div class="value" id="stat-tickets"></div></div>
       <div class="card stat-card"><div class="label">👑 Roles</div><div class="value" id="stat-roles"></div></div>
     </div>
+
+    <!-- Self-service actions (own profile only) -->
+    <div id="self-actions" class="action-row" style="display:none;"></div>
 
     <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;" id="heading-archs">📚 My Archetypes</h3>
     <div id="profile-archs" style="margin-bottom:24px;"></div>
@@ -70,7 +88,72 @@
 
     <div id="profile-requests-section">
       <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;">📨 My Requests</h3>
-      <div id="profile-requests"></div>
+      <div id="profile-requests" style="margin-bottom:24px;"></div>
+    </div>
+
+    <!-- Moderator controls (admin or moderator viewing ANY profile) -->
+    <div id="mod-controls" style="display:none;">
+      <h3 style="color:var(--sl);font-family:'Cinzel',serif;margin-bottom:12px;">🛡️ Moderator Controls</h3>
+
+      <div class="mod-section">
+        <h4>Name & Dorm</h4>
+        <div class="inline-form">
+          <input id="mod-name" class="form-ctrl" type="text"/>
+          <button class="btn-gold" style="padding:6px 14px;font-size:0.8rem;" onclick="modSaveName()">Save Name</button>
+        </div>
+        <div class="inline-form">
+          <select id="mod-dorm" class="form-ctrl">
+            <option value="unassigned">❔ Unassigned</option>
+            <option value="obelisk">❄️ Obelisk Blue</option>
+            <option value="ra">⚜️ Ra Yellow</option>
+            <option value="slifer">🏮 Slifer Red</option>
+          </select>
+          <button class="btn-gold" style="padding:6px 14px;font-size:0.8rem;" onclick="modSaveDorm()">Place in Dorm</button>
+        </div>
+      </div>
+
+      <div class="mod-section">
+        <h4>DP Adjustment</h4>
+        <div class="inline-form">
+          <input id="mod-dp-amount" class="form-ctrl" type="number" min="1" placeholder="Amount"/>
+          <button class="btn-gold" style="padding:6px 14px;font-size:0.8rem;" onclick="modGrantDP()">💰 Grant</button>
+          <button class="btn-icon" style="padding:6px 14px;font-size:0.8rem;color:var(--sl);" onclick="modReduceDP()">➖ Reduce</button>
+        </div>
+      </div>
+
+      <div class="mod-section">
+        <h4>Assign / Remove Archetypes</h4>
+        <div class="inline-form">
+          <select id="mod-arch-select" class="form-ctrl"></select>
+          <button class="btn-gold" style="padding:6px 14px;font-size:0.8rem;" onclick="modAddArchetype()">+ Assign</button>
+        </div>
+        <div id="mod-archs-list"></div>
+      </div>
+
+      <div class="mod-section">
+        <h4>Assign / Remove Tickets</h4>
+        <div class="inline-form">
+          <select id="mod-ticket-select" class="form-ctrl"></select>
+          <button class="btn-gold" style="padding:6px 14px;font-size:0.8rem;" onclick="modAddTicket()">+ Assign</button>
+        </div>
+        <div id="mod-tickets-list"></div>
+      </div>
+
+      <div class="mod-section">
+        <h4>Roles</h4>
+        <div id="mod-roles-checks" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;"></div>
+        <button class="btn-gold" style="padding:6px 14px;font-size:0.8rem;" onclick="modSaveRoles()">Save Roles</button>
+      </div>
+
+      <div class="mod-section" id="mod-kick-section" style="display:none;">
+        <h4>Dorm Leader Action</h4>
+        <button class="btn-icon" style="color:var(--sl);" onclick="modKickMember()">👢 Kick a Member (instant, admin override)</button>
+      </div>
+
+      <div class="mod-section">
+        <h4 style="color:var(--sl);">Danger Zone</h4>
+        <button class="btn-icon" style="color:var(--sl);" onclick="modDeleteDuelist()">🗑️ Delete This Duelist</button>
+      </div>
     </div>
   </div>
 </div>

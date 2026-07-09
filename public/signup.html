@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Claim Your Account — YGO Skyscraper</title>
+  <title>Sign Up — YGO Skyscraper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
   <link rel="stylesheet" href="style.css"/>
@@ -13,25 +13,17 @@
 <div id="nav-root"></div>
 
 <div class="page-wrap" style="max-width:440px;margin:0 auto;">
-  <div class="section-title">🎓 Claim Your Account</div>
+  <div class="section-title">🎓 Sign Up</div>
   <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;">
-    Pick your name from the list, choose a username and password. A moderator
-    reviews it before your account goes live — this keeps people from
-    claiming a name that isn't theirs.
+    Create your duelist. A moderator reviews new signups before they go live —
+    once approved, you'll start in the Unassigned dorm and can roll to join a
+    real dorm from your profile.
   </p>
 
-  <div id="signup-loading" style="color:var(--muted);font-size:0.9rem;">Loading unclaimed duelists...</div>
-
-  <div id="signup-empty" class="card" style="display:none;padding:20px;">
-    <p style="color:var(--muted);font-size:0.9rem;">
-      No unclaimed duelists right now. Ask a moderator to add you, or check back later.
-    </p>
-  </div>
-
-  <div id="signup-form-wrap" class="card" style="display:none;padding:20px;">
+  <div id="signup-form-wrap" class="card" style="padding:20px;">
     <div class="form-group">
-      <label>Which duelist are you?</label>
-      <select id="signup-duelist" class="form-ctrl"></select>
+      <label>Your Name</label>
+      <input id="signup-name" class="form-ctrl" type="text" placeholder="How you'll appear on the site"/>
     </div>
     <div class="form-group">
       <label>Choose a username</label>

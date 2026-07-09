@@ -292,6 +292,32 @@ router.post('/:id/approve', requireModeratorOrAdmin, async (req, res) => {
   if (!request) return res.status(404).json({ success: false, message: 'Request not found.' });
   if (request.status !== 'pending') return res.status(409).json({ success: false, message: 'This request was already resolved.' });
 
+  if (request.type === 'new_signup') {
+    const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
+
+    if (findDuelistByUsername(duelistsObj, request.username)) {
+      return res.status(409).json({ success: false, message: 'That username was taken in the meantime. Reject instead.' });
+    }
+    const nameTaken = Object.values(duelistsObj).some(d => d.name.toLowerCase() === request.name.toLowerCase());
+    if (nameTaken) {
+      return res.status(409).json({ success: false, message: 'That name was taken in the meantime. Reject instead.' });
+    }
+
+    const newId = crypto.randomBytes(6).toString('hex');
+    doc.data = setAtPath(doc.data, ['duelists', newId], {
+      id: newId,
+      name: request.name,
+      dorm: 'unassigned',
+      dp: 0,
+      titles: [],
+      archs: [],
+      tickets: [],
+      username: request.username,
+      passwordHash: request.passwordHash,
+      accountActive: true,
+    });
+  }
+
   if (request.type === 'claim_account') {
     const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
     const duelist = duelistsObj[request.duelistId];

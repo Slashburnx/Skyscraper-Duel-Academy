@@ -378,4 +378,66 @@ router.post('/me/join-dorm', requireDuelist, async (req, res) => {
   res.json({ success: true, roll, dorm });
 });
 
+// POST /api/duelist-auth/register  { name, username, password }
+// "Facebook-style" signup: creates a brand NEW duelist identity (not claiming
+// a pre-made one). Still needs Moderator approval before it activates, and
+// always starts in the Unassigned dorm — a mod places them for real later.
+router.post('/register', async (req, res) => {
+  const { name, username, password } = req.body;
+
+  if (!name || !name.trim()) return res.status(400).json({ success: false, message: 'Enter your name.' });
+  if (!username || !password) return res.status(400).json({ success: false, message: 'All fields are required.' });
+  if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+    return res.status(400).json({ success: false, message: 'Username must be 3-20 characters, letters/numbers/underscores only.' });
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ success: false, message: 'Password must be at least 6 characters.' });
+  }
+
+  const doc = await loadTree();
+  const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
+
+  if (findDuelistByUsername(duelistsObj, username)) {
+    return res.status(409).json({ success: false, message: 'That username is already taken.' });
+  }
+
+  const trimmedName = name.trim();
+  const nameTaken = Object.values(duelistsObj).some(d => d.name.toLowerCase() === trimmedName.toLowerCase());
+  if (nameTaken) {
+    return res.status(409).json({ success: false, message: 'Someone already has that name — try adding a last initial or number.' });
+  }
+
+  const requestsObj = getAtPath(doc.data, ['requests']) || {};
+  const existingPending = Object.values(requestsObj).filter(r => r.type === 'new_signup' && r.status === 'pending');
+
+  if (existingPending.some(r => r.username.toLowerCase() === username.toLowerCase())) {
+    return res.status(409).json({ success: false, message: 'That username is already requested by someone else, pending approval.' });
+  }
+  if (existingPending.some(r => r.name.toLowerCase() === trimmedName.toLowerCase())) {
+    return res.status(409).json({ success: false, message: 'That name is already requested by someone else, pending approval.' });
+  }
+
+  // Hash immediately — the plaintext password is never stored anywhere, even while pending.
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const id = crypto.randomBytes(8).toString('hex');
+  const request = {
+    id,
+    type: 'new_signup',
+    status: 'pending',
+    name: trimmedName,
+    username,
+    passwordHash,
+    createdAt: Date.now(),
+    resolvedAt: null,
+    rejectionReason: null,
+  };
+
+  doc.data = setAtPath(doc.data, ['requests', id], request);
+  doc.markModified('data');
+  await doc.save();
+
+  res.json({ success: true });
+});
+
 module.exports = router;

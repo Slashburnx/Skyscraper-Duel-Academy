@@ -38,58 +38,21 @@
 
 </div>
 
-<!-- ADD / EDIT DUELIST MODAL -->
+<!-- ADD DUELIST MODAL — name only; everything else is set up on their profile afterward -->
 <div class="modal-overlay" id="modal-duelist">
-  <div class="modal" style="max-width:500px;">
-    <h2 id="modal-d-title">Add Duelist</h2>
-    <input type="hidden" id="d-id"/>
+  <div class="modal" style="max-width:420px;">
+    <h2>Add Duelist</h2>
+    <p style="color:var(--muted);font-size:0.8rem;margin-bottom:12px;">
+      Starts in Unassigned with 0 DP and nothing else — set up dorm, DP,
+      archetypes, tickets, and roles from their profile page afterward.
+    </p>
     <div class="form-group">
       <label>Name</label>
       <input class="form-ctrl" type="text" id="d-name" placeholder="Duelist name"/>
     </div>
-    <div class="form-group">
-      <label>Dorm</label>
-      <select class="form-ctrl" id="d-dorm">
-        <option value="obelisk">❄️ Obelisk Blue</option>
-        <option value="ra">⚜️ Ra Yellow</option>
-        <option value="slifer" selected>🏮 Slifer Red</option>
-        <option value="unassigned">❔ Unassigned</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>DP</label>
-      <input class="form-ctrl" type="number" id="d-dp" placeholder="0" min="0"/>
-    </div>
-    <div class="form-group">
-      <label>Titles</label>
-      <div id="d-titles" style="display:flex;flex-wrap:wrap;gap:5px;padding:8px;
-        background:var(--surface2);border:1px solid var(--border);border-radius:6px;min-height:40px;"></div>
-    </div>
-    <div class="form-group">
-      <label>Archetypes (max 4)</label>
-      <div id="d-slots"></div>
-    </div>
     <div class="modal-actions">
       <button class="btn-outline" onclick="closeModal('modal-duelist')">Cancel</button>
-      <button class="btn-gold" onclick="submitDuelist()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADD TICKET TO DUELIST MODAL -->
-<div class="modal-overlay" id="modal-add-ticket-d">
-  <div class="modal">
-    <h2>🎫 Add Ticket to Duelist</h2>
-    <input type="hidden" id="atd-id"/>
-    <div class="form-group">
-      <label>Ticket</label>
-      <select class="form-ctrl" id="atd-ticket"></select>
-    </div>
-    <div style="font-size:0.78rem;color:var(--muted);margin-top:-8px;margin-bottom:12px;"
-      id="atd-stock-info"></div>
-    <div class="modal-actions">
-      <button class="btn-outline" onclick="closeModal('modal-add-ticket-d')">Cancel</button>
-      <button class="btn-gold" onclick="submitAddTicketToDuelist()">Add Ticket</button>
+      <button class="btn-gold" onclick="submitDuelist()">Add</button>
     </div>
   </div>
 </div>
