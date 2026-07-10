@@ -872,3 +872,30 @@ body.admin-mode .admin-only-block { display: block !important; }
   .home-grid   { grid-template-columns: 1fr; }
   .tbl td:nth-child(2), .tbl th:nth-child(2) { display: none; }
 }
+/* ══════════════════════════════════════════════
+   LOGIN GATE (logged-out visitors)
+══════════════════════════════════════════════ */
+body.gated > *:not(#login-gate-overlay) {
+  filter: blur(10px);
+  pointer-events: none;
+  user-select: none;
+}
+#login-gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8,8,14,0.55);
+}
+.login-gate-card {
+  background: rgba(14,14,22,0.98);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}

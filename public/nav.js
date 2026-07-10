@@ -60,7 +60,38 @@ export function injectNav(activePage) {
       document.body.classList.toggle('admin-mode', effective);
       if (typeof window.onAdminChange === 'function') window.onAdminChange(effective);
     }
+
+    // Gate the page for anyone not logged in at all — except the auth-flow
+    // pages themselves (they all pass activePage=null), which must stay
+    // reachable so people can actually log in or sign up in the first place.
+    if (activePage) showLoginGateIfNeeded(isAdmin, duelistStatus.loggedIn);
   });
+}
+
+// ── Login gate: logged-out visitors see a blurred page + login/signup prompt ──
+function showLoginGateIfNeeded(isAdmin, isDuelist) {
+  if (isAdmin || isDuelist) {
+    document.body.classList.remove('gated');
+    const existing = document.getElementById('login-gate-overlay');
+    if (existing) existing.remove();
+    return;
+  }
+
+  document.body.classList.add('gated');
+  if (document.getElementById('login-gate-overlay')) return; // already shown
+
+  const overlay = document.createElement('div');
+  overlay.id = 'login-gate-overlay';
+  overlay.innerHTML = `
+    <div class="login-gate-card">
+      <div class="nav-logo" style="justify-content:center;margin-bottom:6px;">YGO <span>Skyscraper</span></div>
+      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;">
+        Log in or sign up to enter the academy.
+      </p>
+      <a href="duelist-login.html" class="btn-gold" style="display:block;text-decoration:none;margin-bottom:10px;">Log In</a>
+      <a href="signup.html" class="btn-icon" style="display:block;text-decoration:none;">Sign Up</a>
+    </div>`;
+  document.body.appendChild(overlay);
 }
 
 // ── Hamburger ──────────────────────────────────────────────
