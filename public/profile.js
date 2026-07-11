@@ -18,6 +18,7 @@ let currentDuelist = null;
 let allDuelists = [];
 let archCatalog = [];
 let ticketCatalog = [];
+let dmPollTimer = null;
 
 (async function init() {
   const res  = await fetch('/api/duelist-auth/check', { credentials: 'include' });
@@ -93,6 +94,9 @@ async function loadProfile() {
   // ── Self-service action buttons ──
   renderSelfActions(d);
 
+  // ── Direct message (viewing someone else while logged in) ──
+  setupDmSection(d);
+
   // ── Archetypes ──
   const archs = d.archs || [];
   document.getElementById('profile-archs').innerHTML = archs.length
@@ -141,6 +145,66 @@ async function loadProfile() {
   // ── Moderator controls ──
   renderModControls(d);
 }
+
+// ═══════════════════════════════════════════════════════════
+// DIRECT MESSAGE (shown when logged in as a duelist, viewing someone else)
+// ═══════════════════════════════════════════════════════════
+function setupDmSection(d) {
+  const wrap = document.getElementById('dm-section');
+  if (dmPollTimer) { clearInterval(dmPollTimer); dmPollTimer = null; }
+
+  if (!myId || isOwnProfile) { wrap.style.display = 'none'; return; }
+
+  wrap.style.display = 'block';
+  document.getElementById('dm-heading').textContent = `💬 Message ${d.name}`;
+  loadDmMessages();
+  dmPollTimer = setInterval(loadDmMessages, 4000);
+}
+
+function escapeHtmlProfile(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+async function loadDmMessages() {
+  const res  = await fetch(`/api/chat/dm/${viewingId}`, { credentials: 'include' });
+  const data = await res.json();
+  const messages = data.messages || [];
+  const box = document.getElementById('dm-messages');
+
+  if (!messages.length) {
+    box.innerHTML = '<p style="color:var(--muted);font-size:0.82rem;">No messages yet — say hello!</p>';
+    return;
+  }
+  const wasAtBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 30;
+
+  box.innerHTML = messages.map(m => `
+    <div style="margin-bottom:8px;">
+      <div style="font-size:0.7rem;color:${m.senderId === myId ? '#7FB8FF' : 'var(--gold)'};margin-bottom:1px;">
+        ${m.senderName} <span style="color:var(--muted);">${new Date(m.createdAt).toLocaleString()}</span>
+      </div>
+      <div style="font-size:0.84rem;color:#E8E8F0;white-space:pre-wrap;">${escapeHtmlProfile(m.text)}</div>
+    </div>`).join('');
+
+  if (wasAtBottom) box.scrollTop = box.scrollHeight;
+}
+
+window.sendDM = async function() {
+  const input = document.getElementById('dm-input');
+  const text  = input.value.trim();
+  if (!text) return;
+
+  const res  = await fetch(`/api/chat/dm/${viewingId}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
+    body: JSON.stringify({ text }),
+  });
+  const data = await res.json();
+  if (!data.success) { notify(`⚠️ ${data.message || 'Could not send'}`); return; }
+
+  input.value = '';
+  loadDmMessages();
+};
 
 // ── Save the full duelist object back to the server ─────────
 async function saveDuelist(updated) {
@@ -546,3 +610,12 @@ window.modDeleteDuelist = async function() {
     window.location.href = 'duelists.html';
   } else notify('⚠️ Could not delete duelist');
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dmInput = document.getElementById('dm-input');
+  if (dmInput) {
+    dmInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDM(); }
+    });
+  }
+});

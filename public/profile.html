@@ -77,6 +77,18 @@
     <!-- Self-service actions (own profile only) -->
     <div id="self-actions" class="action-row" style="display:none;"></div>
 
+    <!-- Direct message (viewing someone ELSE's profile, while logged in) -->
+    <div id="dm-section" class="card" style="display:none;padding:16px;margin-bottom:24px;">
+      <div style="font-size:0.85rem;color:var(--gold);font-weight:700;margin-bottom:10px;" id="dm-heading"></div>
+      <div id="dm-messages" style="height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;
+        padding:10px;margin-bottom:10px;background:rgba(0,0,0,0.15);"></div>
+      <div style="display:flex;gap:8px;">
+        <textarea id="dm-input" class="form-ctrl" rows="1" maxlength="1000" placeholder="Type a message..."
+          style="flex:1;resize:none;height:40px;"></textarea>
+        <button class="btn-gold" onclick="sendDM()">Send</button>
+      </div>
+    </div>
+
     <h3 style="color:var(--gold);font-family:'Cinzel',serif;margin-bottom:10px;" id="heading-archs">📚 My Archetypes</h3>
     <div id="profile-archs" style="margin-bottom:24px;"></div>
 

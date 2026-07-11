@@ -17,7 +17,7 @@ const NAV_PAGES = [
   ['rules.html',      '📖 Rules'],
   ['requests.html',   '📋 Requests'],
   ['chat.html',       '💬 Chat'],
-  ['profile.html',    '🔑 My Account'],
+  ['profile.html',    '👤 Profile'],
 ];
 
 // ── Build and inject nav ───────────────────────────────────

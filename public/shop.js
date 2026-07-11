@@ -25,7 +25,7 @@ function buildArchRow(name, section) {
   let statusBadge;
   if (unavail)        statusBadge = '<span class="badge b-grey">Unavailable</span>';
   else if (forbidden) statusBadge = '<span class="badge b-red">Forbidden</span>';
-  else if (owners.length > 0) statusBadge = `<span class="badge ${taken ? 'b-red' : 'b-blue'}">${owners.join(', ')} (${owners.length}/${ownerLimit})${taken ? '' : ' — still available'}</span>`;
+  else if (owners.length > 0) statusBadge = `<span class="badge ${taken ? 'b-red' : 'b-blue'}">${owners.map(o => `<a href="profile.html?id=${o.id}" style="color:inherit;">${o.name}</a>`).join(', ')} (${owners.length}/${ownerLimit})${taken ? '' : ' — still available'}</span>`;
   else                statusBadge = '<span class="badge b-green">Available</span>';
 
   const priceCell = (unavail || forbidden)

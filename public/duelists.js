@@ -146,9 +146,14 @@ function buildCard(d, admin) {
     : `<span style="color:var(--faint);font-size:0.74rem;font-style:italic;">No tickets</span>`;
 
   return `
-    <div class="duelist-card" style="border-color:${c}33;">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:2px;">
-        <a href="profile.html?id=${d.id}" style="font-family:'Cinzel',serif;font-weight:700;font-size:0.95rem;color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color=''">${d.name}</a>
+    <a href="profile.html?id=${d.id}" class="duelist-card" style="border-color:${c}33;display:block;text-decoration:none;color:inherit;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px;">
+        ${d.profilePicUrl
+          ? `<img src="${d.profilePicUrl}" alt="${d.name}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid ${c};flex-shrink:0;"/>`
+          : `<div style="width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);
+              display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--muted);flex-shrink:0;">👤</div>`
+        }
+        <span style="font-family:'Cinzel',serif;font-weight:700;font-size:0.95rem;">${d.name}</span>
       </div>
       <div style="font-size:0.68rem;color:${c};font-weight:700;letter-spacing:0.5px;margin-bottom:3px;">
         ${DORM_ICON[d.dorm || 'unassigned']} ${DORM_NAME[d.dorm || 'unassigned']}
@@ -169,7 +174,7 @@ function buildCard(d, admin) {
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:2px;">${ticketHtml}</div>
       </div>
-    </div>`;
+    </a>`;
 }
 
 // ── Open ADD ───────────────────────────────────────────────

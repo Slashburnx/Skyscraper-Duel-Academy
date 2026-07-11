@@ -67,7 +67,7 @@ function getShopPremium()  { return [...(cache.shop.premium || [])]; }
 function getArchOwners(name, duelists) {
   return (duelists || getDuelists())
     .filter(d => (d.archs || []).includes(name))
-    .map(d => d.name);
+    .map(d => ({ id: d.id, name: d.name }));
 }
 
 // ── Setters (persist to the server, then update the cache) ────

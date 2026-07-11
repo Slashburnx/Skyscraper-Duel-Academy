@@ -102,7 +102,7 @@ nav {
 }
 .nav-admin.on { background: var(--sl); color: #fff; }
 
-.nav-hamburger { display: none; }
+.nav-hamburger { display: none; margin-left: auto; }
 
 /* ── Mobile: nav links collapse into a popup, hamburger shows the toggle ── */
 @media (max-width: 860px) {

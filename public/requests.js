@@ -26,21 +26,25 @@ function ticketDetail(r) {
   }
 }
 
+function nameLink(id, name) {
+  return id ? `<a href="profile.html?id=${id}" style="color:inherit;">${name}</a>` : name;
+}
+
 function requestCard(r, { showActions } = {}) {
   const when = new Date(r.createdAt).toLocaleString();
   let detail = '';
   if (r.type === 'kick_member') {
-    detail = `<strong>${r.requestedByName}</strong> (Dorm Leader) wants to kick <strong>${r.targetName}</strong>` +
+    detail = `<strong>${nameLink(r.requestedBy, r.requestedByName)}</strong> (Dorm Leader) wants to kick <strong>${nameLink(r.targetId, r.targetName)}</strong>` +
               (r.archToRemove ? ` — would lose the archetype <em>${r.archToRemove}</em>` : '') +
               ` and 10,000 DP.`;
   } else if (r.type === 'shop_purchase') {
-    detail = `<strong>${r.requestedByName}</strong> wants to buy <strong>${r.itemName}</strong> for ${r.price.toLocaleString()} DP.`;
+    detail = `<strong>${nameLink(r.requestedBy, r.requestedByName)}</strong> wants to buy <strong>${r.itemName}</strong> for ${r.price.toLocaleString()} DP.`;
   } else if (r.type === 'use_ticket') {
-    detail = `<strong>${r.requestedByName}</strong> used a <em>${r.ticketName}</em> — ${ticketDetail(r)}.`;
+    detail = `<strong>${nameLink(r.requestedBy, r.requestedByName)}</strong> used a <em>${r.ticketName}</em> — ${ticketDetail(r)}.`;
   } else if (r.type === 'claim_account') {
-    detail = `Someone wants to claim <strong>${r.duelistName}</strong> with the username <strong>${r.username}</strong>.`;
+    detail = `Someone wants to claim <strong>${nameLink(r.duelistId, r.duelistName)}</strong> with the username <strong>${r.username}</strong>.`;
   } else if (r.type === 'password_reset') {
-    detail = `<strong>${r.duelistName}</strong> (username: ${r.username}) forgot their password.`;
+    detail = `<strong>${nameLink(r.duelistId, r.duelistName)}</strong> (username: ${r.username}) forgot their password.`;
   } else if (r.type === 'new_signup') {
     detail = `A new visitor wants to join as <strong>${r.name}</strong> with the username <strong>${r.username}</strong>. Will start in Unassigned.`;
   }
