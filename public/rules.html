@@ -3,80 +3,92 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Rules — YGO Skyscraper</title>
+  <title>Forum — YGO Skyscraper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    .cat-card { padding:16px; margin-bottom:12px; cursor:pointer; display:block; text-decoration:none; color:inherit; }
+    .cat-card:hover { border-color: rgba(200,155,0,0.4); }
+    .cat-card .cname { font-family:'Cinzel',serif; color:var(--gold); font-size:1rem; font-weight:700; }
+    .cat-card .cdesc { color:var(--muted); font-size:0.82rem; margin-top:4px; }
+    .cat-card .ccount { color:var(--muted); font-size:0.72rem; margin-top:6px; }
+    .thread-row { padding:12px 16px; margin-bottom:8px; display:block; text-decoration:none; color:inherit; }
+    .thread-row:hover { border-color: rgba(200,155,0,0.4); }
+    .thread-row .ttitle { font-weight:700; font-size:0.92rem; }
+    .thread-row .tmeta { color:var(--muted); font-size:0.72rem; margin-top:4px; }
+    .reply-card { padding:10px 14px; margin-bottom:8px; }
+    .reply-who { font-size:0.75rem; color:var(--gold); margin-bottom:3px; }
+    .reply-when { color:var(--muted); font-size:0.65rem; margin-left:6px; }
+    .reply-text { font-size:0.86rem; color:#E8E8F0; white-space:pre-wrap; }
+    .breadcrumb { font-size:0.8rem; color:var(--muted); margin-bottom:14px; }
+    .breadcrumb a { color:var(--gold); text-decoration:none; }
+  </style>
 </head>
 <body>
 
 <div id="nav-root"></div>
 
 <div class="page-wrap">
-  <div class="section-title">📖 Rules &amp; Info</div>
-  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;">
-    Official rules, ticket explanations, and academy guidelines — written and maintained by the mod.
-  </p>
+  <div class="section-title">💬 Forum</div>
 
-  <!-- ADD SECTION (admin only) -->
-  <div style="margin-bottom:20px;">
-    <button class="btn-gold admin-only" onclick="openAddRule()">➕ Add Section</button>
+  <!-- CATEGORY LIST -->
+  <div id="view-categories" style="display:none;">
+    <div id="cat-list"></div>
   </div>
 
-  <!-- RULES LIST -->
-  <div id="rules-list"></div>
-</div>
+  <!-- THREAD LIST (within a category) -->
+  <div id="view-threads" style="display:none;">
+    <div class="breadcrumb"><a href="rules.html">← All Boards</a></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.1rem;font-weight:700;" id="thread-list-heading"></div>
+      <button class="btn-gold" id="new-thread-btn" style="display:none;" onclick="openNewThread()">+ New Thread</button>
+    </div>
+    <div id="thread-list"></div>
+  </div>
 
-<!-- ADD / EDIT RULE MODAL -->
-<div class="modal-overlay" id="modal-rule">
-  <div class="modal">
-    <h2 id="modal-rule-title">Add Section</h2>
-    <input type="hidden" id="ru-id"/>
+  <!-- NEW THREAD FORM -->
+  <div id="view-new-thread" class="card" style="display:none;padding:20px;">
+    <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:1rem;font-weight:700;margin-bottom:14px;">+ New Thread</div>
     <div class="form-group">
-      <label>Section Title</label>
-      <input class="form-ctrl" id="ru-title" placeholder="e.g. Deck Coffin Ticket"/>
+      <label>Title</label>
+      <input id="new-thread-title" class="form-ctrl" type="text" maxlength="150"/>
     </div>
     <div class="form-group">
-      <label>Content</label>
-      <textarea class="form-ctrl" id="ru-body" rows="7"
-        placeholder="Explain the rule, ticket, or guideline in detail…"
-        style="min-height:140px;"></textarea>
+      <label>Body</label>
+      <textarea id="new-thread-body" class="form-ctrl" rows="6" style="width:100%;resize:vertical;" maxlength="5000"></textarea>
     </div>
-    <div class="modal-actions">
-      <button class="btn-outline" onclick="closeModal('modal-rule')">Cancel</button>
-      <button class="btn-gold" onclick="submitRule()">Save</button>
+    <p id="new-thread-err" class="form-err"></p>
+    <div style="display:flex;gap:8px;">
+      <button class="btn-gold" onclick="submitNewThread()">Post Thread</button>
+      <button class="btn-outline" onclick="cancelNewThread()">Cancel</button>
     </div>
   </div>
-</div>
 
-<!-- ADMIN LOGIN MODAL -->
-<div class="modal-overlay" id="modal-admin">
-  <div class="modal">
-    <h2>🔐 Admin Login</h2>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="admin-pw-inp" class="form-ctrl" placeholder="Enter password"
-        onkeydown="if(event.key==='Enter') doAdminLogin()" autocomplete="off"/>
-      <div id="admin-pw-err" class="form-err"></div>
+  <!-- THREAD DETAIL -->
+  <div id="view-thread" style="display:none;">
+    <div class="breadcrumb" id="thread-breadcrumb"></div>
+    <div class="card" style="padding:20px;margin-bottom:20px;">
+      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.15rem;font-weight:700;margin-bottom:6px;" id="thread-title"></div>
+      <div style="font-size:0.75rem;color:var(--muted);margin-bottom:14px;" id="thread-meta"></div>
+      <div style="font-size:0.9rem;color:#E8E8F0;white-space:pre-wrap;" id="thread-body"></div>
+      <div id="thread-actions" style="margin-top:14px;display:none;">
+        <button class="btn-icon" style="color:var(--sl);" onclick="deleteThread()">🗑️ Delete Thread</button>
+        <button class="btn-icon" id="pin-btn" style="display:none;" onclick="togglePin()">📌 Toggle Pin</button>
+      </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn-outline" onclick="closeModal('modal-admin')">Cancel</button>
-      <button class="btn-gold" onclick="doAdminLogin()">Login</button>
-    </div>
-  </div>
-</div>
 
-<!-- CHANGE PASSWORD MODAL -->
-<div class="modal-overlay" id="modal-change-pw">
-  <div class="modal">
-    <h2>🔑 Change Password</h2>
-    <div class="form-group"><label>Current Password</label><input type="password" id="pw-cur" class="form-ctrl"/></div>
-    <div class="form-group"><label>New Password</label><input type="password" id="pw-new" class="form-ctrl"/></div>
-    <div class="form-group"><label>Confirm New Password</label><input type="password" id="pw-conf" class="form-ctrl"/></div>
-    <div id="pw-err" class="form-err"></div>
-    <div class="modal-actions">
-      <button class="btn-outline" onclick="closeModal('modal-change-pw')">Cancel</button>
-      <button class="btn-gold" onclick="doChangePassword()">Save Password</button>
+    <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:0.95rem;font-weight:700;margin-bottom:10px;" id="reply-count-heading"></div>
+    <div id="reply-list" style="margin-bottom:20px;"></div>
+
+    <div id="reply-form-wrap" class="card" style="padding:16px;display:none;">
+      <textarea id="reply-input" class="form-ctrl" rows="3" style="width:100%;resize:vertical;" maxlength="2000" placeholder="Write a reply..."></textarea>
+      <button class="btn-gold" style="margin-top:8px;" onclick="submitReply()">Reply</button>
+    </div>
+    <div id="reply-signed-out" class="card" style="padding:16px;display:none;">
+      <p style="color:var(--muted);font-size:0.85rem;">
+        <a href="duelist-login.html" style="color:var(--gold);">Log in</a> to reply.
+      </p>
     </div>
   </div>
 </div>
@@ -84,8 +96,7 @@
 <div id="notif" class="notif" style="display:none;"></div>
 
 <script src="data.js" defer></script>
-<script type="module" src="store.js"></script>
 <script type="module" src="nav.js"></script>
-<script src="rules.js" defer></script>
+<script src="forum.js" defer></script>
 </body>
 </html>

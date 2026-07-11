@@ -12,6 +12,7 @@ const adminRoutes = require('./routes/admin');
 const duelistAuthRoutes = require('./routes/duelist-auth');
 const requestsRoutes = require('./routes/requests');
 const chatRoutes = require('./routes/chat');
+const forumRoutes = require('./routes/forum');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/duelist-auth', duelistAuthRoutes);
 app.use('/api/requests', requestsRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/forum', forumRoutes);
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 

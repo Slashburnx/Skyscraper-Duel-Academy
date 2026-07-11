@@ -14,7 +14,7 @@ const NAV_PAGES = [
   ['exams.html',      '📝 Exams'],
   ['wheel.html',      '🎡 Wheel'],
   ['bracket.html',    '🏆 Bracket'],
-  ['rules.html',      '📖 Rules'],
+  ['rules.html',      '💬 Forum'],
   ['requests.html',   '📋 Requests'],
   ['chat.html',       '💬 Chat'],
   ['profile.html',    '👤 Profile'],
