@@ -38,21 +38,21 @@ const TITLE_ICON = {
 // Shown as a tooltip on each role chip/checkbox so admins can see what a role
 // actually does without leaving the page.
 const TITLE_BENEFITS = {
-  'Moderator':            'Full site edit access — same powers as the original Admin login, but tied to this duelist\'s own account.',
+  'Moderator':            'Full site edit access.',
   'Skyscraper Champion': '+1 Deck Slot · Immune to Force Trade · Double Starter Allowance · 1 Forbidden Hammer Ticket after every KOG Tournament',
   'King of Games':        '+1 Deck Slot · May activate Magnet Ring once a month (awarded to the King of Games Tournament champion)',
-  'Queen of Games':       '+1 Deck Slot · May activate Magnet Ring once a month (personal badge for a King of Games Tournament champion — the tournament itself keeps its official name)',
+  'Queen of Games':       '+1 Deck Slot · May activate Magnet Ring once a month (awarded to the king of Games Tournament champion)',
   'Legendary Duelist':    '+1 Deck Slot (awarded for #1 on the Ranked Duels leaderboard)',
   'Dorm Leader':          'May kick 1 dorm member per month · May lend a deck to a memberless dorm-mate',
-  'GOAT Champion':        'No additional effects (title only)',
-  'Genesys Champion':     'No additional effects (title only)',
+  'GOAT Champion':        'No additional effects.',
+  'Genesys Champion':     'No additional effects.',
   'Forbidden Master':     'May include 2 different Forbidden Cards in future Banned Card Tournaments',
-  'The Great One':        'No additional effects (title only)',
-  'Top Scorer':           'No additional effects (awarded for 1st place in an exam)',
+  'The Great One':        'No additional effects.',
+  'Top Scorer':           'No additional effects (awarded for 1st place in an exam).',
   'Gambler':              'DP received from any effect is automatically doubled',
   'Null Sovereign':       'May include 1 Forbidden Card during eligible tournaments',
-  'Dropout Boy':          'No gameplay effect — awarded for the lowest exam score',
-  'Dropout Girl':         'No gameplay effect — awarded for the lowest exam score',
+  'Dropout Boy':          'No gameplay effect (awarded for the lowest exam score)',
+  'Dropout Girl':         'No gameplay effect (awarded for the lowest exam score)',
 };
 
 const EXAM_TYPES = ['Writing','Dueling Opponent','Dueling Mod'];
