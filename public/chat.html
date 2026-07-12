@@ -40,6 +40,11 @@
 
   <div id="chat-app" style="display:none;">
     <div class="chat-messages" id="chat-messages"></div>
+    <div style="margin-bottom:8px;">
+      <input type="file" id="chat-image-file" accept="image/*" style="display:none;" onchange="handleChatImage(event)"/>
+      <button class="btn-icon" onclick="document.getElementById('chat-image-file').click()">📷 Attach Image</button>
+      <span id="chat-image-status" style="font-size:0.78rem;color:var(--muted);margin-left:8px;"></span>
+    </div>
     <div class="chat-input-row">
       <textarea id="chat-input" placeholder="Type a message..." maxlength="1000"></textarea>
       <button class="btn-gold" onclick="sendRoomMessage()">Send</button>

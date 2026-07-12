@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "title": "🏫 Welcome to Duel Academy",
+    "body": "Welcome, Duelists, to Yu-Gi-Oh Skyscraper - Duel Academy, an online academy inspired by the legendary Duel Academy from Yu-Gi-Oh GX!\n\nWithin these halls, aspiring duelists will begin their journey to become true masters of the game. Duelists will be sorted into dormitories, participate in tournaments, challenge fellow duelists, and rise through the ranks through skill, strategy, and determination.\n\nRespect, sportsmanship, and a passion for dueling are the foundations of our academy. Prepare your decks, sharpen your strategies, and forge your legacy. The road to becoming a legendary duelist starts here."
+  },
+  {
+    "id": 2,
+    "title": "🎲 Beginner Guide — Dorm Assignment",
+    "body": "Every new duelist begins their journey by being assigned to a dorm, receiving 2 Starter Archetypes, and earning a Starter Allowance.\n\nStep 1: Every new duelist is randomly assigned to one of the three dorms by rolling a 6-sided die (1d6):\n• Slifer Red — roll 1-2\n• Ra Yellow — roll 3-4\n• Obelisk Blue — roll 5-6\n\nDorm assignment is permanent unless changed through special events or exams. If one dorm has 3 more members than the others, it will not receive additional members until the difference is reduced to 2."
+  },
+  {
+    "id": 3,
+    "title": "🃏 Beginner Guide — Starter Archetypes",
+    "body": "Every starter duelist acquires two Starter Archetypes to form their first Dorm Deck.\n\nFirst Starter Archetype — Duelist's Choice:\n• The host presents 5 Starter Archetypes to choose from (each valued 500-5,000 DP).\n• The duelist freely selects 1 based on preferred playstyle.\n\nSecond Starter Archetype — Blind Pick:\n• The host prepares 10 hidden archetypes, numbered 1-10.\n• Pool: 7 archetypes worth 500-5,000 DP, and 3 premium archetypes worth 5,500-10,000 DP.\n• The duelist picks a number without knowing what it hides — the archetype behind it is awarded.\n\nOnce both are obtained, the duelist is ready to receive their Starter Allowance."
+  },
+  {
+    "id": 4,
+    "title": "🎡 Starter Allowance Wheel",
+    "body": "Every new duelist receives a Starter Allowance in Duel Points (DP), determined by spinning the Allowance Wheel. Starter DP can be used to buy archetypes, tickets, or saved for later.\n\nPossible results:\n1 — 10,000 DP\n2 — 5,000 DP\n3 — 30,000 DP\n4 — 1,000 DP\n5 — 500 DP\n6 — 2,500 DP\n7 — 2,500 DP\n8 — 1,000 DP\n9 — 2,000 DP\n10 — 5,000 DP\n11 — 2,500 DP\n12 — 12,000 DP\n13 — 500 DP\n14 — 2,500 DP\n15 — 4,000 DP\n16 — 10,000 DP\n17 — 7,500 DP\n18 — 2,000 DP\n19 — 9,000 DP\n20 — 20,000 DP\n\nSince dorm, archetypes, and starting DP are all random, no two duelists start exactly alike. Good luck, and welcome to the academy!"
+  },
+  {
+    "id": 5,
+    "title": "🛒 Shop",
+    "body": "The Shop is where duelists spend DP to expand their collection. Each rotation features a limited selection of archetypes and may include special tickets.\n\nHow it works:\n• Before each rotation, the host selects 22 archetypes: 15 worth 500-5,000 DP, 4 worth 5,500-10,000 DP, and 3 worth 10,500+ DP.\n• These stay available until the next rotation.\n\nShop Opening:\n• Duelists must wait for the host's official \"START\" signal — purchases submitted early won't be accepted.\n• Once open, purchases are first come, first serve.\n• Be clear and specific when requesting a purchase — state the exact name of the archetype, ticket, or item."
+  },
+  {
+    "id": 6,
+    "title": "🎉 Events",
+    "body": "Events give duelists regular chances to earn DP, tickets, and prizes through smaller-scale challenges open to all experience levels.\n\nCategories:\n• Luck Events — pure chance, no Duels involved; everyone has an equal shot.\n• Skill Events — Duels or challenges where strategy and game knowledge decide the winner.\n• Both (Luck & Skill) Events — roughly 50% luck, 50% skill.\n\nSchedule: Luck → Skill → Both → Repeat, hosted on selected weekends.\n\nRewards are announced by the host before each event and may include DP, tickets, exclusive prizes, or other items — there's no fixed reward pool, so read each announcement carefully."
+  },
+  {
+    "id": 7,
+    "title": "🏆 Tournaments",
+    "body": "Tournaments are the academy's highest level of competition — larger, more competitive, and with greater prizes than regular events.\n\nCategories:\n• King of Games (KOG) — the premier tournament, best Dorm Decks, standard server rules.\n• GOAT — cards must be legal under the GOAT Banlist and Format.\n• Genesys — Dorm Decks following Genesys Format rules.\n• Banned Card — each player may include 1 Forbidden card (up to 3 copies).\n• Limited Card — every legal card limited to 1 copy; Forbidden cards remain banned.\n\nSchedule (monthly rotation): King of Games → GOAT → Limited Card → King of Games → Genesys → Banned Card → Repeat.\n\nRewards are announced by the host before each tournament and may include DP, tickets, exclusive prizes, or championship rewards."
+  },
+  {
+    "id": 8,
+    "title": "📝 Exams",
+    "body": "Exams measure your knowledge, technical skill, and performance under pressure — results directly affect dorm placement.\n\nCategories:\n• Question Type — answer questions on the announced theme (mechanics, rulings, card interactions, archetypes).\n• Battle Phase Type — one turn only (always Turn 2); score is based on total battle damage dealt.\n• Theme Duel Type — a real duel using your Dorm Deck under the announced rules; the closest thing to a live competitive match.\n\nLeaderboard & Results:\n• Final ranking determines dorm placement (stay or transfer) and DP rewards — higher placement earns greater rewards.\n• The lowest scorer receives a DP deduction and is automatically transferred to Slifer Red Dorm, regardless of their previous dorm."
+  },
+  {
+    "id": 9,
+    "title": "👑 Special Roles",
+    "body": "Special Roles are earned through extraordinary feats, prestigious wins, or specific conditions. Unless stated otherwise, benefits remain active as long as you hold the role.\n\n• Skyscraper Champion — beats the reigning Champion in a long-term championship event. Gains 1 extra Deck Slot, immunity to Force Trade effects, double Starter Allowance, and 1 Forbidden Hammer Ticket after every KOG Tournament.\n• King of Games — KOG Tournament champion. Gains 1 extra Deck Slot and may activate Magnet Ring once a month.\n• Legendary Duelist — #1 on the Ranked Duels leaderboard. Gains 1 extra Deck Slot.\n• Dorm Leader — helps manage their dorm. May remove one member per month; may lend a deck to a memberless dorm-mate (not a trade). A kicked member loses 10,000 DP and 1 archetype, then moves to a different dorm.\n• GOAT Champion / Genesys Champion — no additional effects.\n• Forbidden Master — Banned Card Tournament champion. May include 2 different Forbidden Cards in future Banned Card Tournaments.\n• The Great One — Limited Card Tournament champion. No additional effects.\n• Top Scorer — 1st place in an exam. No additional effects.\n• Gambler — doubles any DP received from an effect.\n• Null Sovereign — a rare title. May include 1 Forbidden Card during eligible tournaments.\n• Dropout Boy — given for failing an exam. No gameplay effect, just motivation to improve."
+  },
+  {
+    "id": 10,
+    "title": "☘️ Force Trade Ticket",
+    "body": "Force another duelist to trade archetypes with you. You choose one of your archetypes and one of theirs to be exchanged.\nObtain: Rare Shop item (30,000 DP) or a tournament reward."
+  },
+  {
+    "id": 11,
+    "title": "☘️ Gambling Ticket",
+    "body": "Activate a random gamble — may reward valuable prizes or inflict penalties, entirely by chance.\nObtain: Shop for 3,000 DP or sacrifice 1 archetype; occasionally an event or tournament reward."
+  },
+  {
+    "id": 12,
+    "title": "☘️ Lucky Discount Ticket",
+    "body": "Receive a random Shop discount: 10%, 25%, 50%, or 100% off an eligible purchase.\nObtain: Shop by sacrificing 1 archetype; commonly an event or tournament reward."
+  },
+  {
+    "id": 13,
+    "title": "☘️ Magnet Ring Ticket",
+    "body": "Steal a random amount of DP from a randomly selected duelist in a different dorm.\nObtain: Not sold in the Shop; commonly an event or tournament reward."
+  },
+  {
+    "id": 14,
+    "title": "☘️ Deck Coffin Ticket",
+    "body": "Permanently sacrifice one deck and receive a replacement based on its total value (host determines the replacement).\nObtain: Not sold in the Shop; most commonly earned through events."
+  },
+  {
+    "id": 15,
+    "title": "☘️ Refund Ticket",
+    "body": "Return one of your decks and receive 50% of its total DP value back.\nObtain: Free in the Shop, but activates automatically upon purchase."
+  },
+  {
+    "id": 16,
+    "title": "☘️ Respin Ticket",
+    "body": "Spin an eligible wheel one more time — the new result replaces your previous one.\nObtain: Shop for 3,000 DP; commonly an event or tournament reward."
+  },
+  {
+    "id": 17,
+    "title": "☘️ Dorm Switcher Ticket",
+    "body": "Select two duelists from different dorms (you may pick yourself) — they immediately swap dorm assignments.\nObtain: Not sold in the Shop; commonly a tournament reward."
+  },
+  {
+    "id": 18,
+    "title": "☘️ Semi Duplicator Ticket",
+    "body": "Choose one archetype — its ownership limit increases from 1 owner to 2.\nObtain: Not sold in the Shop; commonly a tournament reward."
+  },
+  {
+    "id": 19,
+    "title": "☘️ Forbidden Hammer Ticket",
+    "body": "Choose one archetype — it becomes Forbidden and unusable by anyone until the host lifts the restriction.\nObtain: Not sold in the Shop; commonly a tournament reward."
+  },
+  {
+    "id": 20,
+    "title": "☘️ Star Multiplier Ticket",
+    "body": "Doubles the reward from an eligible reward wheel or dice roll during a Luck Event. Only the reward is doubled — other rules stay the same.\nObtain: Shop for 6,000 DP or sacrifice 1 deck; commonly an event reward."
+  },
+  {
+    "id": 21,
+    "title": "☘️ Triplet Generator Ticket",
+    "body": "Choose one archetype — its ownership limit increases from 1 owner to 3.\nObtain: Not sold in the Shop; commonly a tournament reward."
+  },
+  {
+    "id": 22,
+    "title": "☘️ Gambling Ticket V2",
+    "body": "Choose two duelists from different dorms (neither the same as each other or you). Each wagers a random DP amount and guesses a die roll — the sole correct guesser wins the whole pool; if nobody's right, reroll.\nObtain: Shop by sacrificing 1 deck; commonly an event reward."
+  },
+  {
+    "id": 23,
+    "title": "☘️ Status Removal Ticket",
+    "body": "Choose one archetype that is currently Forbidden, Semi-Duplicated, or Triplicated — its status is removed, returning it to the default single-owner limit.\nObtain: Not sold in the Shop; commonly a tournament reward."
+  },
+  {
+    "id": 24,
+    "title": "☘️ Bracket Switcher Ticket",
+    "body": "Choose two participants in an active tournament bracket (you may pick yourself) — they immediately swap bracket positions.\nObtain: Not sold in the Shop; commonly a tournament reward."
+  },
+  {
+    "id": 25,
+    "title": "📜 Archetype Rules",
+    "body": "• Cards that mention any archetype in their name or effect are archetypal.\n• Cards that mention no archetype are non-archetypal.\n• Cards mentioning 2+ archetypes belong to each one.\n• Maximum 4 archetypes per duelist.\n• Refund = half the original DP value back."
+  },
+  {
+    "id": 26,
+    "title": "❓ FAQ",
+    "body": "What happens if you leave the dorm game and restart?\nYou cannot join 1 tournament, and your inventory will be cleared, but your adventure may start again.\n\nWhat is the DP Cap for this Dorm Tournament?\n500,000 DP.\n\nCan a Dorm Leader step down and have someone else elected?\nYes — a Dorm Leader may step down voluntarily with host approval. Once approved, a new Dorm Leader is elected or appointed per academy rules."
+  }
+]

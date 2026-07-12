@@ -58,6 +58,16 @@
       <label>Body</label>
       <textarea id="new-thread-body" class="form-ctrl" rows="6" style="width:100%;resize:vertical;" maxlength="5000"></textarea>
     </div>
+    <div class="form-group">
+      <label>Attach an image (optional)</label>
+      <input type="file" id="new-thread-image-file" accept="image/*" style="display:none;" onchange="handleNewThreadImage(event)"/>
+      <button class="btn-icon" type="button" onclick="document.getElementById('new-thread-image-file').click()">📷 Choose Image</button>
+      <span id="new-thread-image-status" style="font-size:0.78rem;color:var(--muted);margin-left:8px;"></span>
+    </div>
+    <div class="form-group">
+      <label>Video link (optional — YouTube link embeds automatically)</label>
+      <input id="new-thread-video-url" class="form-ctrl" type="url" placeholder="https://youtube.com/watch?v=..."/>
+    </div>
     <p id="new-thread-err" class="form-err"></p>
     <div style="display:flex;gap:8px;">
       <button class="btn-gold" onclick="submitNewThread()">Post Thread</button>
@@ -72,6 +82,7 @@
       <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.15rem;font-weight:700;margin-bottom:6px;" id="thread-title"></div>
       <div style="font-size:0.75rem;color:var(--muted);margin-bottom:14px;" id="thread-meta"></div>
       <div style="font-size:0.9rem;color:#E8E8F0;white-space:pre-wrap;" id="thread-body"></div>
+      <div id="thread-media"></div>
       <div id="thread-actions" style="margin-top:14px;display:none;">
         <button class="btn-icon" style="color:var(--sl);" onclick="deleteThread()">🗑️ Delete Thread</button>
         <button class="btn-icon" id="pin-btn" style="display:none;" onclick="togglePin()">📌 Toggle Pin</button>
@@ -83,6 +94,12 @@
 
     <div id="reply-form-wrap" class="card" style="padding:16px;display:none;">
       <textarea id="reply-input" class="form-ctrl" rows="3" style="width:100%;resize:vertical;" maxlength="2000" placeholder="Write a reply..."></textarea>
+      <div style="margin-top:8px;">
+        <input type="file" id="reply-image-file" accept="image/*" style="display:none;" onchange="handleReplyImage(event)"/>
+        <button class="btn-icon" type="button" onclick="document.getElementById('reply-image-file').click()">📷 Attach Image</button>
+        <span id="reply-image-status" style="font-size:0.78rem;color:var(--muted);margin-left:8px;"></span>
+      </div>
+      <input id="reply-video-url" class="form-ctrl" type="url" placeholder="Video link (optional)" style="margin-top:8px;"/>
       <button class="btn-gold" style="margin-top:8px;" onclick="submitReply()">Reply</button>
     </div>
     <div id="reply-signed-out" class="card" style="padding:16px;display:none;">

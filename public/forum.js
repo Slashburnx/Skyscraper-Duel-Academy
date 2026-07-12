@@ -6,10 +6,51 @@
 
 injectNav('rules.html');
 
+// ⚠️ Same Cloudinary setup as profile.js — fill these in once, they're shared in spirit
+// (each file has its own copy since these are plain scripts, not modules).
+const CLOUDINARY_CLOUD_NAME    = 'YOUR_CLOUD_NAME';
+const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET';
+
 let myId = null;
 let canModerate = false;
 let currentCategoryId = null;
 let currentThreadId = null;
+let newThreadImageUrl = null;
+let replyImageUrl = null;
+
+async function uploadImageToCloudinary(file) {
+  if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME') {
+    notify('⚠️ Image upload is not set up yet — ask the site owner to finish Cloudinary setup.');
+    return null;
+  }
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  try {
+    const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
+    const data = await res.json();
+    return data.secure_url || null;
+  } catch {
+    notify('⚠️ Image upload failed.');
+    return null;
+  }
+}
+
+function extractYouTubeId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function videoEmbedHtml(url) {
+  if (!url) return '';
+  const ytId = extractYouTubeId(url);
+  if (ytId) {
+    return `<div style="margin-top:10px;"><iframe width="100%" height="220" style="border-radius:8px;border:none;"
+      src="https://www.youtube.com/embed/${ytId}" allowfullscreen></iframe></div>`;
+  }
+  return `<div style="margin-top:10px;"><a href="${url}" target="_blank" rel="noopener" style="color:var(--gold);">🎬 Watch video ↗</a></div>`;
+}
 
 function escapeHtmlForum(s) {
   const div = document.createElement('div');
@@ -88,13 +129,31 @@ async function loadThreadListView(categoryId) {
   document.getElementById('thread-list').innerHTML = threads.length
     ? threads.map(t => `
         <a href="rules.html?thread=${t.id}" class="card thread-row">
-          <div class="ttitle">${t.pinned ? '📌 ' : ''}${escapeHtmlForum(t.title)}</div>
+          <div class="ttitle">${t.pinned ? '📌 ' : ''}${escapeHtmlForum(t.title)} ${t.imageUrl ? '📷' : ''}${t.videoUrl ? '🎬' : ''}</div>
           <div class="tmeta">by ${t.authorName} · ${new Date(t.createdAt).toLocaleDateString()}</div>
         </a>`).join('')
     : `<p style="color:var(--muted);font-size:0.85rem;">No threads yet — be the first to post!</p>`;
 }
 
 // ── New thread form ──────────────────────────────────────────
+window.handleNewThreadImage = async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  document.getElementById('new-thread-image-status').textContent = 'Uploading...';
+  const url = await uploadImageToCloudinary(file);
+  newThreadImageUrl = url;
+  document.getElementById('new-thread-image-status').textContent = url ? '✅ Image attached' : '';
+};
+
+window.handleReplyImage = async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  document.getElementById('reply-image-status').textContent = 'Uploading...';
+  const url = await uploadImageToCloudinary(file);
+  replyImageUrl = url;
+  document.getElementById('reply-image-status').textContent = url ? '✅ Image attached' : '';
+};
+
 window.cancelNewThread = function() {
   window.location.href = `rules.html?category=${currentCategoryId}`;
 };
@@ -113,7 +172,11 @@ window.submitNewThread = async function() {
 
   const res  = await fetch('/api/forum/threads', {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
-    body: JSON.stringify({ categoryId: currentCategoryId, title, body }),
+    body: JSON.stringify({
+      categoryId: currentCategoryId, title, body,
+      imageUrl: newThreadImageUrl,
+      videoUrl: document.getElementById('new-thread-video-url').value.trim() || null,
+    }),
   });
   const data = await res.json();
 
@@ -146,6 +209,9 @@ async function loadThreadView(threadId) {
   document.getElementById('thread-title').textContent = (t.pinned ? '📌 ' : '') + t.title;
   document.getElementById('thread-meta').textContent = `by ${t.authorName} · ${new Date(t.createdAt).toLocaleString()}`;
   document.getElementById('thread-body').textContent = t.body;
+  document.getElementById('thread-media').innerHTML =
+    (t.imageUrl ? `<img src="${t.imageUrl}" style="max-width:100%;border-radius:8px;margin-top:10px;display:block;"/>` : '') +
+    videoEmbedHtml(t.videoUrl);
 
   const canDeleteThread = myId && (t.authorId === myId || canModerate);
   document.getElementById('thread-actions').style.display = canDeleteThread ? 'block' : 'none';
@@ -159,6 +225,8 @@ async function loadThreadView(threadId) {
       <div class="card reply-card">
         <div class="reply-who">${r.authorName}<span class="reply-when">${new Date(r.createdAt).toLocaleString()}</span></div>
         <div class="reply-text">${escapeHtmlForum(r.text)}</div>
+        ${r.imageUrl ? `<img src="${r.imageUrl}" style="max-width:100%;border-radius:8px;margin-top:8px;display:block;"/>` : ''}
+        ${videoEmbedHtml(r.videoUrl)}
         ${canDeleteReply ? `<button class="btn-icon" style="font-size:0.68rem;color:var(--sl);margin-top:6px;" onclick="deleteReply('${r.id}')">Delete</button>` : ''}
       </div>`;
   }).join('') || `<p style="color:var(--muted);font-size:0.85rem;">No replies yet.</p>`;
@@ -170,16 +238,20 @@ async function loadThreadView(threadId) {
 window.submitReply = async function() {
   const input = document.getElementById('reply-input');
   const text  = input.value.trim();
-  if (!text) return;
+  const videoUrl = document.getElementById('reply-video-url').value.trim() || null;
+  if (!text && !replyImageUrl) return;
 
   const res  = await fetch(`/api/forum/threads/${currentThreadId}/replies`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
-    body: JSON.stringify({ text }),
+    body: JSON.stringify({ text, imageUrl: replyImageUrl, videoUrl }),
   });
   const data = await res.json();
   if (!data.success) { notify(`⚠️ ${data.message || 'Could not post reply'}`); return; }
 
   input.value = '';
+  document.getElementById('reply-video-url').value = '';
+  document.getElementById('reply-image-status').textContent = '';
+  replyImageUrl = null;
   loadThreadView(currentThreadId);
 };
 

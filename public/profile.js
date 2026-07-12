@@ -19,6 +19,7 @@ let allDuelists = [];
 let archCatalog = [];
 let ticketCatalog = [];
 let dmPollTimer = null;
+let dmImageUrl = null;
 
 (async function init() {
   const res  = await fetch('/api/duelist-auth/check', { credentials: 'include' });
@@ -184,25 +185,50 @@ async function loadDmMessages() {
       <div style="font-size:0.7rem;color:${m.senderId === myId ? '#7FB8FF' : 'var(--gold)'};margin-bottom:1px;">
         ${m.senderName} <span style="color:var(--muted);">${new Date(m.createdAt).toLocaleString()}</span>
       </div>
-      <div style="font-size:0.84rem;color:#E8E8F0;white-space:pre-wrap;">${escapeHtmlProfile(m.text)}</div>
+      ${m.text ? `<div style="font-size:0.84rem;color:#E8E8F0;white-space:pre-wrap;">${escapeHtmlProfile(m.text)}</div>` : ''}
+      ${m.imageUrl ? `<img src="${m.imageUrl}" style="max-width:220px;border-radius:8px;margin-top:6px;display:block;"/>` : ''}
     </div>`).join('');
 
   if (wasAtBottom) box.scrollTop = box.scrollHeight;
 }
 
+window.handleDmImage = async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME') {
+    notify('⚠️ Image upload is not set up yet — ask the site owner to finish Cloudinary setup.');
+    return;
+  }
+  document.getElementById('dm-image-status').textContent = 'Uploading...';
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  try {
+    const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
+    const data = await res.json();
+    dmImageUrl = data.secure_url || null;
+    document.getElementById('dm-image-status').textContent = dmImageUrl ? '✅ Image attached' : '';
+  } catch {
+    notify('⚠️ Image upload failed.');
+    document.getElementById('dm-image-status').textContent = '';
+  }
+};
+
 window.sendDM = async function() {
   const input = document.getElementById('dm-input');
   const text  = input.value.trim();
-  if (!text) return;
+  if (!text && !dmImageUrl) return;
 
   const res  = await fetch(`/api/chat/dm/${viewingId}`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
-    body: JSON.stringify({ text }),
+    body: JSON.stringify({ text, imageUrl: dmImageUrl }),
   });
   const data = await res.json();
   if (!data.success) { notify(`⚠️ ${data.message || 'Could not send'}`); return; }
 
   input.value = '';
+  dmImageUrl = null;
+  document.getElementById('dm-image-status').textContent = '';
   loadDmMessages();
 };
 

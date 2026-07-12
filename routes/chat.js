@@ -8,11 +8,12 @@ const router = express.Router();
 
 const MAX_MESSAGES = 300; // per conversation, oldest trimmed off
 
-function makeMessage({ senderType, senderId, senderName, text }) {
+function makeMessage({ senderType, senderId, senderName, text, imageUrl }) {
   return {
     id: crypto.randomBytes(6).toString('hex'),
     senderType, senderId, senderName,
-    text: String(text).slice(0, 1000), // sane cap so nobody pastes a novel
+    text: String(text || '').slice(0, 1000), // sane cap so nobody pastes a novel
+    imageUrl: imageUrl || null,
     createdAt: Date.now(),
   };
 }
@@ -37,14 +38,19 @@ router.get('/room', requireAnyLogin, async (req, res) => {
 });
 
 router.post('/room', requireAnyLogin, async (req, res) => {
-  const { text } = req.body;
-  if (!text || !text.trim()) return res.status(400).json({ success: false, message: 'Message cannot be empty.' });
+  const { text, imageUrl } = req.body;
+  if ((!text || !text.trim()) && !imageUrl) {
+    return res.status(400).json({ success: false, message: 'Message cannot be empty.' });
+  }
+  if (imageUrl && !imageUrl.startsWith('https://')) {
+    return res.status(400).json({ success: false, message: 'Invalid image URL.' });
+  }
 
   const doc = await loadTree();
   const senderName = await resolveActorName(doc, req.actor);
   const messages = getAtPath(doc.data, ['chat', 'room']) || [];
 
-  const msg = makeMessage({ senderType: req.actor.type, senderId: req.actor.id, senderName, text });
+  const msg = makeMessage({ senderType: req.actor.type, senderId: req.actor.id, senderName, text, imageUrl });
   const updated = [...messages, msg].slice(-MAX_MESSAGES);
 
   doc.data = setAtPath(doc.data, ['chat', 'room'], updated);
@@ -65,9 +71,14 @@ router.get('/dm/:otherId', requireDuelist, async (req, res) => {
 });
 
 router.post('/dm/:otherId', requireDuelist, async (req, res) => {
-  const { text } = req.body;
+  const { text, imageUrl } = req.body;
   const { otherId } = req.params;
-  if (!text || !text.trim()) return res.status(400).json({ success: false, message: 'Message cannot be empty.' });
+  if ((!text || !text.trim()) && !imageUrl) {
+    return res.status(400).json({ success: false, message: 'Message cannot be empty.' });
+  }
+  if (imageUrl && !imageUrl.startsWith('https://')) {
+    return res.status(400).json({ success: false, message: 'Invalid image URL.' });
+  }
 
   const doc = await loadTree();
   const duelistsObj = getAtPath(doc.data, ['duelists']) || {};
@@ -77,7 +88,7 @@ router.post('/dm/:otherId', requireDuelist, async (req, res) => {
 
   const key = dmKey(req.duelistId, otherId);
   const messages = getAtPath(doc.data, ['chat', 'dm', key]) || [];
-  const msg = makeMessage({ senderType: 'duelist', senderId: req.duelistId, senderName: sender?.name || 'Unknown', text });
+  const msg = makeMessage({ senderType: 'duelist', senderId: req.duelistId, senderName: sender?.name || 'Unknown', text, imageUrl });
   const updated = [...messages, msg].slice(-MAX_MESSAGES);
 
   doc.data = setAtPath(doc.data, ['chat', 'dm', key], updated);

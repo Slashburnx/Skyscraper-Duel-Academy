@@ -64,9 +64,12 @@ router.get('/threads/:id', async (req, res) => {
 
 // POST /api/forum/threads — requireDuelist { categoryId, title, body }
 router.post('/threads', requireDuelist, async (req, res) => {
-  const { categoryId, title, body } = req.body;
+  const { categoryId, title, body, imageUrl, videoUrl } = req.body;
   if (!categoryId || !title || !title.trim() || !body || !body.trim()) {
     return res.status(400).json({ success: false, message: 'Category, title, and body are all required.' });
+  }
+  if (imageUrl && !imageUrl.startsWith('https://')) {
+    return res.status(400).json({ success: false, message: 'Invalid image URL.' });
   }
 
   const doc = await loadTree();
@@ -83,6 +86,8 @@ router.post('/threads', requireDuelist, async (req, res) => {
     categoryId,
     title: title.trim().slice(0, 150),
     body: body.trim().slice(0, 5000),
+    imageUrl: imageUrl || null,
+    videoUrl: videoUrl ? videoUrl.trim().slice(0, 500) : null,
     authorId: req.duelistId,
     authorName: author.name,
     pinned: false,
@@ -99,8 +104,11 @@ router.post('/threads', requireDuelist, async (req, res) => {
 
 // POST /api/forum/threads/:id/replies — requireDuelist { text }
 router.post('/threads/:id/replies', requireDuelist, async (req, res) => {
-  const { text } = req.body;
+  const { text, imageUrl, videoUrl } = req.body;
   if (!text || !text.trim()) return res.status(400).json({ success: false, message: 'Reply cannot be empty.' });
+  if (imageUrl && !imageUrl.startsWith('https://')) {
+    return res.status(400).json({ success: false, message: 'Invalid image URL.' });
+  }
 
   const doc = await loadTree();
   const thread = getAtPath(doc.data, ['forum', 'threads', req.params.id]);
@@ -116,6 +124,8 @@ router.post('/threads/:id/replies', requireDuelist, async (req, res) => {
     authorId: req.duelistId,
     authorName: author.name,
     text: text.trim().slice(0, 2000),
+    imageUrl: imageUrl || null,
+    videoUrl: videoUrl ? videoUrl.trim().slice(0, 500) : null,
     createdAt: Date.now(),
   };
   const updated = [...replies, reply];
