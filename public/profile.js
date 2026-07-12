@@ -5,8 +5,8 @@
 // ═══════════════════════════════════════════════════════════
 
 // ⚠️ FILL THESE IN — see the setup steps in the message that came with this file.
-const CLOUDINARY_CLOUD_NAME    = 'YOUR_CLOUD_NAME';
-const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET';
+const CLOUDINARY_CLOUD_NAME    = 'dbrsxel6l';
+const CLOUDINARY_UPLOAD_PRESET = 'skycraper-duel-academy';
 
 injectNav('profile.html');
 

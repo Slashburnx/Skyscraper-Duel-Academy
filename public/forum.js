@@ -8,8 +8,8 @@ injectNav('rules.html');
 
 // ⚠️ Same Cloudinary setup as profile.js — fill these in once, they're shared in spirit
 // (each file has its own copy since these are plain scripts, not modules).
-const CLOUDINARY_CLOUD_NAME    = 'YOUR_CLOUD_NAME';
-const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET';
+const CLOUDINARY_CLOUD_NAME    = 'dbrsxel6l';
+const CLOUDINARY_UPLOAD_PRESET = 'skycraper-duel-academy';
 
 let myId = null;
 let canModerate = false;

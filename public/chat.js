@@ -7,8 +7,8 @@
 injectNav('chat.html');
 
 // ⚠️ Same Cloudinary setup as profile.js — fill these in once.
-const CLOUDINARY_CLOUD_NAME    = 'YOUR_CLOUD_NAME';
-const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UPLOAD_PRESET';
+const CLOUDINARY_CLOUD_NAME    = 'dbrsxel6l';
+const CLOUDINARY_UPLOAD_PRESET = 'skycraper-duel-academy';
 
 let myDuelistId = null;
 let pollTimer = null;
