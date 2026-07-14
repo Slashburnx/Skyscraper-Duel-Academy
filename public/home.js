@@ -65,10 +65,14 @@ function renderDormStrip(duelists) {
       const leaders = dp.filter(x => (x.titles||[]).includes('Dorm Leader'));
       lel.innerHTML = leaders.length
         ? '<span style="color:var(--muted);font-size:0.72rem;">Leader: </span>'
-          + leaders.map(l => `<span style="color:${c};font-weight:700;">${l.name}</span>`).join(', ')
+          + leaders.map(l => `<a href="profile.html?id=${l.id}" style="color:${c};font-weight:700;text-decoration:none;">${l.name}</a>`).join(', ')
         : '<span style="color:var(--faint);font-size:0.72rem;">No leader assigned</span>';
     }
   });
+
+  const unassignedCount = duelists.filter(x => !x.dorm || x.dorm === 'unassigned').length;
+  const uEl = document.getElementById('count-unassigned');
+  if (uEl) uEl.textContent = unassignedCount + ' Duelist' + (unassignedCount !== 1 ? 's' : '');
 }
 
 // ── Top 5 ──────────────────────────────────────────────────
@@ -80,7 +84,7 @@ function renderTop5(duelists) {
     ? sorted.map((d,i) => `
         <div class="top5-row">
           <div class="top5-rank">${['🥇','🥈','🥉'][i]||i+1}</div>
-          <div class="top5-name">${d.name} <span>${DORM_ICON[d.dorm]}</span></div>
+          <div class="top5-name"><a href="profile.html?id=${d.id}" style="color:inherit;text-decoration:none;">${d.name}</a> <span>${DORM_ICON[d.dorm || 'unassigned']}</span></div>
           <div class="top5-dp">${d.dp.toLocaleString()} DP</div>
         </div>`).join('')
     : '<div style="color:var(--muted);font-size:0.85rem;padding:8px 0;">No duelists yet.</div>';
@@ -92,13 +96,13 @@ function renderHallOfTitles(duelists) {
   if (!el) return;
   const tm = {};
   TITLE_LIST.forEach(t => tm[t] = []);
-  duelists.forEach(d => (d.titles||[]).forEach(t => { if(tm[t]) tm[t].push(d.name); }));
+  duelists.forEach(d => (d.titles||[]).forEach(t => { if(tm[t]) tm[t].push(d); }));
   const rows = TITLE_LIST.filter(t => tm[t].length > 0).map(t => `
     <div style="margin-bottom:10px;">
       <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:4px;">
         ${TITLE_ICON[t]||''} ${t}
       </div>
-      <div>${tm[t].map(n=>`<span class="title-chip t-${t.replace(/\s+/g,'-')}">${n}</span>`).join(' ')}</div>
+      <div>${tm[t].map(d=>`<a href="profile.html?id=${d.id}" class="title-chip t-${t.replace(/\s+/g,'-')}" style="text-decoration:none;">${d.name}</a>`).join(' ')}</div>
     </div>`).join('');
   el.innerHTML = rows || '<div style="color:var(--muted);font-size:0.85rem;">No titles assigned yet.</div>';
 }
@@ -115,6 +119,4 @@ function renderHint(exams) {
 window.onAdminChange = function() {
   const eb = document.getElementById('btn-edit-announce');
   if (eb) eb.style.display = isAdminLoggedIn() ? '' : 'none';
-  const panel = document.getElementById('admin-panel');
-  if (panel) panel.style.display = isAdminLoggedIn() ? '' : 'none';
 };

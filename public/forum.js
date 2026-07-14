@@ -207,7 +207,7 @@ async function loadThreadView(threadId) {
     `<a href="rules.html">← All Boards</a> / <a href="rules.html?category=${t.categoryId}">${cat ? cat.name : t.categoryId}</a>`;
 
   document.getElementById('thread-title').textContent = (t.pinned ? '📌 ' : '') + t.title;
-  document.getElementById('thread-meta').textContent = `by ${t.authorName} · ${new Date(t.createdAt).toLocaleString()}`;
+  document.getElementById('thread-meta').innerHTML = `by <a href="profile.html?id=${t.authorId}" style="color:var(--gold);text-decoration:none;">${t.authorName}</a> · ${new Date(t.createdAt).toLocaleString()}`;
   document.getElementById('thread-body').textContent = t.body;
   document.getElementById('thread-media').innerHTML =
     (t.imageUrl ? `<img src="${t.imageUrl}" style="max-width:100%;border-radius:8px;margin-top:10px;display:block;"/>` : '') +
@@ -223,7 +223,7 @@ async function loadThreadView(threadId) {
     const canDeleteReply = myId && (r.authorId === myId || canModerate);
     return `
       <div class="card reply-card">
-        <div class="reply-who">${r.authorName}<span class="reply-when">${new Date(r.createdAt).toLocaleString()}</span></div>
+        <div class="reply-who"><a href="profile.html?id=${r.authorId}" style="color:inherit;">${r.authorName}</a><span class="reply-when">${new Date(r.createdAt).toLocaleString()}</span></div>
         <div class="reply-text">${escapeHtmlForum(r.text)}</div>
         ${r.imageUrl ? `<img src="${r.imageUrl}" style="max-width:100%;border-radius:8px;margin-top:8px;display:block;"/>` : ''}
         ${videoEmbedHtml(r.videoUrl)}
