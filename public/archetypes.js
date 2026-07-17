@@ -41,8 +41,7 @@ fbListen(PATHS.duelists, val => {
 window.switchTab = function(tab, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('tab-table').style.display = tab === 'table' ? '' : 'none';
-  document.getElementById('tab-rules').style.display = tab === 'rules' ? '' : 'none';
+  document.getElementById('tab-table').style.display = '';
 };
 
 // ── Filter ─────────────────────────────────────────────────
