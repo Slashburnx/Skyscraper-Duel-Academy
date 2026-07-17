@@ -17,7 +17,7 @@ import { fbSet, PATHS } from './api.js';
 const cache = {
   duelists: {}, archetypes: {}, tickets: {}, rules: {}, exams: {},
   wheel: { items: [], result: null, history: {} },
-  bracket: { players: [], winners: {} },
+  bracket: { players: [], winners: {}, rotationIndex: 0, typeOverride: null, history: [] },
   shop: { budget: [], premium: [] },
 };
 
@@ -36,7 +36,10 @@ const cache = {
     console.error('store.js: initial data load failed', err);
   }
   cache.wheel   = cache.wheel   || { items: [], result: null, history: [] };
-  cache.bracket = cache.bracket || { players: [], winners: {} };
+  cache.bracket = cache.bracket || { players: [], winners: {}, rotationIndex: 0, typeOverride: null, history: [] };
+  cache.bracket.rotationIndex = cache.bracket.rotationIndex || 0;
+  cache.bracket.typeOverride  = cache.bracket.typeOverride  || null;
+  cache.bracket.history       = cache.bracket.history       || [];
   cache.shop    = cache.shop    || { budget: [], premium: [] };
 })();
 
@@ -62,6 +65,9 @@ function getWheelResult()  { return cache.wheel.result || null; }
 function getWheelHistory() { return [...(cache.wheel.history || [])]; }
 function getBracketPlayers() { return [...(cache.bracket.players || [])]; }
 function getBracketWinners() { return { ...(cache.bracket.winners || {}) }; }
+function getBracketRotationIndex() { return cache.bracket.rotationIndex || 0; }
+function getBracketTypeOverride()  { return cache.bracket.typeOverride || null; }
+function getTournamentHistory()    { return [...(cache.bracket.history || [])]; }
 function getShopBudget()   { return [...(cache.shop.budget || [])]; }
 function getShopPremium()  { return [...(cache.shop.premium || [])]; }
 function getArchOwners(name, duelists) {
@@ -92,6 +98,9 @@ async function saveWheelResult(entry) { cache.wheel.result = entry; await fbSet(
 async function saveWheelHistory(arr)  { cache.wheel.history = arr;  await fbSet(PATHS.wheelHistory, arr); }
 async function saveBracketPlayers(arr) { cache.bracket.players = arr; await fbSet(PATHS.bracketPlayers, arr); }
 async function saveBracketWinners(obj) { cache.bracket.winners = obj; await fbSet(PATHS.bracketWinners, obj); }
+async function saveBracketRotationIndex(n) { cache.bracket.rotationIndex = n; await fbSet(PATHS.bracketRotationIndex, n); }
+async function saveBracketTypeOverride(t)  { cache.bracket.typeOverride = t; await fbSet(PATHS.bracketTypeOverride, t); }
+async function saveTournamentHistory(arr)  { cache.bracket.history = arr; await fbSet(PATHS.tournamentHistory, arr); }
 async function saveShopBudget(arr)  { cache.shop.budget = arr;  await fbSet(PATHS.shopBudget, arr); }
 async function saveShopPremium(arr) { cache.shop.premium = arr; await fbSet(PATHS.shopPremium, arr); }
 
@@ -101,9 +110,11 @@ Object.assign(window, {
   getDuelists, getArchetypes, getTickets, getRules, getExams,
   getWheelItems, getWheelResult, getWheelHistory,
   getBracketPlayers, getBracketWinners,
+  getBracketRotationIndex, getBracketTypeOverride, getTournamentHistory,
   getShopBudget, getShopPremium, getArchOwners,
   saveTickets, saveRules, saveExams,
   saveWheelItems, saveWheelResult, saveWheelHistory,
   saveBracketPlayers, saveBracketWinners,
+  saveBracketRotationIndex, saveBracketTypeOverride, saveTournamentHistory,
   saveShopBudget, saveShopPremium,
 });

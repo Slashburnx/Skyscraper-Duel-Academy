@@ -19,10 +19,12 @@
   <div class="tab-bar">
     <button class="tab-btn active" onclick="switchBracketTab('view', this)">🎮 Bracket</button>
     <button class="tab-btn" onclick="switchBracketTab('setup', this)">⚙️ Setup</button>
+    <button class="tab-btn" onclick="switchBracketTab('history', this)">📜 History</button>
   </div>
 
   <!-- BRACKET VIEW -->
   <div id="tab-view">
+    <div id="bracket-type-banner"></div>
     <p style="font-size:0.8rem;color:var(--muted);margin-bottom:16px;">
       Click a duelist's name to advance them to the next round.
     </p>
@@ -56,6 +58,14 @@
     </div>
 
     <div id="bp-list" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
+  </div>
+
+  <!-- HISTORY TAB -->
+  <div id="tab-history" style="display:none;max-width:520px;">
+    <div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">
+      Past Tournaments
+    </div>
+    <div id="tournament-history"></div>
   </div>
 
 </div>

@@ -78,6 +78,9 @@ export const PATHS = {
   wheelHistory  : 'wheel/history',
   bracketPlayers: 'bracket/players',
   bracketWinners: 'bracket/winners',
+  bracketRotationIndex: 'bracket/rotationIndex',
+  bracketTypeOverride : 'bracket/typeOverride',
+  tournamentHistory   : 'bracket/history',
 };
 
 // ── Admin auth (new — replaces the old "password stored in Firebase" scheme) ──
