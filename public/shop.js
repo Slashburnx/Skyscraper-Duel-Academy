@@ -52,9 +52,15 @@ function buildArchRow(name, section) {
 }
 
 // ── Render budget ──────────────────────────────────────────
+function sortByPrice(names) {
+  const archs = getArchetypes();
+  const priceOf = n => (archs.find(a => a.name === n)?.price) || 0;
+  return [...names].sort((n1, n2) => priceOf(n1) - priceOf(n2));
+}
+
 function renderBudget() {
   const admin  = isAdminLoggedIn();
-  const budget = getShopBudget();
+  const budget = sortByPrice(getShopBudget());
   const ecol   = document.getElementById('budget-edit-col');
   const bcol   = document.getElementById('budget-buy-col');
   if (ecol) ecol.style.display = admin ? '' : 'none';
@@ -70,7 +76,7 @@ function renderBudget() {
 // ── Render premium ─────────────────────────────────────────
 function renderPremium() {
   const admin   = isAdminLoggedIn();
-  const premium = getShopPremium();
+  const premium = sortByPrice(getShopPremium());
   const ecol    = document.getElementById('premium-edit-col');
   const bcol    = document.getElementById('premium-buy-col');
   if (ecol) ecol.style.display = admin ? '' : 'none';
@@ -85,20 +91,27 @@ function renderPremium() {
 
 // ── Render tickets ─────────────────────────────────────────
 function renderTickets() {
-  const admin   = isAdminLoggedIn();
-  const tickets = getTickets();
+  const admin  = isAdminLoggedIn();
+  const all    = getTickets();
+  // Duelists never see inactive tickets or tickets with 0 stock; admins see everything so they can manage it.
+  const tickets = admin ? all : all.filter(t => t.active !== false && t.stock > 0);
   const ecol    = document.getElementById('ticket-edit-col');
   if (ecol) ecol.style.display = admin ? '' : 'none';
 
   document.getElementById('shop-tickets').innerHTML = tickets.length
-    ? tickets.map((t, i) => `
-        <tr>
+    ? tickets.map(t => {
+        const i = all.indexOf(t);
+        const inactive = t.active === false;
+        const outOfStock = t.stock <= 0;
+        const stockBadgeClass = (inactive || outOfStock) ? 'b-grey' : 'b-gold';
+        return `
+        <tr${inactive ? ' style="opacity:0.55;"' : ''}>
           <td>
-            <div style="font-weight:600;">${t.name}</div>
+            <div style="font-weight:600;">${t.name}${inactive ? ' <span class="badge b-grey" style="font-size:0.65rem;">Inactive</span>' : ''}</div>
             ${t.desc ? `<div style="font-size:0.73rem;color:var(--muted);margin-top:2px;line-height:1.4;">${t.desc}</div>` : ''}
           </td>
           <td style="color:var(--gold);font-weight:600;white-space:nowrap;">${t.price}</td>
-          <td><span class="badge b-gold">${t.stock}x</span></td>
+          <td><span class="badge ${stockBadgeClass}">${t.stock}x</span></td>
           ${admin ? `
             <td>
               <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
@@ -107,15 +120,63 @@ function renderTickets() {
                   style="width:60px;background:var(--surface2);border:1px solid var(--border);
                          color:var(--text);padding:4px 8px;border-radius:4px;
                          font-family:'Exo 2',sans-serif;font-size:0.82rem;"/>
+                <label style="display:flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--muted);cursor:pointer;">
+                  <input type="checkbox" ${t.active !== false ? 'checked' : ''}
+                    onchange="toggleTicketActive(${i}, this.checked)"/>
+                  Active
+                </label>
                 <button class="btn-icon" style="color:var(--sl);"
                   onclick="removeTicket(${i})">✕</button>
               </div>
             </td>` : ''}
-        </tr>`).join('')
+        </tr>`;
+      }).join('')
     : `<tr><td colspan="4" style="color:var(--muted);font-style:italic;padding:12px;">
          No tickets in stock right now.
        </td></tr>`;
 }
+
+// ── Randomize: pull random archetypes from the database into a section ──
+const SECTION_PRICE_RANGE = {
+  budget:  [0, 5000],
+  premium: [6500, 16000],
+};
+
+function randomizeShopSection(section) {
+  const [lo, hi] = SECTION_PRICE_RANGE[section];
+  const inBudget  = getShopBudget();
+  const inPremium = getShopPremium();
+  const alreadyInShop = new Set([...inBudget, ...inPremium]);
+
+  const eligible = getArchetypes().filter(a =>
+    a.status !== 'Forbidden' &&
+    a.status !== 'Unavailable' &&
+    a.price >= lo && a.price <= hi &&
+    !alreadyInShop.has(a.name)
+  );
+
+  if (!eligible.length) {
+    notify('⚠️ No eligible archetypes left in this price range to add');
+    return;
+  }
+
+  const label = section === 'budget' ? 'Budget' : 'Premium';
+  const countStr = prompt(`How many random archetypes to add to ${label}? (${eligible.length} available)`, '5');
+  if (countStr === null) return;
+  const count = Math.max(1, Math.min(eligible.length, parseInt(countStr) || 0));
+  if (!count) { notify('⚠️ Enter a valid number'); return; }
+
+  const shuffled = [...eligible].sort(() => Math.random() - 0.5);
+  const picked   = shuffled.slice(0, count).map(a => a.name);
+
+  const current = section === 'budget' ? inBudget : inPremium;
+  const updated = [...current, ...picked];
+  if (section === 'budget') saveShopBudget(updated); else saveShopPremium(updated);
+
+  notify(`🎲 Added ${picked.length} random archetype${picked.length > 1 ? 's' : ''} to ${label}`);
+  renderShop();
+}
+window.randomizeShopSection = randomizeShopSection;
 
 // ── Remove archetype from shop ─────────────────────────────
 function removeFromShop(name, section) {
@@ -168,6 +229,16 @@ function updateStock(idx, val) {
   notify('✅ Stock updated');
   renderTickets();
 }
+
+// ── Toggle ticket active/inactive ───────────────────────────
+function toggleTicketActive(idx, checked) {
+  const tickets = getTickets();
+  tickets[idx].active = checked;
+  saveTickets(tickets);
+  notify(checked ? '✅ Ticket enabled' : '🚫 Ticket disabled');
+  renderTickets();
+}
+window.toggleTicketActive = toggleTicketActive;
 
 // ── Remove ticket ──────────────────────────────────────────
 function removeTicket(idx) {

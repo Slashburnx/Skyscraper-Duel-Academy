@@ -1,0 +1,1617 @@
+[
+ {
+  "name": "@Ignister",
+  "price_raw": "15,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "A-Z Union",
+  "price_raw": "15,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Abyss Actor",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Adamancipator",
+  "price_raw": "13,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Adventurer",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Allure Queen",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ally of Justice",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Altergeist",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Amazement",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Amazoness",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Amorphage",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ancient Fairy",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ancient Gear",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Ancient Warrior",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Angelechy",
+  "price_raw": "21,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Appliancer",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Aquaactress",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Arcana Force",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Argostar",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Armed Dragon",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Aroma",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Artifact",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Artmage",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Ashened",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Assault Mode",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Asutra",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Azamina",
+  "price_raw": "8,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "B.E.S.",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Batteryman",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Battleguard",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Battlewasp",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Battlin\u2019 Boxer",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Beetrooper",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Blackwing",
+  "price_raw": "18,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Blitzclique",
+  "price_raw": "11,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Blue-Eyes",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Branded",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Bujin",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Burning Abyss",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Buster Blader",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Bystial",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Call of the Haunted",
+  "price_raw": "15,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Centur-ion",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Charmer",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Chemicritter",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Chimera Fusion",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Chronomaly",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Clear World",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Cloudian",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Clown Crew",
+  "price_raw": "29,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Code Talker",
+  "price_raw": "26,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Constellar",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Crusadia",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Crystal Beast",
+  "price_raw": "15,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Crystron",
+  "price_raw": "21,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Cubic",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Cyber Angel",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Cyber Dragon",
+  "price_raw": "23,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "D/D",
+  "price_raw": "24,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Danger!",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Dark Magician",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Dark Scorpion",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "D. Time Wizard",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Dark World",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Darklord",
+  "price_raw": "18,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Deskbot",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Dinomist",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Dinomorphia",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Dinowrestler",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Dogmatika",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Doom Z",
+  "price_raw": "32,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Dracoslayer",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Dracotail",
+  "price_raw": "21,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Dragon Ruler",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Dragonmaid",
+  "price_raw": "9,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Dragunity",
+  "price_raw": "16,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Dream Mirror",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Drytron",
+  "price_raw": "14,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Dual Avatar",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Duston",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Earthbound",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Eldlich",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Elemental Lord",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Elfnote",
+  "price_raw": "32,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Endymion",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Enneacraft",
+  "price_raw": "21,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Evil Eye",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Evil Twin",
+  "price_raw": "16,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Evolzar",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Exodia",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Exosister",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Eyes Restrict",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "F.A.",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Fabled",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Fairy Tail",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Flame Swordsman",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Fiendsmith",
+  "price_raw": "35,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Fire Fist",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Fire King",
+  "price_raw": "18,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Fishborg",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Flamvell",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Floowandereeze",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Flower Cardian",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Fortune Lady",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Fossil Fusion",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Frightfur",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Frog",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Fur Hire",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "G Golem",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Galaxy-Eyes",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Gate Guardian",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Geargia",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Gem-",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Generaider",
+  "price_raw": "9,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Genex",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ghostrick",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ghoti",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Gimmick Puppet",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Gishki",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Gladiator Beast",
+  "price_raw": "17,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "GMX",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Goblin Biker",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Gold Pride",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Gouki",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Gravekeeper",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Graydle",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Gusto",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Harpie",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Hazy Flame",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Hecahand",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Herald",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Heraldric",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "HERO",
+  "price_raw": "Unavailable",
+  "symbol": ""
+ },
+ {
+  "name": "Heroic",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Hieratic",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Horus",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ice Barrier",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Icejade",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Igknight",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Impcantation",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Infernity",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Infernoid",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Infinitrack",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Invoked",
+  "price_raw": "16,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Inzektor",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Iron Chain",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Jinzo",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Jurrac",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "K9",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Kaiju",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Karakuri",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Kashtira",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Kewl Tune",
+  "price_raw": "50,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Knightmare",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Koa\u2019ki Meiru",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Kozmo",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Krawler",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Kuriboh",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Labyrinth",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Laval",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Libromancer",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Lightsworn",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Lswarm",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Lunalight",
+  "price_raw": "31,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Lyrilusc",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Machina",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Madolche",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Magical Musket",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Magikey",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Magistus",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Magnet Warrior",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Majespecter",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Malefic",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Maliss",
+  "price_raw": "13,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Mannadium",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Marincess",
+  "price_raw": "12,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Materiactor",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Mathmech",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Mayakashi",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Mecha Phantom Beast",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Megalith",
+  "price_raw": "14,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Mekk-Knight",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Meklord",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Melffy",
+  "price_raw": "12,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Melodious",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Memento",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Mermail",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Metalfoes",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Metalmorph",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Metaphys",
+  "price_raw": "1,00",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Mikanko",
+  "price_raw": "12,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Mimighoul",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Mist Valley",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Mitsurugi",
+  "price_raw": "31,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Monarch",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Morphtronic",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Myutant",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Naturia",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Nekroz",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Nemeses",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Nemleria",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Nephthys",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ninja",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Noble Knight",
+  "price_raw": "15,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Nordic",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Nouvelles",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Numeron",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Odd-Eyes",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Ogdoadic",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Ojama",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Orcust",
+  "price_raw": "21,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "P.U.N.K.",
+  "price_raw": "18,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Paleozoic",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Penguin",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Performage",
+  "price_raw": "8,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Phantasm Spiral",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Phantom Knights",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Plunder Patrol",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Power Patron",
+  "price_raw": "32,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Prank-Kids",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Predaplant",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Prediction Princess",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Primite",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Psy-Frame",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Purrely",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Qli",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "R.B.",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Radiant Typhoon",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Ragnaraika",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Raidraptor",
+  "price_raw": "18,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Red Dragon Archfiend",
+  "price_raw": "27,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Red-Eyes",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Regenesis",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Reptilianne",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Rescue Ace",
+  "price_raw": "12,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Rikka",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Ritual Beast",
+  "price_raw": "9,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Roid",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Rokket",
+  "price_raw": "26,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Rose Dragon",
+  "price_raw": "8,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Runick",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Ryu-Ge",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Ryzeal",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "S-Force",
+  "price_raw": "9,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Sacred Beast",
+  "price_raw": "19,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Salamangreat",
+  "price_raw": "12,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Scareclaw",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Scrap",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Shaddoll",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Shark",
+  "price_raw": "15,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Shining Sarcophagus",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Shiranui",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Silent Magician",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Simorgh",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Six Samurai",
+  "price_raw": "8,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Skull Servant",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Sky Striker",
+  "price_raw": "31,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Snake-Eye",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Solfachord",
+  "price_raw": "9,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Speedroid",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Spellbook",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Spright",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Springan",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "SPYRAL",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Star Seraph",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Stardust",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Subterror",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Sunavalon",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Super Quant",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Superheavy Samurai",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Swordsoul",
+  "price_raw": "15,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Sylvan",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Symphonic Warrior",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "T.G.",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Tearlament",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Temple of the Kings",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Tenpai",
+  "price_raw": "11,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Tenyi",
+  "price_raw": "8,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "The Ritual of Light and Darkness",
+  "price_raw": "30,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "The Sanctuary in the Sky",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "The Weather",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Therion",
+  "price_raw": "8,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Thunder Dragon",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Time Thief",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Timelord",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Tindangle",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Tistina",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Toon",
+  "price_raw": "75,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Traptrix",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Tri-Brigade",
+  "price_raw": "11,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Triamid",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "True Draco",
+  "price_raw": "5,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "U.A.",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Umbral Horror",
+  "price_raw": "18,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Umi",
+  "price_raw": "20,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Unchained",
+  "price_raw": "12,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Ursarctic",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Utopia",
+  "price_raw": "39,000",
+  "symbol": "$"
+ },
+ {
+  "name": "Vaalmonica",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Valkyrie",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Vampire",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Vanquish Soul",
+  "price_raw": "11,000",
+  "symbol": "\ud83d\udd3c"
+ },
+ {
+  "name": "Vaylantz",
+  "price_raw": "6,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Vendread",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Vernusylph",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Virtual World",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Voiceless Voice",
+  "price_raw": "7,500",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Volcanic",
+  "price_raw": "2,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Vylon",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "War Rock",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Watt",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "White Forest",
+  "price_raw": "23,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Wind-Up",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Windwitch",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Witchcraft",
+  "price_raw": "10,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "World Legacy",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "X-Saber",
+  "price_raw": "8,000",
+  "symbol": "\ud83d\udd34"
+ },
+ {
+  "name": "Yang Zing",
+  "price_raw": "4,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Yosenju",
+  "price_raw": "1,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Yubel",
+  "price_raw": "21,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Yummy",
+  "price_raw": "25,000",
+  "symbol": "\ud83d\udfe6"
+ },
+ {
+  "name": "Zefra",
+  "price_raw": "3,000",
+  "symbol": "\u2b50"
+ },
+ {
+  "name": "Zoodiac",
+  "price_raw": "7,000",
+  "symbol": "\ud83d\udd34"
+ }
+]
