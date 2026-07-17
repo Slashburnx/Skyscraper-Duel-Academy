@@ -88,7 +88,7 @@ function renderArchTable() {
 
     // Inline edit row
     if (editingId === a.id) {
-      const statOpts = ['','Forbidden','Semi-Limited','Trimited','Unavailable']
+      const statOpts = ['','Forbidden','Semi Limited','Limited','Unavailable']
         .map(s => `<option value="${s}" ${a.status===s?'selected':''}>${s||'—'}</option>`).join('');
       return `
         <tr style="background:rgba(200,155,0,0.04);">
@@ -107,8 +107,8 @@ function renderArchTable() {
     // Status badge
     let badge = '—';
     if (a.status === 'Forbidden')     badge = '<span class="badge b-red">Forbidden</span>';
-    else if (a.status === 'Semi-Limited') badge = '<span class="badge b-gold">Semi-Limited</span>';
-    else if (a.status === 'Trimited')     badge = '<span class="badge b-blue">Trimited</span>';
+    else if (a.status === 'Semi Limited') badge = '<span class="badge b-gold">Semi Limited</span>';
+    else if (a.status === 'Limited')     badge = '<span class="badge b-blue">Limited</span>';
     else if (a.status === 'Unavailable')  badge = '<span class="badge b-grey">Unavailable</span>';
     else if (taken)                       badge = '<span class="badge b-green">Taken</span>';
 
