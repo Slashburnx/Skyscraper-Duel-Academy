@@ -88,13 +88,14 @@ function renderArchTable() {
 
     // Inline edit row
     if (editingId === a.id) {
-      const statOpts = ['','Forbidden','Semi Limited','Limited','Unavailable']
+      const statOpts = ['','Forbidden','Semi-Limited','Limited','Unavailable']
         .map(s => `<option value="${s}" ${a.status===s?'selected':''}>${s||'—'}</option>`).join('');
       return `
         <tr style="background:rgba(200,155,0,0.04);">
           <td style="font-weight:700;color:var(--gold);">${a.name}</td>
           <td><input class="inline-inp" id="ae-notes" value="${(a.notes||'').replace(/"/g,'&quot;')}"/></td>
           <td><input class="inline-inp" type="number" id="ae-price" value="${a.price}" style="width:90px;"/></td>
+          <td style="font-size:1rem;text-align:center;">${a.symbol||'—'}</td>
           <td style="color:var(--muted);font-size:0.78rem;">${owners.join(', ')||'Available'}</td>
           <td><select class="inline-sel" id="ae-status">${statOpts}</select></td>
           <td style="display:flex;gap:4px;">
@@ -107,7 +108,7 @@ function renderArchTable() {
     // Status badge
     let badge = '—';
     if (a.status === 'Forbidden')     badge = '<span class="badge b-red">Forbidden</span>';
-    else if (a.status === 'Semi Limited') badge = '<span class="badge b-gold">Semi Limited</span>';
+    else if (a.status === 'Semi-Limited') badge = '<span class="badge b-gold">Semi-Limited</span>';
     else if (a.status === 'Limited')     badge = '<span class="badge b-blue">Limited</span>';
     else if (a.status === 'Unavailable')  badge = '<span class="badge b-grey">Unavailable</span>';
     else if (taken)                       badge = '<span class="badge b-green">Taken</span>';
@@ -125,6 +126,7 @@ function renderArchTable() {
         <td style="font-weight:600;">${a.name}</td>
         <td style="color:var(--muted);font-size:0.76rem;max-width:200px;">${a.notes||'—'}</td>
         <td>${priceCell}</td>
+        <td style="font-size:1rem;text-align:center;">${a.symbol||'—'}</td>
         <td style="font-size:0.8rem;">${ownerCell}</td>
         <td>${badge}</td>
         ${admin ? `<td style="display:flex;gap:4px;">
