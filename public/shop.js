@@ -139,41 +139,40 @@ function renderTickets() {
 // ── Randomize: pull random archetypes from the database into a section ──
 const SECTION_PRICE_RANGE = {
   budget:  [0, 5000],
-  premium: [6500, 16000],
+  premium: [5500, Infinity],
 };
 
 function randomizeShopSection(section) {
   const [lo, hi] = SECTION_PRICE_RANGE[section];
-  const inBudget  = getShopBudget();
-  const inPremium = getShopPremium();
-  const alreadyInShop = new Set([...inBudget, ...inPremium]);
+  const otherSection  = section === 'budget' ? getShopPremium() : getShopBudget();
+  const otherSet      = new Set(otherSection);
 
   const eligible = getArchetypes().filter(a =>
     a.status !== 'Forbidden' &&
     a.status !== 'Unavailable' &&
     a.price >= lo && a.price <= hi &&
-    !alreadyInShop.has(a.name)
+    !otherSet.has(a.name) // still avoid double-listing something that's in the OTHER section
   );
 
   if (!eligible.length) {
-    notify('⚠️ No eligible archetypes left in this price range to add');
+    notify('⚠️ No eligible archetypes in this price range to add');
     return;
   }
 
   const label = section === 'budget' ? 'Budget' : 'Premium';
-  const countStr = prompt(`How many random archetypes to add to ${label}? (${eligible.length} available)`, '5');
+  const countStr = prompt(`Replace ${label} with how many random archetypes? (${eligible.length} available)`, '5');
   if (countStr === null) return;
   const count = Math.max(1, Math.min(eligible.length, parseInt(countStr) || 0));
   if (!count) { notify('⚠️ Enter a valid number'); return; }
 
+  if (!confirm(`This will remove everything currently in ${label} and replace it with ${count} new random archetype(s). Continue?`)) return;
+
   const shuffled = [...eligible].sort(() => Math.random() - 0.5);
   const picked   = shuffled.slice(0, count).map(a => a.name);
 
-  const current = section === 'budget' ? inBudget : inPremium;
-  const updated = [...current, ...picked];
-  if (section === 'budget') saveShopBudget(updated); else saveShopPremium(updated);
+  if (section === 'budget') saveShopBudget(picked); else saveShopPremium(picked);
 
-  notify(`🎲 Added ${picked.length} random archetype${picked.length > 1 ? 's' : ''} to ${label}`);
+  notify(`🎲 ${label} refreshed with ${picked.length} new archetype${picked.length > 1 ? 's' : ''}`);
   renderShop();
 }
 window.randomizeShopSection = randomizeShopSection;
