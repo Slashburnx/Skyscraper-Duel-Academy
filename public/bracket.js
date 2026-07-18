@@ -56,6 +56,23 @@ function removeBracketPlayer(idx) {
   renderSetup();
 }
 
+// ── Randomize seeding order ─────────────────────────────────
+// When the player count isn't a clean power of 2, whoever ends up last
+// gets the bye and skips Round 1. Shuffling first makes that a random
+// ("lucky") duelist each time instead of always whoever was added last.
+function shuffleBracketPlayers() {
+  const players = getBracketPlayers();
+  if (players.length < 2) { notify('⚠️ Add at least 2 duelists first'); return; }
+  if (!confirm('Randomize seeding order? This clears any results already set on the current bracket.')) return;
+
+  const shuffled = [...players].sort(() => Math.random() - 0.5);
+  saveBracketPlayers(shuffled);
+  saveBracketWinners({});
+  renderSetup();
+  renderBracket();
+  notify('🍀 Seeding randomized');
+}
+
 // ── Import from roster ─────────────────────────────────────
 function importRoster() {
   const names = getDuelists().slice(0, bracketSize).map(d => d.name);
@@ -131,7 +148,14 @@ function completeTournament() {
     const next = [];
     for (let i = 0; i < current.length; i += 2) {
       const key = `${roundIdx}-${i / 2}`;
-      next.push(winners[key] || 'TBD');
+      const p1 = current[i], p2 = current[i + 1];
+      const explicit = winners[key];
+      let w;
+      if (explicit) w = explicit;
+      else if (p1 === 'BYE' && p2 !== 'BYE') w = p2;
+      else if (p2 === 'BYE' && p1 !== 'BYE') w = p1;
+      else w = 'TBD';
+      next.push(w);
     }
     current = next;
     roundIdx++;
@@ -227,6 +251,14 @@ function renderBracket() {
 
   const winners = getBracketWinners();
 
+  // A bye (opponent === 'BYE') auto-advances the real player — no click needed.
+  function effectiveWinner(p1, p2, explicit) {
+    if (explicit) return explicit;
+    if (p1 === 'BYE' && p2 !== 'BYE') return p2;
+    if (p2 === 'BYE' && p1 !== 'BYE') return p1;
+    return 'TBD';
+  }
+
   // Build all rounds
   const rounds  = [];
   let current   = [...padded];
@@ -236,7 +268,7 @@ function renderBracket() {
     const next = [];
     for (let i = 0; i < current.length; i += 2) {
       const key = `${rounds.length - 1}-${i / 2}`;
-      next.push(winners[key] || 'TBD');
+      next.push(effectiveWinner(current[i], current[i + 1], winners[key]));
     }
     current = next;
   }
@@ -263,7 +295,7 @@ function renderBracket() {
         const p1  = round[i]     || 'BYE';
         const p2  = round[i + 1] || 'BYE';
         const key = `${ri}-${i / 2}`;
-        const w   = winners[key];
+        const w   = effectiveWinner(p1, p2, winners[key]);
         const num = matchNum++;
 
         const bye1 = p1 === 'BYE', tbd1 = p1 === 'TBD';
